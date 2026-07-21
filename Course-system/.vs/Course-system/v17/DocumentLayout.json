@@ -1,0 +1,85 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-system\\course-system\\controllers\\instructorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|solutionrelative:course-system\\controllers\\instructorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-system\\course-system\\repository\\instructorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|solutionrelative:course-system\\repository\\instructorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-system\\course-system\\service\\instructorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|solutionrelative:course-system\\service\\instructorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-system\\course-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|solutionrelative:course-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Program.cs",
+              "RelativeDocumentMoniker": "Course-system\\Program.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Program.cs",
+              "RelativeToolTip": "Course-system\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T10:48:54.127Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InstructorService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Service\\InstructorService.cs",
+              "RelativeDocumentMoniker": "Course-system\\Service\\InstructorService.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Service\\InstructorService.cs",
+              "RelativeToolTip": "Course-system\\Service\\InstructorService.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAUwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T10:46:29.036Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "InstructorController.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Controllers\\InstructorController.cs",
+              "RelativeDocumentMoniker": "Course-system\\Controllers\\InstructorController.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Controllers\\InstructorController.cs",
+              "RelativeToolTip": "Course-system\\Controllers\\InstructorController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T10:46:08.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InstructorRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Repository\\InstructorRepository.cs",
+              "RelativeDocumentMoniker": "Course-system\\Repository\\InstructorRepository.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Repository\\InstructorRepository.cs",
+              "RelativeToolTip": "Course-system\\Repository\\InstructorRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T10:45:34.492Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
