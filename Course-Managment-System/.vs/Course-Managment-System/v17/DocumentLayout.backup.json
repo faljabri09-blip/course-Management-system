@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managment-System\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0B0042A3-FB6D-421D-ABEA-52186DEF3F86}|Course-Managment-System\\Course-Managment-System.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managment-system\\course-managment-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B0042A3-FB6D-421D-ABEA-52186DEF3F86}|Course-Managment-System\\Course-Managment-System.csproj|solutionrelative:course-managment-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managment-System\\Course-Managment-System\\Program.cs",
+              "RelativeDocumentMoniker": "Course-Managment-System\\Program.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managment-System\\Course-Managment-System\\Program.cs",
+              "RelativeToolTip": "Course-Managment-System\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T06:59:35.846Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
