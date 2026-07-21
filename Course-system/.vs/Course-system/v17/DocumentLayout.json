@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Migrations\\20260721111222_initialDatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Course-system\\Migrations\\20260721111222_initialDatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-system\\course-system\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|solutionrelative:course-system\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-system\\course-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5C721850-47FB-4E85-BF2D-729E76A74863}|Course-system\\Course-system.csproj|solutionrelative:course-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -31,6 +39,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "20260721111222_initialDatabase.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Migrations\\20260721111222_initialDatabase.cs",
+              "RelativeDocumentMoniker": "Course-system\\Migrations\\20260721111222_initialDatabase.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Migrations\\20260721111222_initialDatabase.cs",
+              "RelativeToolTip": "Course-system\\Migrations\\20260721111222_initialDatabase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T11:12:22.778Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "Course-system\\Models\\Course.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Models\\Course.cs",
+              "RelativeToolTip": "Course-system\\Models\\Course.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-21T11:11:57.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Program.cs",
               "RelativeDocumentMoniker": "Course-system\\Program.cs",
@@ -43,7 +77,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "InstructorService.cs",
               "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Service\\InstructorService.cs",
               "RelativeDocumentMoniker": "Course-system\\Service\\InstructorService.cs",
@@ -51,12 +85,11 @@
               "RelativeToolTip": "Course-system\\Service\\InstructorService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T10:46:29.036Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T10:46:29.036Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "InstructorController.cs",
               "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Controllers\\InstructorController.cs",
               "RelativeDocumentMoniker": "Course-system\\Controllers\\InstructorController.cs",
@@ -64,12 +97,11 @@
               "RelativeToolTip": "Course-system\\Controllers\\InstructorController.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAA0wAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T10:46:08.231Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T10:46:08.231Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "InstructorRepository.cs",
               "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-system\\Course-system\\Repository\\InstructorRepository.cs",
               "RelativeDocumentMoniker": "Course-system\\Repository\\InstructorRepository.cs",
@@ -77,8 +109,7 @@
               "RelativeToolTip": "Course-system\\Repository\\InstructorRepository.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T10:45:34.492Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T10:45:34.492Z"
             }
           ]
         }

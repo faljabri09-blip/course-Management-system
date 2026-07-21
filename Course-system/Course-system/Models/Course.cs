@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Course_system.Models
 {
-    public class Course
-    {
+   
         [Table("Course")]
         public class Course
         {
@@ -37,6 +36,6 @@ namespace Course_system.Models
 
             //one to many
             public ICollection<Enrollment> Enrollments { get; set; }
-        }
+        
     }
 }
