@@ -1,6 +1,6 @@
 ﻿using Course_system.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
+
 
 [ApiController]
 [Route("api/[controller]")]

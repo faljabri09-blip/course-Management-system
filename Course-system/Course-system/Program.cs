@@ -1,4 +1,3 @@
-
 using Course_Managment_System;
 
 namespace Course_system
@@ -17,8 +16,9 @@ namespace Course_system
             builder.Services.AddDbContext<CourseContext>();
             builder.Services.AddScoped<InstructorRepository>();
             builder.Services.AddScoped<InstructorService>();
+            builder.Services.AddScoped<InstructorController>();
 
-           
+
             // Add services to the container.
 
             builder.Services.AddControllers();

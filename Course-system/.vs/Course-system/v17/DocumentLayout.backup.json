@@ -38,8 +38,7 @@
               "RelativeToolTip": "Course-system\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T10:48:54.127Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T10:48:54.127Z"
             },
             {
               "$type": "Document",
@@ -51,8 +50,7 @@
               "RelativeToolTip": "Course-system\\Service\\InstructorService.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAUwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T10:46:29.036Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T10:46:29.036Z"
             },
             {
               "$type": "Document",
@@ -77,8 +75,7 @@
               "RelativeToolTip": "Course-system\\Repository\\InstructorRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-21T10:45:34.492Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-21T10:45:34.492Z"
             }
           ]
         }

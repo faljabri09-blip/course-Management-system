@@ -1,7 +1,7 @@
 ﻿using Course_Managment_System;
 using Course_system.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+
 
 public class InstructorRepository
 {
