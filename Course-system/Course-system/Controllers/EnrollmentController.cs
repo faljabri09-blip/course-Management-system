@@ -1,4 +1,5 @@
 ﻿using Course_system.Models;
+using CourseManagementSystem.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -30,19 +31,18 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult RegisterStudent(Enrollment enrollment)
+    public IActionResult Register(CreateEnrollmentDto dto)
     {
+        var enrollment = new Enrollment
+        {
+            StudentId = dto.StudentId,
+            CourseId = dto.CourseId,
+            EnrollmentDate = dto.EnrollmentDate
+        };
+
         _service.RegisterStudent(enrollment);
 
-        return Ok("Student registered successfully.");
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        _service.Delete(id);
-
-        return Ok("Enrollment deleted successfully.");
+        return Ok("Student Registered Successfully");
     }
 
     [HttpGet("Student/{studentId}")]
@@ -55,5 +55,13 @@ public class EnrollmentController : ControllerBase
     public IActionResult GetCourseStudents(int courseId)
     {
         return Ok(_service.GetCourseStudents(courseId));
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        _service.Delete(id);
+
+        return Ok("Enrollment Deleted Successfully");
     }
 }

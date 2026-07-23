@@ -1,4 +1,6 @@
 ﻿using Course_system.Models;
+using CourseManagementSystem.DTOs;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -36,19 +38,39 @@ public class CourseController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Add(Course course)
+    public IActionResult Add(CreateCourseDto dto)
     {
+        var course = new Course
+        {
+            CourseName = dto.CourseName,
+            Description = dto.Description,
+            Duration = dto.Duration,
+            Price = dto.Price,
+            InstructorId = dto.InstructorId
+        };
+
         _service.Add(course);
 
-        return Ok("Course added successfully.");
+        return Ok("Course Added Successfully");
     }
 
-    [HttpPut]
-    public IActionResult Update(Course course)
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, CreateCourseDto dto)
     {
+        var course = _service.GetById(id);
+
+        if (course == null)
+            return NotFound();
+
+        course.CourseName = dto.CourseName;
+        course.Description = dto.Description;
+        course.Duration = dto.Duration;
+        course.Price = dto.Price;
+        course.InstructorId = dto.InstructorId;
+
         _service.Update(course);
 
-        return Ok("Course updated successfully.");
+        return Ok("Course Updated Successfully");
     }
 
     [HttpDelete("{id}")]
@@ -56,6 +78,6 @@ public class CourseController : ControllerBase
     {
         _service.Delete(id);
 
-        return Ok("Course deleted successfully.");
+        return Ok("Course Deleted Successfully");
     }
 }

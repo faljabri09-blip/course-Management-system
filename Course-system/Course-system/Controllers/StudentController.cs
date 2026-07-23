@@ -1,4 +1,5 @@
 ﻿using Course_system.Models;
+using CourseManagementSystem.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -30,19 +31,35 @@ public class StudentController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Add(Student student)
+    public IActionResult Add(CreateStudentDto dto)
     {
+        var student = new Student
+        {
+            FullName = dto.FullName,
+            Email = dto.Email,
+            PhoneNumber = dto.PhoneNumber
+        };
+
         _service.Add(student);
 
-        return Ok("Student added successfully.");
+        return Ok("Student Added Successfully");
     }
 
-    [HttpPut]
-    public IActionResult Update(Student student)
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, CreateStudentDto dto)
     {
+        var student = _service.GetById(id);
+
+        if (student == null)
+            return NotFound();
+
+        student.FullName = dto.FullName;
+        student.Email = dto.Email;
+        student.PhoneNumber = dto.PhoneNumber;
+
         _service.Update(student);
 
-        return Ok("Student updated successfully.");
+        return Ok("Student Updated Successfully");
     }
 
     [HttpDelete("{id}")]
@@ -50,6 +67,6 @@ public class StudentController : ControllerBase
     {
         _service.Delete(id);
 
-        return Ok("Student deleted successfully.");
+        return Ok("Student Deleted Successfully");
     }
 }
