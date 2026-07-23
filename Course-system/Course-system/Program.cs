@@ -1,4 +1,5 @@
 using Course_Managment_System;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Course_system
 {
@@ -11,13 +12,28 @@ namespace Course_system
 
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services
+            // Add Instructor services
             builder.Services.AddControllers();
             builder.Services.AddDbContext<CourseContext>();
             builder.Services.AddScoped<InstructorRepository>();
             builder.Services.AddScoped<InstructorService>();
             builder.Services.AddScoped<InstructorController>();
 
+
+            // Course services 
+
+            builder.Services.AddScoped<CourseRepository>();
+            builder.Services.AddScoped<CourseService>();
+
+            // Student services
+
+            builder.Services.AddScoped<StudentRepository>();
+            builder.Services.AddScoped<StudentService>();
+
+            // Enrollement services 
+
+            builder.Services.AddScoped<EnrollmentRepository>();
+            builder.Services.AddScoped<EnrollmentService>();
 
             // Add services to the container.
 
