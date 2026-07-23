@@ -1,5 +1,6 @@
 using Course_Managment_System;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Course_system
 {
@@ -11,6 +12,13 @@ namespace Course_system
         {
 
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add DbContext
+            builder.Services.AddDbContext<CourseContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                ));
+
 
             // Add Instructor services
             builder.Services.AddControllers();

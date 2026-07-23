@@ -24,46 +24,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Course"
+                "$ref": "#/components/schemas/CreateCourseDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Course"
+                "$ref": "#/components/schemas/CreateCourseDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Course"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Course"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Course"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Course"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Course"
+                "$ref": "#/components/schemas/CreateCourseDto"
               }
             }
           }
@@ -91,6 +62,46 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Course"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCourseDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCourseDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCourseDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -142,10 +153,10 @@
         }
       }
     },
-    "/api/Instructor": {
+    "/api/Enrollment": {
       "get": {
         "tags": [
-          "Instructor"
+          "Enrollment"
         ],
         "responses": {
           "200": {
@@ -153,29 +164,131 @@
           }
         }
       },
-      "put": {
+      "post": {
         "tags": [
-          "Instructor"
+          "Enrollment"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/CreateEnrollmentDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/CreateEnrollmentDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/CreateEnrollmentDto"
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Enrollment/{id}": {
+      "get": {
+        "tags": [
+          "Enrollment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Enrollment"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Enrollment/Student/{studentId}": {
+      "get": {
+        "tags": [
+          "Enrollment"
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Enrollment/Course/{courseId}": {
+      "get": {
+        "tags": [
+          "Enrollment"
+        ],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Instructor": {
+      "get": {
+        "tags": [
+          "Instructor"
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -190,17 +303,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/CreateInstructorDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/CreateInstructorDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/CreateInstructorDto"
               }
             }
           }
@@ -228,6 +341,46 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Instructor"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInstructorDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInstructorDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInstructorDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -275,46 +428,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/CreateStudentDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/CreateStudentDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Student"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Student"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Student"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/CreateStudentDto"
               }
             }
           }
@@ -348,6 +472,46 @@
           }
         }
       },
+      "put": {
+        "tags": [
+          "Student"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateStudentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Student"
@@ -373,32 +537,26 @@
   },
   "components": {
     "schemas": {
-      "Course": {
+      "CreateCourseDto": {
         "required": [
           "courseName",
-          "instructorId",
-          "price"
+          "instructorId"
         ],
         "type": "object",
         "properties": {
-          "courseId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "courseName": {
-            "maxLength": 100,
-            "minLength": 0,
+            "maxLength": 150,
+            "minLength": 1,
             "type": "string"
           },
           "description": {
-            "maxLength": 100,
+            "maxLength": 500,
             "type": "string",
             "nullable": true
           },
           "duration": {
             "maximum": 500,
             "minimum": 1,
-            "maxLength": 50,
             "type": "integer",
             "format": "int32"
           },
@@ -411,49 +569,33 @@
           "instructorId": {
             "type": "integer",
             "format": "int32"
-          },
-          "instructor": {
-            "$ref": "#/components/schemas/Instructor"
-          },
-          "enrollments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Enrollment"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "Enrollment": {
+      "CreateEnrollmentDto": {
+        "required": [
+          "courseId",
+          "studentId"
+        ],
         "type": "object",
         "properties": {
-          "enrollmentId": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "courseId": {
             "type": "integer",
             "format": "int32"
           },
           "enrollmentDate": {
             "type": "string",
             "format": "date-time"
-          },
-          "studentId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "student": {
-            "$ref": "#/components/schemas/Student"
-          },
-          "courseId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "course": {
-            "$ref": "#/components/schemas/Course"
           }
         },
         "additionalProperties": false
       },
-      "Instructor": {
+      "CreateInstructorDto": {
         "required": [
           "email",
           "fullName",
@@ -461,10 +603,6 @@
         ],
         "type": "object",
         "properties": {
-          "instructorId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "fullName": {
             "maxLength": 100,
             "minLength": 1,
@@ -476,52 +614,33 @@
             "format": "email"
           },
           "specialization": {
+            "maxLength": 100,
             "minLength": 1,
             "type": "string"
-          },
-          "courses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Course"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "Student": {
+      "CreateStudentDto": {
         "required": [
           "email",
-          "fullName",
-          "phoneNumber"
+          "fullName"
         ],
         "type": "object",
         "properties": {
-          "studentId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "fullName": {
             "maxLength": 100,
             "minLength": 1,
             "type": "string"
           },
           "email": {
-            "maxLength": 100,
             "minLength": 1,
             "type": "string",
             "format": "email"
           },
           "phoneNumber": {
-            "maxLength": 50,
-            "minLength": 1,
-            "type": "string"
-          },
-          "enrollments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Enrollment"
-            },
+            "type": "string",
+            "format": "tel",
             "nullable": true
           }
         },

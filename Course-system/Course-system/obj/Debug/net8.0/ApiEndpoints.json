@@ -18,24 +18,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "course",
-        "Type": "Course_system.Models.Course",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "CourseController",
-    "Method": "Update",
-    "RelativePath": "api/Course",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "course",
-        "Type": "Course_system.Models.Course",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateCourseDto",
         "IsRequired": true
       }
     ],
@@ -52,6 +36,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CourseController",
+    "Method": "Update",
+    "RelativePath": "api/Course/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateCourseDto",
         "IsRequired": true
       }
     ],
@@ -90,6 +95,96 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "EnrollmentController",
+    "Method": "GetAll",
+    "RelativePath": "api/Enrollment",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnrollmentController",
+    "Method": "Register",
+    "RelativePath": "api/Enrollment",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateEnrollmentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnrollmentController",
+    "Method": "GetById",
+    "RelativePath": "api/Enrollment/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnrollmentController",
+    "Method": "Delete",
+    "RelativePath": "api/Enrollment/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnrollmentController",
+    "Method": "GetCourseStudents",
+    "RelativePath": "api/Enrollment/Course/{courseId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "courseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EnrollmentController",
+    "Method": "GetStudentCourses",
+    "RelativePath": "api/Enrollment/Student/{studentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "InstructorController",
     "Method": "GetAll",
     "RelativePath": "api/Instructor",
@@ -101,22 +196,6 @@
   },
   {
     "ContainingType": "InstructorController",
-    "Method": "Update",
-    "RelativePath": "api/Instructor",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "instructor",
-        "Type": "Course_system.Models.Instructor",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "InstructorController",
     "Method": "Add",
     "RelativePath": "api/Instructor",
     "HttpMethod": "POST",
@@ -124,8 +203,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "instructor",
-        "Type": "Course_system.Models.Instructor",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateInstructorDto",
         "IsRequired": true
       }
     ],
@@ -142,6 +221,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InstructorController",
+    "Method": "Update",
+    "RelativePath": "api/Instructor/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateInstructorDto",
         "IsRequired": true
       }
     ],
@@ -182,24 +282,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "student",
-        "Type": "Course_system.Models.Student",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "StudentController",
-    "Method": "Update",
-    "RelativePath": "api/Student",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "student",
-        "Type": "Course_system.Models.Student",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateStudentDto",
         "IsRequired": true
       }
     ],
@@ -216,6 +300,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudentController",
+    "Method": "Update",
+    "RelativePath": "api/Student/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.CreateStudentDto",
         "IsRequired": true
       }
     ],
