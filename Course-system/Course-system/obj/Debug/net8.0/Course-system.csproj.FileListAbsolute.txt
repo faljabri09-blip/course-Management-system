@@ -145,3 +145,4 @@ C:\Users\Fatma ALjabri\Desktop\Karim Back-End\couse-Management-system\Course-sys
 C:\Users\Fatma ALjabri\Desktop\Karim Back-End\couse-Management-system\Course-system\Course-system\obj\Debug\net8.0\Course-system.pdb
 C:\Users\Fatma ALjabri\Desktop\Karim Back-End\couse-Management-system\Course-system\Course-system\obj\Debug\net8.0\Course-system.genruntimeconfig.cache
 C:\Users\Fatma ALjabri\Desktop\Karim Back-End\couse-Management-system\Course-system\Course-system\obj\Debug\net8.0\ref\Course-system.dll
+C:\Users\Fatma ALjabri\Desktop\Karim Back-End\couse-Management-system\Course-system\Course-system\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -1,5 +1,5 @@
 ﻿using Course_system.Models;
-using CourseManagementSystem.DTOs;
+using Course_system.DTOs;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 

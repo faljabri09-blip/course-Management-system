@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CourseManagementSystem.DTOs
+namespace Course_system.DTOs
 {
     public class CreateInstructorDto
     {

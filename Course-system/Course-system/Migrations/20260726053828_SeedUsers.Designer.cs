@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Course_system.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20260723051443_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260726053828_SeedUsers")]
+    partial class SeedUsers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,54 @@ namespace Course_system.Migrations
                     b.HasKey("StudentId");
 
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("Course_system.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Password = "1234",
+                            Role = "Admin",
+                            Username = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Password = "1234",
+                            Role = "Instructor",
+                            Username = "instructor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Password = "1234",
+                            Role = "Student",
+                            Username = "student"
+                        });
                 });
 
             modelBuilder.Entity("Course_system.Models.Course", b =>

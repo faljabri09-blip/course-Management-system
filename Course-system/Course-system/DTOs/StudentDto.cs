@@ -1,4 +1,4 @@
-﻿namespace CourseManagementSystem.DTOs
+﻿namespace Course_system.DTOs
 {
     public class StudentDto
     {
