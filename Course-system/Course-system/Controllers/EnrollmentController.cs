@@ -20,9 +20,9 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public IActionResult GetEnrollmentById(int id)
     {
-        var enrollment = _service.GetById(id);
+        var enrollment = _service.GetEnrollmentById(id);
 
         if (enrollment == null)
             return NotFound();
@@ -31,7 +31,7 @@ public class EnrollmentController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Register(CreateEnrollmentDto dto)
+    public IActionResult Register(EnrollmentOutPutDto dto)
     {
         var enrollment = new Enrollment
         {
@@ -45,6 +45,7 @@ public class EnrollmentController : ControllerBase
         return Ok("Student Registered Successfully");
     }
 
+
     [HttpGet("Student/{studentId}")]
     public IActionResult GetStudentCourses(int studentId)
     {
@@ -57,7 +58,7 @@ public class EnrollmentController : ControllerBase
         return Ok(_service.GetCourseStudents(courseId));
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("Enrollement/{id}")]
     public IActionResult Delete(int id)
     {
         _service.Delete(id);

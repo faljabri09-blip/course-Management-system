@@ -1,4 +1,5 @@
-﻿using Course_system.Models;
+﻿using Course_system.DTOs;
+using Course_system.Models;
 
 public class EnrollmentService 
 {
@@ -9,14 +10,32 @@ public class EnrollmentService
         _repository = repository;
     }
 
-    public List<Enrollment> GetAll()
+   
+
+    public List<EnrollmentOutPutDto> GetAll()
     {
-        return _repository.GetAll();
+        return _repository.GetAll()
+            .Select(Enrollment => new EnrollmentOutPutDto
+            {
+                StudentId = Enrollment.StudentId,
+                CourseId = Enrollment.CourseId,
+                EnrollmentDate = Enrollment.EnrollmentDate,
+            })
+                       .ToList();
     }
 
-    public Enrollment GetById(int id)
+ 
+
+    public EnrollmentOutPutDto GetEnrollmentById(int id)
     {
-        return _repository.GetById(id);
+        Enrollment e = _repository.GetEnrollmentById(id);
+
+        EnrollmentOutPutDto output = new EnrollmentOutPutDto();
+        output.StudentId = e.StudentId;
+        output.CourseId = e.CourseId;
+        output.EnrollmentDate = e.EnrollmentDate;
+
+        return output;
     }
 
     public void RegisterStudent(Enrollment enrollment)
@@ -26,13 +45,14 @@ public class EnrollmentService
 
     public void Delete(int id)
     {
-        var enrollment = _repository.GetById(id);
+        var enrollment = _repository.GetEnrollmentById(id);
 
         if (enrollment != null)
         {
             _repository.Delete(enrollment);
         }
     }
+
 
     public List<Enrollment> GetStudentCourses(int studentId)
     {

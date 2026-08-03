@@ -21,7 +21,7 @@ public class EnrollmentRepository
             .ToList();
     }
 
-    public Enrollment GetById(int id)
+    public Enrollment GetEnrollmentById(int id)
     {
         return _context.Enrollments
             .Include(e => e.Student)

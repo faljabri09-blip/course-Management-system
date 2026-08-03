@@ -2,51 +2,57 @@
 using Course_system.DTOs;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
-[Route("api/[controller]")]
+//[Route("api/[controller]")]
+[Route("Course")]
+[Authorize]
 public class CourseController : ControllerBase
 {
-    private readonly CourseService _service;
+    private CourseService _service;
 
     public CourseController(CourseService service)
     {
         _service = service;
     }
 
-    [HttpGet]
+    [AllowAnonymous]
+    [HttpGet("GetAll")]
     public IActionResult GetAll()
     {
-        return Ok(_service.GetAll());
+        List<CourseOutPutDto> result = _service.GetAll();
+
+        if (result.Count > 0)
+        {
+            return Ok(result);
+        }
+
+        return NoContent();
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    [HttpGet("GetCourseById/{id}")]
+    public IActionResult GetCourseById([FromRoute] int id)
     {
-        var course = _service.GetById(id);
+        CourseAllOutPutDto course = _service.GetCourseById(id);
 
         if (course == null)
-            return NotFound();
+        {
+            return NotFound(); // 404 notfound
+        }
 
         return Ok(course);
     }
 
-    [HttpGet("Instructor/{instructorId}")]
-    public IActionResult GetByInstructor(int instructorId)
-    {
-        return Ok(_service.GetByInstructor(instructorId));
-    }
+    
 
     [HttpPost]
-    public IActionResult Add(CreateCourseDto dto)
+    public IActionResult Add(CourseOutPutDto dto)
     {
         var course = new Course
         {
             CourseName = dto.CourseName,
-            Description = dto.Description,
-            Duration = dto.Duration,
             Price = dto.Price,
-            InstructorId = dto.InstructorId
         };
 
         _service.Add(course);
@@ -54,30 +60,44 @@ public class CourseController : ControllerBase
         return Ok("Course Added Successfully");
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, CreateCourseDto dto)
+    
+
+    [HttpPost("AddDTO")]
+    public IActionResult AddDTO([FromBody] CourseInputDto course)
     {
-        var course = _service.GetById(id);
+        int courseId = _service.Create(course);
 
-        if (course == null)
-            return NotFound();
+        return Ok(new { courseId = courseId });
+        return Ok("Course added successfully");
 
-        course.CourseName = dto.CourseName;
-        course.Description = dto.Description;
-        course.Duration = dto.Duration;
-        course.Price = dto.Price;
-        course.InstructorId = dto.InstructorId;
-
-        _service.Update(course);
-
-        return Ok("Course Updated Successfully");
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        _service.Delete(id);
 
-        return Ok("Course Deleted Successfully");
+    [Authorize(Roles = "Admin")]
+    [HttpPut("UpdatePrice/{courseId}")]
+    public IActionResult UpdatePrice([FromRoute] int courseId, [FromQuery] int newPrice)
+    {
+        bool updated = _service.UpdatePrice(courseId, newPrice);
+
+        if (!updated)
+            return NotFound();
+
+        return Ok("Updated successfully");
+        // return NoContent();
+    }
+
+    
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("Delete/{CourseId}")]
+    public IActionResult Delete([FromRoute] int CourseId)
+    {
+        bool deleted = _service.Delete(CourseId);
+
+        if (!deleted)
+            return NotFound();
+
+        return Ok("deleted successfully");
+        //return NoContent();
     }
 }

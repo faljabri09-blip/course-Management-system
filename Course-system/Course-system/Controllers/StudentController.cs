@@ -1,23 +1,33 @@
-﻿using Course_system.Models;
-using Course_system.DTOs;
+﻿using Course_system.DTOs;
+using Course_system.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class StudentController : ControllerBase
 {
-    private readonly StudentService _service;
+    private StudentService _service;
 
     public StudentController(StudentService service)
     {
         _service = service;
     }
 
-    [HttpGet]
-    public IActionResult GetAll()
-    {
-        return Ok(_service.GetAll());
-    }
+    //[AllowAnonymous]
+    //[HttpGet("GetAll")]
+    //public IActionResult GetAll()
+    //{
+    //    List<CreateStudentDto> result = _service.GetAll();
+
+    //    if (result.Count > 0)
+    //    {
+    //        return Ok(result);
+    //    }
+
+    //    return NoContent();
+    //}
 
     [HttpGet("{id}")]
     public IActionResult GetById(int id)

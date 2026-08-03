@@ -1,19 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Course_system.Models
 {
+    [Table("Users")]
     public class User
     {
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }                      // system generated
 
         [Required]
-        public string Username { get; set; }
+        [MaxLength(50)]
+        public string Username { get; set; }              // user input
 
         [Required]
-        public string Password { get; set; }
+        [MaxLength(150)]
+        public string Email { get; set; }                 // user input
 
         [Required]
-        public string Role { get; set; }
+        public string PasswordHash { get; set; }          // system generated — BCrypt hash
+
+        [Required]
+        [MaxLength(20)]
+        public string Role { get; set; }                  // from list — Client | Admin
     }
+
 }

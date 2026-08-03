@@ -19,7 +19,7 @@ public class CourseRepository
             .ToList();
     }
 
-    public Course GetById(int id)
+    public Course GetCourseById(int id)
     {
         return _context.Courses
             .Include(c => c.Instructor)
@@ -33,9 +33,8 @@ public class CourseRepository
         _context.SaveChanges();
     }
 
-    public void Update(Course course)
+    public void UpdatePrice()
     {
-        _context.Courses.Update(course);
         _context.SaveChanges();
     }
 

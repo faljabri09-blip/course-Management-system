@@ -2,7 +2,7 @@
 
 namespace Course_system.DTOs
 {
-    public class CreateEnrollmentDto
+    public class EnrollmentOutPutDto
     {
         [Required]
         public int StudentId { get; set; }

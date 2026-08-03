@@ -3,7 +3,7 @@
 
 public class StudentService 
 {
-    private readonly StudentRepository _repository;
+    private StudentRepository _repository;
 
     public StudentService(StudentRepository repository)
     {

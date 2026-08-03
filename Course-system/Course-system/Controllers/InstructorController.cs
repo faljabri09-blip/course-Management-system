@@ -1,5 +1,6 @@
-﻿using Course_system.Models;
-using Course_system.DTOs;
+﻿using Course_system.DTOs;
+using Course_system.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -13,6 +14,7 @@ public class InstructorController : ControllerBase
         _service = service;
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult GetAll()
     {
