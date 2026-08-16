@@ -1,0 +1,92 @@
+17. تجربة Register
+
+في Swagger:
+
+POST /api/Auth/register
+
+Body:
+
+{
+  "username": "admin",
+  "email": "admin@gmail.com",
+  "password": "123456",
+  "role": "Admin"
+}
+
+ثم أنشئي Instructor:
+
+{
+  "username": "instructor1",
+  "email": "instructor@gmail.com",
+  "password": "123456",
+  "role": "Instructor"
+}
+
+ثم Student:
+
+{
+  "username": "student1",
+  "email": "student@gmail.com",
+  "password": "123456",
+  "role": "Student"
+}
+18. Login
+POST /api/Auth/login
+
+مثلاً:
+
+{
+  "username": "admin",
+  "password": "123456"
+}
+
+ستحصلين على:
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIs...",
+  "username": "admin",
+  "role": "Admin"
+}
+
+
+Token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMSIsImV4cCI6MTc4Njg4MjM1OCwiaXNzIjoiQ291cnNlTWFuYWdlbWVudFN5c3RlbSIsImF1ZCI6IkNvdXJzZU1hbmFnZW1lbnRVc2VycyJ9.1_O3eL_5Sc4xsoeQmpi9C57XstQgP9WSQCw9xJJSisg
+----------------------------------------
+post :
+
+1.student JSON test:
+
+{
+  "id": 0,
+  "name": "Fatma Aljabri",
+  "email": "fatma.aljabri@example.com",
+  "phone": "91234567",
+  "enrollments": []
+}
+
+2.Instructor JSON test:
+
+{
+  "name": "Ahmed Al Jabri",
+  "email": "ahmed.Jabri@example.com",
+  "phone": "92345678",
+  "specialization": "Software Engineering"
+}
+
+3. course JSON test:
+
+{
+  "title": "C# Programming",
+  "description": "Introduction to C# and .NET programming",
+  "credits": 3,
+  "price": 50,
+  "instructorId": 1
+}
+
+4. Enrollement JSON test:
+
+{
+  "studentId": 1,
+  "courseId": 1,
+  "status": "Active",
+  "grade": 0  // still student dont take grade
+}
