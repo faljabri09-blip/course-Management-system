@@ -1,0 +1,269 @@
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">
+      <img src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png" alt="Logo">
+      <h2>EduFlow</h2>
+    </div>
+
+    <nav class="menu">
+
+      <a class="menu-item active" routerLink="/dashboard">
+        <span>🏠</span>
+        <span>Dashboard</span>
+      </a>
+
+      <a class="menu-item" routerLink="/courses">
+        <span>📚</span>
+        <span>Courses</span>
+      </a>
+
+      <a class="menu-item" routerLink="/students">
+        <span>👨‍🎓</span>
+        <span>Students</span>
+      </a>
+
+      <a class="menu-item" routerLink="/instructors">
+        <span>👨‍🏫</span>
+        <span>Instructors</span>
+      </a>
+
+      <a class="menu-item" routerLink="/enrollments">
+        <span>📝</span>
+        <span>Enrollments</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <button class="logout-btn" (click)="logout()">
+        <span>🚪</span>
+        <span>Logout</span>
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Header -->
+    <header class="top-header">
+
+      <div>
+        <h1>Dashboard</h1>
+        <p>Welcome back to Course Management System</p>
+      </div>
+
+      <div class="user-info">
+
+        <div class="user-avatar">
+          {{ userInitial }}
+        </div>
+
+        <div class="user-details">
+          <strong>{{ username }}</strong>
+          <span>Administrator</span>
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- Statistics -->
+    <section class="statistics">
+
+      <div class="stat-card">
+
+        <div class="stat-icon students-icon">
+          👨‍🎓
+        </div>
+
+        <div class="stat-info">
+          <span>Total Students</span>
+          <h2>{{ totalStudents }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon courses-icon">
+          📚
+        </div>
+
+        <div class="stat-info">
+          <span>Total Courses</span>
+          <h2>{{ totalCourses }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon instructors-icon">
+          👨‍🏫
+        </div>
+
+        <div class="stat-info">
+          <span>Total Instructors</span>
+          <h2>{{ totalInstructors }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon enrollment-icon">
+          📝
+        </div>
+
+        <div class="stat-info">
+          <span>Total Enrollments</span>
+          <h2>{{ totalEnrollments }}</h2>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Dashboard Content -->
+    <section class="dashboard-grid">
+
+      <!-- Recent Courses -->
+      <div class="dashboard-card courses-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Recent Courses</h2>
+            <p>Latest courses in the system</p>
+          </div>
+
+          <button class="view-btn" routerLink="/courses">
+            View All
+          </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Course</th>
+                <th>Instructor</th>
+                <th>Students</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let course of recentCourses">
+
+                <td>
+                  <strong>{{ course.name }}</strong>
+                </td>
+
+                <td>
+                  {{ course.instructor }}
+                </td>
+
+                <td>
+                  {{ course.students }}
+                </td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.active-status]="course.status === 'Active'"
+                    [class.inactive-status]="course.status === 'Inactive'">
+
+                    {{ course.status }}
+
+                  </span>
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- Quick Actions -->
+      <div class="dashboard-card quick-card">
+
+        <div class="card-header">
+
+          <div>
+            <h2>Quick Actions</h2>
+            <p>Manage your system</p>
+          </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+          <button routerLink="/courses">
+            <span>📚</span>
+            <div>
+              <strong>Manage Courses</strong>
+              <small>Add or edit courses</small>
+            </div>
+          </button>
+
+
+          <button routerLink="/students">
+            <span>👨‍🎓</span>
+            <div>
+              <strong>Manage Students</strong>
+              <small>View student records</small>
+            </div>
+          </button>
+
+
+          <button routerLink="/instructors">
+            <span>👨‍🏫</span>
+            <div>
+              <strong>Manage Instructors</strong>
+              <small>Manage instructors</small>
+            </div>
+          </button>
+
+
+          <button routerLink="/enrollments">
+            <span>📝</span>
+            <div>
+              <strong>Enrollments</strong>
+              <small>Manage enrollments</small>
+            </div>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>

@@ -1,0 +1,48 @@
+<div class="login-container">
+
+  <div class="login-card">
+
+    <div class="logo-section">
+      <img src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png" alt="Course Management Logo">
+
+      <h1>Course Management</h1>
+      <p>Sign in to your account</p>
+    </div>
+
+    <form (ngSubmit)="login()">
+
+      <div class="form-group">
+        <label>Username</label>
+
+        <input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          placeholder="Enter username"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Enter password"
+        >
+      </div>
+
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Signing in...' : 'Login' }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

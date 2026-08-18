@@ -15,7 +15,10 @@ namespace CourseManagementSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // ================================
             // Controllers
+            // ================================
+
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -23,27 +26,60 @@ namespace CourseManagementSystem
                         System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                 });
 
+
+            // ================================
             // Database
+            // ================================
+
             builder.Services.AddDbContext<CourseContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration
                         .GetConnectionString("DefaultConnection")));
 
+
+            // ================================
+            // CORS
+            // ================================
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngular", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+
+            // ================================
             // Repositories
+            // ================================
+
             builder.Services.AddScoped<CourseRepository>();
             builder.Services.AddScoped<StudentRepository>();
             builder.Services.AddScoped<EnrollmentRepository>();
             builder.Services.AddScoped<InstructorRepository>();
 
+
+            // ================================
             // Services
+            // ================================
+
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<StudentService>();
             builder.Services.AddScoped<EnrollmentService>();
             builder.Services.AddScoped<InstructorService>();
 
+
+            // ================================
             // JWT Authentication
+            // ================================
+
             builder.Services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddAuthentication(
+                    JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters =
@@ -70,10 +106,18 @@ namespace CourseManagementSystem
                         };
                 });
 
+
+            // ================================
             // Authorization
+            // ================================
+
             builder.Services.AddAuthorization();
 
+
+            // ================================
             // Swagger
+            // ================================
+
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen(options =>
@@ -82,22 +126,31 @@ namespace CourseManagementSystem
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "Course Management System API",
+                        Title =
+                            "Course Management System API",
+
                         Version = "v1"
                     });
+
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
                     {
                         Name = "Authorization",
+
                         Type = SecuritySchemeType.Http,
+
                         Scheme = "bearer",
+
                         BearerFormat = "JWT",
+
                         In = ParameterLocation.Header,
+
                         Description =
                             "Enter JWT token as: Bearer {your token}"
                     });
+
 
                 options.AddSecurityRequirement(
                     new OpenApiSecurityRequirement
@@ -110,31 +163,61 @@ namespace CourseManagementSystem
                                     {
                                         Type =
                                             ReferenceType.SecurityScheme,
+
                                         Id = "Bearer"
                                     }
                             },
+
                             Array.Empty<string>()
                         }
                     });
             });
 
+
+            // ================================
+            // Build Application
+            // ================================
+
             var app = builder.Build();
 
+
+            // ================================
             // Swagger
+            // ================================
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
+
                 app.UseSwaggerUI();
             }
 
+
+            // ================================
+            // Middleware
+            // ================================
+
             app.UseHttpsRedirection();
 
-            // Authentication MUST come before Authorization
+            // CORS MUST be before Authentication
+            app.UseCors("AllowAngular");
+
+            // Authentication MUST be before Authorization
             app.UseAuthentication();
 
             app.UseAuthorization();
 
+
+            // ================================
+            // Controllers
+            // ================================
+
             app.MapControllers();
+
+
+            // ================================
+            // Run
+            // ================================
 
             app.Run();
         }
