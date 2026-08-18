@@ -90,3 +90,10 @@ post :
   "status": "Active",
   "grade": 0  // still student dont take grade
 }
+
+
+---------------------
+
+ng serve
+
+ng serve --port 4200

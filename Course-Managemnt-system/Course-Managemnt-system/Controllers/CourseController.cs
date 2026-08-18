@@ -7,6 +7,7 @@ namespace CourseManagementSystem.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CourseController : ControllerBase
     {
         private readonly CourseService _service;

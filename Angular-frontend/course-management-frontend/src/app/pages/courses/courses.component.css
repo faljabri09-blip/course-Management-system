@@ -1,0 +1,797 @@
+/* =========================================================
+   Courses Page
+========================================================= */
+
+.courses-page {
+  padding: 30px;
+  min-height: 100vh;
+
+  background-image:
+  
+    url('/assets/back-school-decoration-with-books.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   Header
+========================================================= */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.header-content p {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   Add Course Button
+========================================================= */
+
+.add-btn {
+  border: none;
+  background: #4f46e5;
+  color: white;
+
+  padding: 12px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.add-btn span {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.add-btn:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(79, 70, 229, 0.25);
+}
+
+
+/* =========================================================
+   Error Message
+========================================================= */
+
+.error-message {
+  background: #fee2e2;
+  color: #b91c1c;
+
+  padding: 15px 18px;
+
+  border-radius: 8px;
+
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid #fecaca;
+}
+
+
+/* =========================================================
+   Loading
+========================================================= */
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6b7280;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  border-radius: 12px;
+}
+
+.loading p {
+  margin-top: 15px;
+}
+
+.spinner {
+  width: 35px;
+  height: 35px;
+
+  margin: auto;
+
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #4f46e5;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   Table Container
+========================================================= */
+
+.table-container {
+  background: rgba(255, 255, 255, 0.96);
+
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   Table Header
+========================================================= */
+
+.table-header {
+  padding: 20px 24px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  color: #1f2937;
+}
+
+.course-count {
+  display: inline-block;
+
+  margin-top: 5px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   Table Wrapper
+========================================================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   Table
+========================================================= */
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 900px;
+}
+
+thead {
+  background: #f8fafc;
+}
+
+th,
+td {
+  padding: 16px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  color: #374151;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.3px;
+}
+
+td {
+  color: #4b5563;
+
+  font-size: 14px;
+}
+
+tbody tr {
+  transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================================
+   Course ID
+========================================================= */
+
+.course-id {
+  display: inline-block;
+
+  background: #eef2ff;
+
+  color: #4338ca;
+
+  padding: 5px 9px;
+
+  border-radius: 6px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   Course Title
+========================================================= */
+
+.course-title strong {
+  color: #1f2937;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   Description
+========================================================= */
+
+.description {
+  display: block;
+
+  max-width: 280px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   Credits
+========================================================= */
+
+.credits-badge {
+  display: inline-block;
+
+  background: #ecfdf5;
+
+  color: #047857;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   Price
+========================================================= */
+
+.price {
+  color: #111827;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   Instructor
+========================================================= */
+
+.instructor {
+  color: #4b5563;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   Actions
+========================================================= */
+
+.actions {
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   Edit Button
+========================================================= */
+
+.edit-btn,
+.delete-btn {
+  border: none;
+
+  padding: 8px 12px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  margin-right: 6px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background: #e0e7ff;
+
+  color: #3730a3;
+}
+
+.edit-btn:hover {
+  background: #c7d2fe;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   Delete Button
+========================================================= */
+
+.delete-btn {
+  background: #fee2e2;
+
+  color: #b91c1c;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   Empty State
+========================================================= */
+
+.empty-state {
+  background: rgba(255, 255, 255, 0.96);
+
+  text-align: center;
+
+  padding: 70px 20px;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.empty-icon {
+  font-size: 55px;
+
+  margin-bottom: 15px;
+}
+
+.empty-state h2 {
+  color: #374151;
+
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: #6b7280;
+
+  margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   MODAL OVERLAY
+========================================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(15, 23, 42, 0.55);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 9999;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  backdrop-filter: blur(3px);
+
+  animation: fadeIn 0.2s ease;
+}
+
+
+/* =========================================================
+   Modal Box
+========================================================= */
+
+.modal-box {
+  width: 100%;
+
+  max-width: 430px;
+
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 32px;
+
+  text-align: center;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.2);
+
+  animation: modalAppear 0.25s ease;
+}
+
+
+/* =========================================================
+   Modal Icon
+========================================================= */
+
+.modal-icon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 28px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   Delete Modal
+========================================================= */
+
+.delete-icon {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.delete-modal h2 {
+  margin: 0 0 10px;
+
+  color: #1f2937;
+
+  font-size: 23px;
+}
+
+.delete-modal p {
+  color: #6b7280;
+
+  line-height: 1.6;
+
+  margin: 8px 0;
+}
+
+.delete-modal strong {
+  color: #1f2937;
+}
+
+.warning-text {
+  font-size: 13px;
+
+  color: #dc2626 !important;
+
+  margin-top: 12px !important;
+}
+
+
+/* =========================================================
+   Modal Actions
+========================================================= */
+
+.modal-actions {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+.cancel-btn,
+.confirm-delete-btn {
+  border: none;
+
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+
+/* Cancel */
+
+.cancel-btn {
+  background: #f3f4f6;
+
+  color: #374151;
+}
+
+.cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+
+/* Confirm Delete */
+
+.confirm-delete-btn {
+  background: #dc2626;
+
+  color: white;
+}
+
+.confirm-delete-btn:hover {
+  background: #b91c1c;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   Success Modal
+========================================================= */
+
+.success-icon {
+  background: #dcfce7;
+
+  color: #16a34a;
+
+  font-size: 32px;
+}
+
+.success-modal h2 {
+  margin: 0 0 10px;
+
+  color: #1f2937;
+}
+
+.success-modal p {
+  color: #6b7280;
+
+  margin-bottom: 25px;
+}
+
+
+/* Success Button */
+
+.success-btn {
+  border: none;
+
+  background: #16a34a;
+
+  color: white;
+
+  padding: 11px 30px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.success-btn:hover {
+  background: #15803d;
+}
+
+
+/* =========================================================
+   Error Modal
+========================================================= */
+
+.error-icon {
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  font-size: 30px;
+}
+
+.error-modal h2 {
+  margin: 0 0 10px;
+
+  color: #1f2937;
+}
+
+.error-modal p {
+  color: #6b7280;
+
+  line-height: 1.6;
+
+  margin-bottom: 25px;
+}
+
+
+/* Error Button */
+
+.error-btn {
+  border: none;
+
+  background: #dc2626;
+
+  color: white;
+
+  padding: 11px 30px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.error-btn:hover {
+  background: #b91c1c;
+}
+
+
+/* =========================================================
+   Animations
+========================================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+
+    transform: scale(0.9) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: scale(1) translateY(0);
+  }
+}
+
+
+/* =========================================================
+   Responsive Design
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .courses-page {
+    padding: 20px;
+  }
+
+  .page-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .add-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .table-container {
+    border-radius: 10px;
+  }
+
+  .modal-box {
+    padding: 25px 20px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .cancel-btn,
+  .confirm-delete-btn {
+    width: 100%;
+  }
+}

@@ -1,1 +1,419 @@
-<p>courses works!</p>
+<div class="courses-page">
+
+  <!-- ========================= -->
+  <!-- Header -->
+  <!-- ========================= -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+      <h1>Courses</h1>
+      <p>Manage all courses in the system</p>
+    </div>
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="addCourse()">
+
+      <span>+</span>
+      Add Course
+
+    </button>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Error Message -->
+  <!-- ========================= -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    <span>⚠</span>
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Loading -->
+  <!-- ========================= -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    <div class="spinner"></div>
+
+    <p>Loading courses...</p>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Courses Table -->
+  <!-- ========================= -->
+
+  <div
+    class="table-container"
+    *ngIf="!loading && courses.length > 0">
+
+    <div class="table-header">
+
+      <div>
+        <h2>All Courses</h2>
+
+        <span class="course-count">
+          {{ courses.length }}
+          {{ courses.length === 1 ? 'Course' : 'Courses' }}
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <!-- ========================= -->
+        <!-- Table Header -->
+        <!-- ========================= -->
+
+        <thead>
+
+          <tr>
+
+            <th>ID</th>
+
+            <th>Course</th>
+
+            <th>Description</th>
+
+            <th>Credits</th>
+
+            <th>Price</th>
+
+            <th>Instructor</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <!-- ========================= -->
+        <!-- Table Body -->
+        <!-- ========================= -->
+
+        <tbody>
+
+          <tr
+            *ngFor="let course of courses">
+
+            <!-- ID -->
+
+            <td>
+
+              <span class="course-id">
+                #{{ course.id }}
+              </span>
+
+            </td>
+
+
+            <!-- Course Title -->
+
+            <td>
+
+              <div class="course-title">
+
+                <strong>
+                  📚 {{ course.title }}
+                </strong>
+
+              </div>
+
+            </td>
+
+
+            <!-- Description -->
+
+            <td>
+
+              <span class="description">
+
+                {{ course.description }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Credits -->
+
+            <td>
+
+              <span class="credits-badge">
+
+                {{ course.credits }}
+
+                {{ course.credits === 1
+                    ? 'Credit'
+                    : 'Credits' }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Price -->
+
+            <td>
+
+              <span class="price">
+
+                {{ course.price | number:'1.2-2' }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Instructor -->
+
+            <td>
+
+              <span class="instructor">
+
+                Instructor #{{ course.instructorId }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Actions -->
+
+            <td class="actions">
+
+              <!-- Edit Button -->
+
+              <button
+                type="button"
+                class="edit-btn"
+                title="Edit Course"
+                (click)="editCourse(course.id)">
+
+                ✏️
+                <span>Edit</span>
+
+              </button>
+
+
+              <!-- Delete Button -->
+
+              <button
+                type="button"
+                class="delete-btn"
+                title="Delete Course"
+                (click)="deleteCourse(course.id, course.title)">
+
+                🗑️
+                <span>Delete</span>
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Empty State -->
+  <!-- ========================= -->
+
+  <div
+    class="empty-state"
+    *ngIf="
+      !loading &&
+      courses.length === 0 &&
+      !errorMessage
+    ">
+
+    <div class="empty-icon">
+      📚
+    </div>
+
+    <h2>No Courses Found</h2>
+
+    <p>
+      There are currently no courses in the system.
+    </p>
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="addCourse()">
+
+      <span>+</span>
+      Add First Course
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- Delete Confirmation Modal -->
+  <!-- ================================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showDeleteModal"
+    (click)="cancelDelete()">
+
+    <div
+      class="modal-box delete-modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-icon delete-icon">
+        🗑️
+      </div>
+
+      <h2>
+        Delete Course?
+      </h2>
+
+      <p>
+        Are you sure you want to delete
+        <strong>
+          {{ selectedCourseTitle }}
+        </strong>
+       ?
+      </p>
+
+      <p class="warning-text">
+        This action cannot be undone.
+      </p>
+
+
+      <div class="modal-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancelDelete()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="confirm-delete-btn"
+          (click)="confirmDelete()">
+
+          Delete Course
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- Success Modal -->
+  <!-- ================================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showSuccessModal"
+    (click)="closeSuccessModal()">
+
+    <div
+      class="modal-box success-modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-icon success-icon">
+        ✓
+      </div>
+
+      <h2>
+        Course Deleted
+      </h2>
+
+      <p>
+        The course has been deleted successfully.
+      </p>
+
+      <button
+        type="button"
+        class="success-btn"
+        (click)="closeSuccessModal()">
+
+        OK
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- Error Modal -->
+  <!-- ================================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showErrorModal"
+    (click)="closeErrorModal()">
+
+    <div
+      class="modal-box error-modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-icon error-icon">
+        !
+      </div>
+
+      <h2>
+        Unable to Delete
+      </h2>
+
+      <p>
+        {{ modalErrorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="error-btn"
+        (click)="closeErrorModal()">
+
+        OK
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

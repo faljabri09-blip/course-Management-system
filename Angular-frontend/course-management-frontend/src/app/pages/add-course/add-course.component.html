@@ -1,1 +1,299 @@
-<p>add-course works!</p>
+<div class="add-course-page">
+
+  <!-- ========================= -->
+  <!-- Header -->
+  <!-- ========================= -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>Add Course</h1>
+
+      <p>
+        Create a new course in the system
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Courses
+
+    </button>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Course Form -->
+  <!-- ========================= -->
+
+  <div class="form-container">
+
+    <div class="form-header">
+
+      <div class="form-icon">
+        📚
+      </div>
+
+      <div>
+
+        <h2>Course Information</h2>
+
+        <p>
+          Enter the information for the new course.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <form
+      (ngSubmit)="addCourse()"
+      #courseForm="ngForm">
+
+
+      <!-- ========================= -->
+      <!-- Course Title -->
+      <!-- ========================= -->
+
+      <div class="form-group">
+
+        <label for="title">
+          Course Title
+        </label>
+
+        <input
+          id="title"
+          type="text"
+          name="title"
+          [(ngModel)]="course.title"
+          placeholder="Enter course title"
+          required>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Description -->
+      <!-- ========================= -->
+
+      <div class="form-group">
+
+        <label for="description">
+          Description
+        </label>
+
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="course.description"
+          placeholder="Enter course description"
+          rows="5"
+          required>
+        </textarea>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Credits + Price -->
+      <!-- ========================= -->
+
+      <div class="form-row">
+
+
+        <!-- Credits -->
+
+        <div class="form-group">
+
+          <label for="credits">
+            Credits
+          </label>
+
+          <input
+            id="credits"
+            type="number"
+            name="credits"
+            [(ngModel)]="course.credits"
+            min="1"
+            placeholder="Example: 3"
+            required>
+
+        </div>
+
+
+        <!-- Price -->
+
+        <div class="form-group">
+
+          <label for="price">
+            Price
+          </label>
+
+          <input
+            id="price"
+            type="number"
+            name="price"
+            [(ngModel)]="course.price"
+            min="0"
+            step="0.01"
+            placeholder="Example: 50"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Instructor -->
+      <!-- ========================= -->
+
+      <div class="form-group">
+
+        <label for="instructorId">
+          Instructor ID
+        </label>
+
+        <input
+          id="instructorId"
+          type="number"
+          name="instructorId"
+          [(ngModel)]="course.instructorId"
+          min="1"
+          placeholder="Enter instructor ID"
+          required>
+
+        <small>
+          Enter the ID of the instructor assigned to this course.
+        </small>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- Buttons -->
+      <!-- ========================= -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()"
+          [disabled]="loading">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="save-btn"
+          [disabled]="loading">
+
+          <span *ngIf="!loading">
+            + Add Course
+          </span>
+
+          <span *ngIf="loading">
+            Adding Course...
+          </span>
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- SUCCESS MODAL -->
+  <!-- ================================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showSuccessModal"
+    (click)="closeSuccessModal()">
+
+    <div
+      class="modal-box success-modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-icon success-icon">
+        ✓
+      </div>
+
+      <h2>
+        Course Added Successfully
+      </h2>
+
+      <p>
+        The course
+        <strong>{{ course.title }}</strong>
+        has been added successfully.
+      </p>
+
+      <button
+        type="button"
+        class="success-btn"
+        (click)="closeSuccessModal()">
+
+        Go to Courses
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- ERROR MODAL -->
+  <!-- ================================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showErrorModal"
+    (click)="closeErrorModal()">
+
+    <div
+      class="modal-box error-modal"
+      (click)="$event.stopPropagation()">
+
+      <div class="modal-icon error-icon">
+        !
+
+      </div>
+
+      <h2>
+        Unable to Add Course
+      </h2>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+      <button
+        type="button"
+        class="error-btn"
+        (click)="closeErrorModal()">
+
+        OK
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

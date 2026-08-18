@@ -19,7 +19,6 @@ import { EnrollmentsComponent } from './pages/enrollments/enrollments.component'
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
