@@ -1,0 +1,186 @@
+<div class="courses-page">
+
+  <!-- Header -->
+  <header class="page-header">
+
+    <div>
+      <h1>Available Courses</h1>
+      <p>
+        Explore courses and enroll in the ones you are interested in.
+      </p>
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="back-btn"
+        (click)="goBack()">
+        ← Dashboard
+      </button>
+
+      <button
+        type="button"
+        class="enrollments-btn"
+        (click)="goToMyEnrollments()">
+        My Enrollments
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- Success Message -->
+  <div
+    class="message success-message"
+    *ngIf="successMessage">
+
+    {{ successMessage }}
+
+  </div>
+
+
+  <!-- Error Message -->
+  <div
+    class="message error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- Loading -->
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    <div class="loading-icon">⏳</div>
+
+    <p>Loading courses...</p>
+
+  </div>
+
+
+  <!-- Courses -->
+  <section
+    class="courses-grid"
+    *ngIf="!loading && courses.length > 0">
+
+    <div
+      class="course-card"
+      *ngFor="let course of courses">
+
+      <!-- Course Icon -->
+      <div class="course-icon">
+        📚
+      </div>
+
+
+      <!-- Course Information -->
+      <div class="course-content">
+
+        <h2>
+          {{ course.title }}
+        </h2>
+
+
+        <p class="description">
+          {{ course.description }}
+        </p>
+
+
+        <!-- Course Details -->
+        <div class="course-details">
+
+          <!-- Credits -->
+          <div class="detail">
+
+            <span class="icon">
+              ⏱️
+            </span>
+
+            <span>
+              {{ course.credits }} Credits
+            </span>
+
+          </div>
+
+
+          <!-- Price -->
+          <div class="detail">
+
+            <span class="icon">
+              💰
+            </span>
+
+            <span>
+              {{ course.price }} OMR
+            </span>
+
+          </div>
+
+
+          <!-- Instructor -->
+          <div
+            class="detail"
+            *ngIf="course.instructor">
+
+            <span class="icon">
+              👨‍🏫
+            </span>
+
+            <span>
+              {{ course.instructor.name }}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- Enroll Button -->
+        <button
+          type="button"
+          class="enroll-btn"
+          [disabled]="isEnrolling(course.id)"
+          (click)="enroll(course.id)">
+
+          <span *ngIf="!isEnrolling(course.id)">
+            Enroll Now
+          </span>
+
+          <span *ngIf="isEnrolling(course.id)">
+            Enrolling...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- No Courses -->
+  <div
+    class="no-courses"
+    *ngIf="!loading && courses.length === 0">
+
+    <div class="empty-icon">
+      📚
+    </div>
+
+    <h2>
+      No Courses Available
+    </h2>
+
+    <p>
+      There are currently no courses available.
+    </p>
+
+  </div>
+
+</div>

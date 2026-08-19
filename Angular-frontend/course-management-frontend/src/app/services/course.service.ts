@@ -29,49 +29,46 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  // ============================
-  // Get All Courses
-  // ============================
   getAll(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.apiUrl);
+
+    return this.http.get<Course[]>(
+      this.apiUrl
+    );
+
   }
 
-  // ============================
-  // Get Course By ID
-  // ============================
   getById(id: number): Observable<Course> {
+
     return this.http.get<Course>(
       `${this.apiUrl}/${id}`
     );
+
   }
 
-  // ============================
-  // Add Course
-  // ============================
   add(course: CourseDto): Observable<Course> {
+
     return this.http.post<Course>(
       this.apiUrl,
       course
     );
+
   }
 
-  // ============================
-  // Update Course
-  // ============================
   update(
     id: number,
     course: CourseDto
-  ): Observable<any> {
+  ): Observable<string> {
 
     return this.http.put(
       `${this.apiUrl}/${id}`,
-      course
+      course,
+      {
+        responseType: 'text'
+      }
     );
+
   }
 
-  // ============================
-  // Delete Course
-  // ============================
   delete(id: number): Observable<string> {
 
     return this.http.delete(
@@ -80,5 +77,6 @@ export class CourseService {
         responseType: 'text'
       }
     );
+
   }
 }

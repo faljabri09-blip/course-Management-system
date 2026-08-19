@@ -17,6 +17,10 @@ import { InstructorsComponent } from './pages/instructors/instructors.component'
 import { EnrollmentsComponent } from './pages/enrollments/enrollments.component';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { StudentDashboardComponent } from './pages/student-dashboard/student-dashboard.component';
+import { AvailableCoursesComponent } from './pages/available-courses/available-courses.component';
+import { MyEnrollmentsComponent } from './pages/my-enrollments/my-enrollments.component';
+
 
 
 @NgModule({
@@ -30,7 +34,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     EditCourseComponent,
     StudentsComponent,
     InstructorsComponent,
-    EnrollmentsComponent
+    EnrollmentsComponent,
+    StudentDashboardComponent,
+    AvailableCoursesComponent,
+    MyEnrollmentsComponent
   ],
 
   imports: [

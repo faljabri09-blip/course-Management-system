@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import {
   Course,
   CourseService
@@ -12,41 +13,75 @@ import {
 })
 export class CoursesComponent implements OnInit {
 
+  // ============================
+  // Courses
+  // ============================
+
   courses: Course[] = [];
 
   loading = false;
   errorMessage = '';
 
+  // ============================
   // Delete Modal
+  // ============================
+
   showDeleteModal = false;
   selectedCourseId: number | null = null;
   selectedCourseTitle = '';
 
+  // ============================
   // Success Modal
+  // ============================
+
   showSuccessModal = false;
 
+  // ============================
   // Error Modal
+  // ============================
+
   showErrorModal = false;
   modalErrorMessage = '';
+
+  // ============================
+  // Constructor
+  // ============================
 
   constructor(
     private courseService: CourseService,
     private router: Router
   ) {}
 
+  // ============================
+  // On Init
+  // ============================
+
   ngOnInit(): void {
     this.loadCourses();
   }
 
   // ============================
+  // Back to Dashboard
+  // ============================
+
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
+  // ============================
   // Load Courses
   // ============================
+
   loadCourses(): void {
 
     this.loading = true;
     this.errorMessage = '';
 
     this.courseService.getAll().subscribe({
+
+      // ============================
+      // Success
+      // ============================
 
       next: (data: Course[]) => {
 
@@ -55,6 +90,10 @@ export class CoursesComponent implements OnInit {
 
         console.log('Courses loaded:', data);
       },
+
+      // ============================
+      // Error
+      // ============================
 
       error: (error) => {
 
@@ -88,6 +127,7 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Add Course
   // ============================
+
   addCourse(): void {
 
     this.router.navigate([
@@ -99,6 +139,7 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Edit Course
   // ============================
+
   editCourse(id: number): void {
 
     this.router.navigate([
@@ -111,6 +152,7 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Open Delete Modal
   // ============================
+
   deleteCourse(
     id: number,
     title: string
@@ -125,6 +167,7 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Cancel Delete
   // ============================
+
   cancelDelete(): void {
 
     this.showDeleteModal = false;
@@ -137,6 +180,7 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Confirm Delete
   // ============================
+
   confirmDelete(): void {
 
     if (this.selectedCourseId === null) {
@@ -153,8 +197,9 @@ export class CoursesComponent implements OnInit {
     this.courseService.delete(id).subscribe({
 
       // ============================
-      // Success
+      // Delete Success
       // ============================
+
       next: (response) => {
 
         console.log(
@@ -162,7 +207,7 @@ export class CoursesComponent implements OnInit {
           response
         );
 
-        // Remove course immediately
+        // Remove deleted course from list
         this.courses = this.courses.filter(
           course => course.id !== id
         );
@@ -179,8 +224,9 @@ export class CoursesComponent implements OnInit {
       },
 
       // ============================
-      // Error
+      // Delete Error
       // ============================
+
       error: (error) => {
 
         console.error(
@@ -227,6 +273,7 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Close Success Modal
   // ============================
+
   closeSuccessModal(): void {
 
     this.showSuccessModal = false;
@@ -236,9 +283,12 @@ export class CoursesComponent implements OnInit {
   // ============================
   // Close Error Modal
   // ============================
+
   closeErrorModal(): void {
 
     this.showErrorModal = false;
+
+    this.modalErrorMessage = '';
 
   }
 

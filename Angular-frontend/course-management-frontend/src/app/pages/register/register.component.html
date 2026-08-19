@@ -1,1 +1,279 @@
-<p>register works!</p>
+<div class="register-page">
+
+  <!-- ============================= -->
+  <!-- Register Card -->
+  <!-- ============================= -->
+
+  <div class="register-card">
+
+    <!-- ============================= -->
+    <!-- Logo -->
+    <!-- ============================= -->
+
+    <div class="register-logo">
+
+      <div class="logo-box">
+
+        <img
+          src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png"
+          alt="EduFlow Logo">
+
+      </div>
+
+      <span>EduFlow</span>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- Title -->
+    <!-- ============================= -->
+
+    <div class="register-header">
+
+      <h1>Create Account</h1>
+
+      <p>
+        Create your student account to get started.
+      </p>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- Error Message -->
+    <!-- ============================= -->
+
+    <div
+      class="message error-message"
+      *ngIf="errorMessage">
+
+      <i class="bi bi-exclamation-circle-fill"></i>
+
+      <span>
+        {{ errorMessage }}
+      </span>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- Success Message -->
+    <!-- ============================= -->
+
+    <div
+      class="message success-message"
+      *ngIf="successMessage">
+
+      <i class="bi bi-check-circle-fill"></i>
+
+      <span>
+        {{ successMessage }}
+      </span>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- Register Form -->
+    <!-- ============================= -->
+
+    <form
+      (ngSubmit)="register()"
+      #registerForm="ngForm">
+
+
+      <!-- ============================= -->
+      <!-- Username -->
+      <!-- ============================= -->
+
+      <div class="form-group">
+
+        <label for="username">
+          Username
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-person"></i>
+
+          <input
+            id="username"
+            type="text"
+            name="username"
+            [(ngModel)]="username"
+            placeholder="Enter your username"
+            autocomplete="username"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- Email -->
+      <!-- ============================= -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-envelope"></i>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- Password -->
+      <!-- ============================= -->
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-lock"></i>
+
+          <input
+            id="password"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter your password"
+            autocomplete="new-password"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- Confirm Password -->
+      <!-- ============================= -->
+
+      <div class="form-group">
+
+        <label for="confirmPassword">
+          Confirm Password
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-lock-fill"></i>
+
+          <input
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm your password"
+            autocomplete="new-password"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- Role -->
+      <!-- ============================= -->
+
+      <div class="role-info">
+
+        <i class="bi bi-mortarboard-fill"></i>
+
+        <div>
+
+          <strong>
+            Account Type
+          </strong>
+
+          <span>
+            Student
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- Register Button -->
+      <!-- ============================= -->
+
+      <button
+        type="submit"
+        class="register-btn"
+        [disabled]="loading">
+
+        <!-- Normal -->
+
+        <span *ngIf="!loading">
+
+          <i class="bi bi-person-plus-fill"></i>
+
+          Create Account
+
+        </span>
+
+
+        <!-- Loading -->
+
+        <span *ngIf="loading">
+
+          <i class="bi bi-arrow-repeat loading-icon"></i>
+
+          Creating Account...
+
+        </span>
+
+      </button>
+
+    </form>
+
+
+    <!-- ============================= -->
+    <!-- Login Link -->
+    <!-- ============================= -->
+
+    <div class="login-link">
+
+      <span>
+        Already have an account?
+      </span>
+
+      <button
+        type="button"
+        (click)="goToLogin()">
+
+        Login
+
+      </button>
+
+    </div>
+
+
+  </div>
+
+</div>

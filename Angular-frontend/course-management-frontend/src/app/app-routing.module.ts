@@ -4,28 +4,38 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+
+import { StudentDashboardComponent }
+  from './pages/student-dashboard/student-dashboard.component';
+
 import { CoursesComponent } from './pages/courses/courses.component';
 import { AddCourseComponent } from './pages/add-course/add-course.component';
 import { EditCourseComponent } from './pages/edit-course/edit-course.component';
+
 import { StudentsComponent } from './pages/students/students.component';
 import { InstructorsComponent } from './pages/instructors/instructors.component';
 import { EnrollmentsComponent } from './pages/enrollments/enrollments.component';
+
 import { AuthGuard } from '../guards/auth.guard';
+
 
 const routes: Routes = [
 
-  // ================================
+  // =========================================
   // Default Route
-  // ================================
+  // =========================================
+
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
   },
 
-  // ================================
+
+  // =========================================
   // Authentication
-  // ================================
+  // =========================================
+
   {
     path: 'login',
     component: LoginComponent
@@ -36,83 +46,148 @@ const routes: Routes = [
     component: RegisterComponent
   },
 
-  // ================================
-  // Dashboard
-  // ================================
+
+  // =========================================
+  // Admin Dashboard
+  // =========================================
+
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
   },
 
-  // ================================
+
+  // =========================================
+  // Student Dashboard
+  // Student + Admin
+  // =========================================
+
+  {
+    path: 'student-dashboard',
+    component: StudentDashboardComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Student', 'Admin']
+    }
+  },
+
+
+  // =========================================
   // Courses
-  // ================================
+  // Student + Admin
+  // =========================================
+
   {
     path: 'courses',
     component: CoursesComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Student', 'Admin']
+    }
   },
+
+
+  // =========================================
+  // Add Course
+  // Admin Only
+  // =========================================
 
   {
     path: 'courses/add',
     component: AddCourseComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
   },
+
+
+  // =========================================
+  // Edit Course
+  // Admin Only
+  // =========================================
 
   {
     path: 'courses/edit/:id',
     component: EditCourseComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
   },
 
-  // ================================
+
+  // =========================================
   // Students
-  // ================================
+  // Admin Only
+  // =========================================
+
   {
     path: 'students',
     component: StudentsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
   },
 
-  // ================================
+
+  // =========================================
   // Instructors
-  // ================================
+  // Admin Only
+  // =========================================
+
   {
     path: 'instructors',
     component: InstructorsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
   },
 
-  // ================================
+
+  // =========================================
   // Enrollments
-  // ================================
+  // Student + Admin
+  // =========================================
+
   {
     path: 'enrollments',
     component: EnrollmentsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Student', 'Admin']
+    }
   },
 
-  // ================================
+
+  // =========================================
   // Unknown Route
-  // ================================
+  // =========================================
+
   {
     path: '**',
     redirectTo: 'login'
   }
 
-  
-
 ];
 
 
-
 @NgModule({
+
   imports: [
     RouterModule.forRoot(routes)
   ],
+
   exports: [
     RouterModule
   ]
+
 })
+
 export class AppRoutingModule { }

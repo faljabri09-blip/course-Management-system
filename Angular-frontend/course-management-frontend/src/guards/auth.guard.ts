@@ -6,7 +6,9 @@ import { CanActivate, Router } from '@angular/router';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router
+  ) {}
 
   canActivate(): boolean {
 
@@ -17,6 +19,7 @@ export class AuthGuard implements CanActivate {
     }
 
     this.router.navigate(['/login']);
+
     return false;
   }
 }

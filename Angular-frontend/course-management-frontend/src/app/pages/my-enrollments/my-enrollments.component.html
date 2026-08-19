@@ -1,0 +1,326 @@
+<div class="enrollments-page">
+
+  <!-- ========================= -->
+  <!-- Header -->
+  <!-- ========================= -->
+
+  <div class="page-header">
+
+    <div>
+      <h1>My Enrollments</h1>
+
+      <p>
+        View and manage your enrolled courses.
+      </p>
+    </div>
+
+
+    <div class="header-actions">
+
+      <button
+        type="button"
+        class="dashboard-btn"
+        (click)="goToDashboard()">
+
+        ← Dashboard
+
+      </button>
+
+
+      <button
+        type="button"
+        class="browse-btn"
+        (click)="browseCourses()">
+
+        + Browse Courses
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Success Message -->
+  <!-- ========================= -->
+
+  <div
+    class="message success-message"
+    *ngIf="successMessage">
+
+    {{ successMessage }}
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Error Message -->
+  <!-- ========================= -->
+
+  <div
+    class="message error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Loading -->
+  <!-- ========================= -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    <div class="loading-icon">
+      ⏳
+    </div>
+
+    <p>
+      Loading your enrollments...
+    </p>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Empty State -->
+  <!-- ========================= -->
+
+  <div
+    class="empty-state"
+    *ngIf="
+      !loading &&
+      enrollments.length === 0 &&
+      !errorMessage
+    ">
+
+    <div class="empty-icon">
+      📚
+    </div>
+
+
+    <h2>
+      No Enrollments Yet
+    </h2>
+
+
+    <p>
+      You haven't enrolled in any courses yet.
+    </p>
+
+
+    <button
+      type="button"
+      class="browse-btn"
+      (click)="browseCourses()">
+
+      Browse Available Courses
+
+    </button>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- Enrollments -->
+  <!-- ========================= -->
+
+  <div
+    class="enrollments-container"
+    *ngIf="
+      !loading &&
+      enrollments.length > 0
+    ">
+
+
+    <div
+      class="enrollment-card"
+      *ngFor="let enrollment of enrollments">
+
+
+      <!-- Course Header -->
+
+      <div class="course-header">
+
+        <div class="course-icon">
+          📚
+        </div>
+
+
+        <div class="course-title">
+
+          <h2>
+            {{ enrollment.course?.title || 'Course' }}
+          </h2>
+
+
+          <p>
+            Course ID: {{ enrollment.courseId }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Course Description -->
+
+      <div
+        class="course-description"
+        *ngIf="enrollment.course?.description">
+
+        {{ enrollment.course?.description }}
+
+      </div>
+
+
+      <!-- Course Details -->
+
+      <div class="course-details">
+
+
+        <!-- Instructor -->
+
+        <div class="detail-item">
+
+          <span class="detail-label">
+            Instructor
+          </span>
+
+
+          <strong>
+            {{
+              enrollment.course?.instructor?.name
+              || 'N/A'
+            }}
+          </strong>
+
+        </div>
+
+
+        <!-- Credits -->
+
+        <div class="detail-item">
+
+          <span class="detail-label">
+            Credits
+          </span>
+
+
+          <strong>
+            {{ enrollment.course?.credits || 0 }}
+          </strong>
+
+        </div>
+
+
+        <!-- Price -->
+
+        <div class="detail-item">
+
+          <span class="detail-label">
+            Price
+          </span>
+
+
+          <strong>
+            {{ enrollment.course?.price || 0 }} OMR
+          </strong>
+
+        </div>
+
+
+        <!-- Enrollment Date -->
+
+        <div class="detail-item">
+
+          <span class="detail-label">
+            Enrollment Date
+          </span>
+
+
+          <strong>
+            {{
+              enrollment.enrollmentDate
+              | date:'dd MMM yyyy'
+            }}
+          </strong>
+
+        </div>
+
+
+        <!-- Grade -->
+
+        <div class="detail-item">
+
+          <span class="detail-label">
+            Grade
+          </span>
+
+
+          <strong>
+            {{
+              enrollment.grade !== null
+                ? enrollment.grade
+                : '-'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- Card Footer -->
+
+      <div class="card-footer">
+
+
+        <!-- Status -->
+
+        <span
+          class="status"
+          [ngClass]="{
+            'active': enrollment.status === 'Active',
+            'completed': enrollment.status === 'Completed',
+            'dropped': enrollment.status === 'Dropped'
+          }">
+
+          {{ enrollment.status }}
+
+        </span>
+
+
+        <!-- Drop Button -->
+
+        <button
+          type="button"
+          *ngIf="enrollment.status === 'Active'"
+          class="drop-btn"
+          [disabled]="isDropping(enrollment.id)"
+          (click)="dropCourse(enrollment.id)">
+
+          <span
+            *ngIf="!isDropping(enrollment.id)">
+            Drop Course
+          </span>
+
+
+          <span
+            *ngIf="isDropping(enrollment.id)">
+            Dropping...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

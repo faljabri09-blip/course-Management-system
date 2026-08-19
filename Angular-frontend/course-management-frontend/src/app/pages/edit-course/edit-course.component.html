@@ -1,1 +1,224 @@
-<p>edit-course works!</p>
+<div class="edit-course-page">
+
+  <!-- Header -->
+
+  <div class="page-header">
+
+    <div class="header-title">
+
+      <h1>Edit Course</h1>
+
+      <p>
+        Update course information
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
+
+      ← Back to Courses
+
+    </button>
+
+  </div>
+
+
+  <!-- Loading -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    <div class="spinner"></div>
+
+    <p>Loading course...</p>
+
+  </div>
+
+
+  <!-- Form -->
+
+  <div
+    class="form-container"
+    *ngIf="!loading && !errorMessage.includes('not found')">
+
+    <div class="form-card">
+
+      <div class="form-title">
+
+        <div class="icon">
+          📚
+        </div>
+
+        <div>
+          <h2>Course Information</h2>
+
+          <p>
+            Edit the information below
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- Error -->
+
+      <div
+        class="error-message"
+        *ngIf="errorMessage">
+
+        <span>⚠️</span>
+
+        {{ errorMessage }}
+
+      </div>
+
+
+      <!-- Success -->
+
+      <div
+        class="success-message"
+        *ngIf="successMessage">
+
+        <span>✓</span>
+
+        {{ successMessage }}
+
+      </div>
+
+
+      <!-- Course Title -->
+
+      <div class="form-group">
+
+        <label>
+          Course Title
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="course.title"
+          placeholder="Enter course title"
+          [disabled]="saving">
+
+      </div>
+
+
+      <!-- Description -->
+
+      <div class="form-group">
+
+        <label>
+          Description
+        </label>
+
+        <textarea
+          [(ngModel)]="course.description"
+          placeholder="Enter course description"
+          rows="5"
+          [disabled]="saving">
+        </textarea>
+
+      </div>
+
+
+      <!-- Credits -->
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label>
+            Credits
+          </label>
+
+          <input
+            type="number"
+            [(ngModel)]="course.credits"
+            min="1"
+            placeholder="Enter credits"
+            [disabled]="saving">
+
+        </div>
+
+
+        <!-- Price -->
+
+        <div class="form-group">
+
+          <label>
+            Price
+          </label>
+
+          <input
+            type="number"
+            [(ngModel)]="course.price"
+            min="0"
+            step="0.01"
+            placeholder="Enter price"
+            [disabled]="saving">
+
+        </div>
+
+      </div>
+
+
+      <!-- Instructor -->
+
+      <div class="form-group">
+
+        <label>
+          Instructor ID
+        </label>
+
+        <input
+          type="number"
+          [(ngModel)]="course.instructorId"
+          min="1"
+          placeholder="Enter instructor ID"
+          [disabled]="saving">
+
+      </div>
+
+
+      <!-- Buttons -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()"
+          [disabled]="saving">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="save-btn"
+          (click)="updateCourse()"
+          [disabled]="saving">
+
+          <span *ngIf="!saving">
+            ✓ Update Course
+          </span>
+
+          <span *ngIf="saving">
+            Updating...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

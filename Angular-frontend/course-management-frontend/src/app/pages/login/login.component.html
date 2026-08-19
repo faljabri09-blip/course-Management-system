@@ -2,46 +2,120 @@
 
   <div class="login-card">
 
+    <!-- ============================= -->
+    <!-- Logo -->
+    <!-- ============================= -->
+
     <div class="logo-section">
-      <img src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png" alt="Course Management Logo">
+
+      <img
+        src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png"
+        alt="Course Management Logo">
 
       <h1>Course Management</h1>
-      <p>Sign in to your account</p>
+
+      <p>
+        Sign in to your account
+      </p>
+
     </div>
 
-    <form (ngSubmit)="login()">
+
+    <!-- ============================= -->
+    <!-- Login Form -->
+    <!-- ============================= -->
+
+    <form
+      (ngSubmit)="login()">
+
+
+      <!-- Username -->
 
       <div class="form-group">
-        <label>Username</label>
+
+        <label>
+          Username
+        </label>
 
         <input
           type="text"
           [(ngModel)]="username"
           name="username"
           placeholder="Enter username"
-        >
+          autocomplete="username"
+          required>
+
       </div>
 
+
+      <!-- Password -->
+
       <div class="form-group">
-        <label>Password</label>
+
+        <label>
+          Password
+        </label>
 
         <input
           type="password"
           [(ngModel)]="password"
           name="password"
           placeholder="Enter password"
-        >
+          autocomplete="current-password"
+          required>
+
       </div>
 
-      <div *ngIf="errorMessage" class="error">
+
+      <!-- Error -->
+
+      <div
+        *ngIf="errorMessage"
+        class="error">
+
         {{ errorMessage }}
+
       </div>
 
-      <button type="submit" [disabled]="loading">
-        {{ loading ? 'Signing in...' : 'Login' }}
+
+      <!-- Login Button -->
+
+      <button
+        type="submit"
+        [disabled]="loading">
+
+        {{
+          loading
+            ? 'Signing in...'
+            : 'Login'
+        }}
+
       </button>
 
+
     </form>
+
+
+    <!-- ============================= -->
+    <!-- Register Link -->
+    <!-- ============================= -->
+
+    <div class="register-link">
+
+      <span>
+        Registor new user 
+      </span>
+
+      <button
+        type="button"
+        (click)="goToRegister()">
+
+        Create an account
+
+      </button>
+
+    </div>
+
 
   </div>
 

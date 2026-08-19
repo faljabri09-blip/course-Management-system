@@ -1,0 +1,446 @@
+/* ================================= */
+/* Register Container */
+/* ================================= */
+
+.register-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url('/assets/background.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding: 30px 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* ================================= */
+/* Register Card */
+/* ================================= */
+
+.register-card {
+  width: 440px;
+
+  padding: 35px;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+
+  box-sizing: border-box;
+}
+
+
+/* ================================= */
+/* Logo */
+/* ================================= */
+
+.register-logo {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.logo-box {
+  width: 55px;
+
+  height: 55px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.logo-box img {
+  width: 55px;
+
+  height: 55px;
+
+  object-fit: contain;
+}
+
+.register-logo span {
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: #2563eb;
+}
+
+
+/* ================================= */
+/* Register Header */
+/* ================================= */
+
+.register-header {
+  text-align: center;
+
+  margin-bottom: 25px;
+}
+
+.register-header h1 {
+  margin: 0 0 8px;
+
+  font-size: 26px;
+
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.register-header p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+
+/* ================================= */
+/* Form Group */
+/* ================================= */
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #374151;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* ================================= */
+/* Input Wrapper */
+/* ================================= */
+
+.input-wrapper {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+
+  left: 14px;
+
+  color: #9ca3af;
+
+  font-size: 16px;
+
+  pointer-events: none;
+}
+
+.input-wrapper input {
+  width: 100%;
+
+  padding: 12px 14px 12px 42px;
+
+  border: 1px solid #d9dee7;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #1f2937;
+
+  font-size: 14px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition: 0.2s;
+}
+
+.input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
+.input-wrapper input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+
+/* ================================= */
+/* Account Type */
+/* ================================= */
+
+.role-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 20px 0;
+
+  padding: 12px 14px;
+
+  background: #f4f7ff;
+
+  border: 1px solid #dbe5ff;
+
+  border-radius: 10px;
+}
+
+.role-info > i {
+  width: 38px;
+
+  height: 38px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 18px;
+}
+
+.role-info div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.role-info strong {
+  color: #374151;
+
+  font-size: 13px;
+}
+
+.role-info span {
+  color: #2563eb;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* ================================= */
+/* Register Button */
+/* ================================= */
+
+.register-btn {
+  width: 100%;
+
+  padding: 13px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.register-btn:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+}
+
+.register-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* ================================= */
+/* Loading Icon */
+/* ================================= */
+
+.loading-icon {
+  display: inline-block;
+
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ================================= */
+/* Messages */
+/* ================================= */
+
+.message {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 11px 13px;
+
+  margin-bottom: 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+}
+
+
+/* ================================= */
+/* Error */
+/* ================================= */
+
+.error-message {
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #dc2626;
+}
+
+
+/* ================================= */
+/* Success */
+/* ================================= */
+
+.success-message {
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+
+  color: #16a34a;
+}
+
+
+/* ================================= */
+/* Login Link */
+/* ================================= */
+
+.login-link {
+  margin-top: 25px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #eeeeee;
+
+  text-align: center;
+
+  font-size: 14px;
+}
+
+.login-link span {
+  color: #777;
+
+  margin-right: 6px;
+}
+
+
+/* ================================= */
+/* Login Button Link */
+/* ================================= */
+
+.login-link button {
+  width: auto;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #2563eb;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.login-link button:hover {
+  background: transparent;
+
+  color: #1d4ed8;
+
+  text-decoration: underline;
+}
+
+
+/* ================================= */
+/* Responsive */
+/* ================================= */
+
+@media (max-width: 500px) {
+
+  .register-page {
+    padding: 20px 15px;
+  }
+
+  .register-card {
+    width: 100%;
+
+    padding: 25px;
+  }
+
+  .register-header h1 {
+    font-size: 23px;
+  }
+
+}

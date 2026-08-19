@@ -1,4 +1,4 @@
-using CourseManagementSystem.Data;
+﻿using CourseManagementSystem.Data;
 using CourseManagementSystem.Repositories;
 using CourseManagementSystem.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -33,8 +33,8 @@ namespace CourseManagementSystem
 
             builder.Services.AddDbContext<CourseContext>(options =>
                 options.UseSqlServer(
-                    builder.Configuration
-                        .GetConnectionString("DefaultConnection")));
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                ));
 
 
             // ================================
@@ -46,11 +46,25 @@ namespace CourseManagementSystem
                 options.AddPolicy("AllowAngular", policy =>
                 {
                     policy
-                        .WithOrigins("http://localhost:4200")
+                        .SetIsOriginAllowed(origin =>
+                        {
+                            if (Uri.TryCreate(
+                                origin,
+                                UriKind.Absolute,
+                                out var uri))
+                            {
+                                return uri.Host.Equals(
+                                    "localhost",
+                                    StringComparison.OrdinalIgnoreCase);
+                            }
+
+                            return false;
+                        })
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
-            });
+        
+        });
 
 
             // ================================
@@ -86,11 +100,8 @@ namespace CourseManagementSystem
                         new TokenValidationParameters
                         {
                             ValidateIssuer = true,
-
                             ValidateAudience = true,
-
                             ValidateLifetime = true,
-
                             ValidateIssuerSigningKey = true,
 
                             ValidIssuer =
@@ -102,7 +113,9 @@ namespace CourseManagementSystem
                             IssuerSigningKey =
                                 new SymmetricSecurityKey(
                                     Encoding.UTF8.GetBytes(
-                                        builder.Configuration["Jwt:Key"]!))
+                                        builder.Configuration["Jwt:Key"]!
+                                    )
+                                )
                         };
                 });
 
@@ -126,31 +139,22 @@ namespace CourseManagementSystem
                     "v1",
                     new OpenApiInfo
                     {
-                        Title =
-                            "Course Management System API",
-
+                        Title = "Course Management System API",
                         Version = "v1"
                     });
-
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
                     {
                         Name = "Authorization",
-
                         Type = SecuritySchemeType.Http,
-
                         Scheme = "bearer",
-
                         BearerFormat = "JWT",
-
                         In = ParameterLocation.Header,
-
                         Description =
                             "Enter JWT token as: Bearer {your token}"
                     });
-
 
                 options.AddSecurityRequirement(
                     new OpenApiSecurityRequirement
@@ -163,11 +167,9 @@ namespace CourseManagementSystem
                                     {
                                         Type =
                                             ReferenceType.SecurityScheme,
-
                                         Id = "Bearer"
                                     }
                             },
-
                             Array.Empty<string>()
                         }
                     });
@@ -175,7 +177,7 @@ namespace CourseManagementSystem
 
 
             // ================================
-            // Build Application
+            // Build
             // ================================
 
             var app = builder.Build();
@@ -188,7 +190,6 @@ namespace CourseManagementSystem
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-
                 app.UseSwaggerUI();
             }
 
@@ -197,20 +198,14 @@ namespace CourseManagementSystem
             // Middleware
             // ================================
 
-            app.UseHttpsRedirection();
+            // إذا أردنا HTTP فقط، لا نستخدم HTTPS Redirection
+            // app.UseHttpsRedirection();
 
-            // CORS MUST be before Authentication
             app.UseCors("AllowAngular");
 
-            // Authentication MUST be before Authorization
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-
-            // ================================
-            // Controllers
-            // ================================
 
             app.MapControllers();
 
