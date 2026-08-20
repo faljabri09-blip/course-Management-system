@@ -1,21 +1,25 @@
 <div class="dashboard-container">
 
   <!-- =========================================
-       Sidebar
-  ========================================= -->
+       SIDEBAR
+  ========================================== -->
+
   <aside class="sidebar">
 
     <div class="sidebar-logo">
-      <div class="logo-icon">👩‍🎓</div>
+
+      <div class="logo-icon">
+        👩‍🎓
+      </div>
 
       <div class="logo-text">
         <strong>EduFlow</strong>
         <span>Student Portal</span>
       </div>
+
     </div>
 
 
-    <!-- Navigation -->
     <nav class="sidebar-nav">
 
       <a
@@ -25,6 +29,7 @@
         class="nav-item">
 
         <span class="nav-icon">🏠</span>
+
         <span>Dashboard</span>
 
       </a>
@@ -36,6 +41,7 @@
         class="nav-item">
 
         <span class="nav-icon">📚</span>
+
         <span>Courses</span>
 
       </a>
@@ -47,6 +53,7 @@
         class="nav-item">
 
         <span class="nav-icon">📝</span>
+
         <span>My Enrollments</span>
 
       </a>
@@ -54,7 +61,6 @@
     </nav>
 
 
-    <!-- Sidebar Bottom -->
     <div class="sidebar-bottom">
 
       <button
@@ -63,6 +69,7 @@
         (click)="logout()">
 
         <span>🚪</span>
+
         <span>Logout</span>
 
       </button>
@@ -72,27 +79,31 @@
   </aside>
 
 
+
   <!-- =========================================
-       Main Content
-  ========================================= -->
+       MAIN CONTENT
+  ========================================== -->
+
   <main class="main-content">
 
 
     <!-- =========================================
-         Header
-    ========================================= -->
+         HEADER
+    ========================================== -->
+
     <header class="top-header">
 
       <div class="header-left">
 
         <div class="search-box">
 
-          <span class="search-icon">🔍</span>
+          <span class="search-icon">
+            🔍
+          </span>
 
           <input
             type="text"
-            placeholder="Search..."
-          >
+            placeholder="Search">
 
         </div>
 
@@ -137,29 +148,28 @@
     </header>
 
 
+
     <!-- =========================================
-         Page Title
-    ========================================= -->
+         PAGE TITLE
+    ========================================== -->
+
     <section class="page-title">
 
-      <div>
+      <h1>
+        Student Dashboard
+      </h1>
 
-        <h1>
-          Student Dashboard
-        </h1>
-
-        <p>
-          Welcome back, {{ username }} 👋
-        </p>
-
-      </div>
+      <p>
+        Welcome back, {{ username }} 👋
+      </p>
 
     </section>
 
 
+
     <!-- =========================================
-         Messages
-    ========================================= -->
+         MESSAGES
+    ========================================== -->
 
     <div
       class="success-message"
@@ -179,13 +189,16 @@
     </div>
 
 
+
     <!-- =========================================
-         Statistics
-    ========================================= -->
+         STATISTICS
+    ========================================== -->
+
     <section class="stats-grid">
 
 
-      <!-- Available Courses -->
+      <!-- AVAILABLE COURSES -->
+
       <div class="stat-card">
 
         <div class="stat-content">
@@ -212,7 +225,9 @@
       </div>
 
 
-      <!-- My Courses -->
+
+      <!-- MY COURSES -->
+
       <div class="stat-card">
 
         <div class="stat-content">
@@ -239,7 +254,9 @@
       </div>
 
 
-      <!-- Active Courses -->
+
+      <!-- ACTIVE COURSES -->
+
       <div class="stat-card">
 
         <div class="stat-content">
@@ -266,7 +283,9 @@
       </div>
 
 
-      <!-- Completed -->
+
+      <!-- COMPLETED -->
+
       <div class="stat-card">
 
         <div class="stat-content">
@@ -295,13 +314,13 @@
     </section>
 
 
+
     <!-- =========================================
-         Available Courses
-    ========================================= -->
+         AVAILABLE COURSES
+    ========================================== -->
+
     <section class="dashboard-card recent-card">
 
-
-      <!-- Card Header -->
       <div class="card-header">
 
         <div>
@@ -329,7 +348,9 @@
       </div>
 
 
+
       <!-- Loading -->
+
       <div
         class="loading"
         *ngIf="loadingCourses">
@@ -339,7 +360,9 @@
       </div>
 
 
-      <!-- Courses Table -->
+
+      <!-- Courses -->
+
       <div
         class="table-wrapper"
         *ngIf="!loadingCourses">
@@ -373,9 +396,9 @@
 
           <tbody>
 
-            <!-- Course Row -->
             <tr
               *ngFor="let course of courses">
+
 
               <td>
 
@@ -434,7 +457,6 @@
             </tr>
 
 
-            <!-- No Courses -->
             <tr
               *ngIf="courses.length === 0">
 
@@ -459,13 +481,13 @@
     </section>
 
 
+
     <!-- =========================================
-         My Enrollments
-    ========================================= -->
+         MY ENROLLMENTS
+    ========================================== -->
+
     <section class="dashboard-card recent-card">
 
-
-      <!-- Card Header -->
       <div class="card-header">
 
         <div>
@@ -493,7 +515,9 @@
       </div>
 
 
+
       <!-- Loading -->
+
       <div
         class="loading"
         *ngIf="loadingEnrollments">
@@ -503,7 +527,9 @@
       </div>
 
 
+
       <!-- Empty -->
+
       <div
         class="empty-message"
         *ngIf="
@@ -516,7 +542,9 @@
       </div>
 
 
-      <!-- Enrollments Table -->
+
+      <!-- Table -->
+
       <div
         class="table-wrapper"
         *ngIf="
@@ -561,7 +589,8 @@
               *ngFor="let enrollment of enrollments">
 
 
-              <!-- Course -->
+              <!-- COURSE -->
+
               <td>
 
                 <div class="course-cell">
@@ -579,7 +608,9 @@
               </td>
 
 
-              <!-- Date -->
+
+              <!-- DATE -->
+
               <td>
 
                 {{ enrollment.enrollmentDate | date:'dd MMM yyyy' }}
@@ -587,14 +618,22 @@
               </td>
 
 
-              <!-- Status -->
+
+              <!-- STATUS -->
+
               <td>
 
                 <span
                   class="status-badge"
-                  [class.active]="enrollment.status === 'Active'"
-                  [class.completed]="enrollment.status === 'Completed'"
-                  [class.dropped]="enrollment.status === 'Dropped'">
+                  [class.active]="
+                    enrollment.status === 'Active'
+                  "
+                  [class.completed]="
+                    enrollment.status === 'Completed'
+                  "
+                  [class.dropped]="
+                    enrollment.status === 'Dropped'
+                  ">
 
                   <span class="status-dot"></span>
 
@@ -605,11 +644,12 @@
               </td>
 
 
-              <!-- Grade -->
+
+              <!-- GRADE -->
+
               <td>
 
                 <span
-                  class="grade"
                   *ngIf="enrollment.grade !== null">
 
                   {{ enrollment.grade }}
@@ -627,22 +667,55 @@
               </td>
 
 
-              <!-- Action -->
+
+              <!-- ACTION -->
+
               <td>
+
+                <!-- DROP BUTTON -->
 
                 <button
                   type="button"
-                  *ngIf="enrollment.status === 'Active'"
                   class="drop-btn"
-                  (click)="dropCourse(enrollment.id)">
+                  *ngIf="
+                    enrollment.status === 'Active'
+                  "
+                  [disabled]="
+                    isDropping(enrollment.id)
+                  "
+                  (click)="
+                    openDropModal(enrollment)
+                  ">
 
-                  Drop
+
+                  <span
+                    *ngIf="
+                      !isDropping(enrollment.id)
+                    ">
+
+                    Drop
+
+                  </span>
+
+
+                  <span
+                    *ngIf="
+                      isDropping(enrollment.id)
+                    ">
+
+                    Dropping...
+
+                  </span>
 
                 </button>
 
 
+                <!-- NON ACTIVE -->
+
                 <span
-                  *ngIf="enrollment.status !== 'Active'">
+                  *ngIf="
+                    enrollment.status !== 'Active'
+                  ">
 
                   —
 
@@ -660,7 +733,138 @@
 
     </section>
 
-
   </main>
+
+
+
+  <!-- =====================================================
+       DROP COURSE MODAL
+  ====================================================== -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showDropModal"
+    (click)="closeDropModal()">
+
+
+    <!-- MODAL BOX -->
+
+    <div
+      class="drop-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- ICON -->
+
+      <div class="modal-icon">
+
+        ⚠️
+
+      </div>
+
+
+
+      <!-- TITLE -->
+
+      <h2>
+
+        Drop Course?
+
+      </h2>
+
+
+
+      <!-- DESCRIPTION -->
+
+      <p>
+
+        Are you sure you want to drop this course?
+
+      </p>
+
+
+
+      <!-- SELECTED COURSE -->
+
+      <div
+        class="selected-course"
+        *ngIf="selectedEnrollment">
+
+
+        <span>
+
+          Course
+
+        </span>
+
+
+        <strong>
+
+          {{ selectedEnrollment.courseId }}
+
+        </strong>
+
+      </div>
+
+
+
+      <!-- BUTTONS -->
+
+      <div class="modal-actions">
+
+
+        <!-- CANCEL -->
+
+        <button
+          type="button"
+          class="cancel-btn"
+          [disabled]="
+            droppingCourseId !== null
+          "
+          (click)="closeDropModal()">
+
+          Cancel
+
+        </button>
+
+
+
+        <!-- CONFIRM -->
+
+        <button
+          type="button"
+          class="confirm-drop-btn"
+          [disabled]="
+            droppingCourseId !== null
+          "
+          (click)="confirmDropCourse()">
+
+
+          <span
+            *ngIf="
+              droppingCourseId === null
+            ">
+
+            Drop Course
+
+          </span>
+
+
+          <span
+            *ngIf="
+              droppingCourseId !== null
+            ">
+
+            Dropping...
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>

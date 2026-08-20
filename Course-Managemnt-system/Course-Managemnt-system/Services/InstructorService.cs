@@ -1,4 +1,5 @@
-﻿using CourseManagementSystem.Models;
+﻿using CourseManagementSystem.DTOs;
+using CourseManagementSystem.Models;
 using CourseManagementSystem.Repositories;
 
 namespace CourseManagementSystem.Services
@@ -12,24 +13,60 @@ namespace CourseManagementSystem.Services
             _repository = repository;
         }
 
-        public async Task<List<Instructor>> GetAll()
+        public async Task<List<InstructorDto>> GetAll()
         {
-            return await _repository.GetAll();
+            var instructors = await _repository.GetAll();
+
+            return instructors.Select(i => new InstructorDto
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Email = i.Email,
+                Phone = i.Phone,
+                Specialization = i.Specialization
+            }).ToList();
         }
 
-        public async Task<Instructor?> GetById(int id)
+        public async Task<InstructorDto?> GetById(int id)
         {
-            return await _repository.GetById(id);
+            var instructor = await _repository.GetById(id);
+
+            if (instructor == null)
+                return null;
+
+            return new InstructorDto
+            {
+                Id = instructor.Id,
+                Name = instructor.Name,
+                Email = instructor.Email,
+                Phone = instructor.Phone,
+                Specialization = instructor.Specialization
+            };
         }
 
-        public async Task<Instructor> Add(Instructor instructor)
+        public async Task<Instructor> Add(InstructorDto dto)
         {
+            var instructor = new Instructor
+            {
+                Name = dto.Name,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                Specialization = dto.Specialization
+            };
+
             return await _repository.Add(instructor);
         }
 
-        public async Task<bool> Update(int id, Instructor instructor)
+        public async Task<bool> Update(int id, InstructorDto dto)
         {
-            instructor.Id = id;
+            var instructor = new Instructor
+            {
+                Id = id,
+                Name = dto.Name,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                Specialization = dto.Specialization
+            };
 
             return await _repository.Update(instructor);
         }

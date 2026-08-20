@@ -100,7 +100,11 @@ namespace CourseManagementSystem.Controllers
 
                 username = user.Username,
 
-                role = user.Role
+                role = user.Role,
+
+                studentId = user.Role.ToLower() == "student"
+                    ? user.Id
+                    : (int?)null
             });
         }
     }

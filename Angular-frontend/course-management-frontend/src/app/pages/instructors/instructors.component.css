@@ -1,0 +1,755 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background: #f5f7fb;
+  color: #202638;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   PAGE
+========================================= */
+
+.instructors-page {
+  min-height: 100vh;
+  padding: 35px;
+  background: #f5f7fb;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.header-content h1 {
+  margin: 0 0 7px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #202638;
+}
+
+.header-content p {
+  margin: 0;
+  color: #8b91a1;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   ADD BUTTON
+========================================= */
+
+.add-btn {
+  height: 43px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 8px;
+  background: #5b4bdb;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: all 0.2s ease;
+}
+
+.add-btn span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.add-btn:hover {
+  background: #4939c5;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.message {
+  width: 100%;
+  padding: 13px 16px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.success-message {
+  background: #ecfdf3;
+  border: 1px solid #b7ebca;
+  color: #15803d;
+}
+
+.error-message {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #dc2626;
+}
+
+.success-message span {
+  font-weight: 700;
+}
+
+.error-message span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #dc2626;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loading {
+  min-height: 250px;
+  background: #ffffff;
+  border: 1px solid #e9ebf1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #8d93a2;
+  font-size: 13px;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #eceafc;
+  border-top-color: #5b4bdb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.table-card {
+  background: #ffffff;
+  border: 1px solid #e9ebf1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.table-header {
+  min-height: 80px;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eef0f4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-header h2 {
+  margin: 0 0 5px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #252a3a;
+}
+
+.table-header p {
+  margin: 0;
+  color: #969baa;
+  font-size: 12px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #fafbfc;
+}
+
+thead th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  color: #8d93a3;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  border-bottom: 1px solid #eef0f4;
+}
+
+tbody td {
+  padding: 17px 20px;
+  font-size: 13px;
+  color: #555c6d;
+  border-bottom: 1px solid #f0f1f5;
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #fcfcfe;
+}
+
+
+/* =========================================
+   INSTRUCTOR CELL
+========================================= */
+
+.instructor-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 200px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eeebff;
+  color: #5b4bdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.instructor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.instructor-info strong {
+  color: #303646;
+  font-size: 13px;
+}
+
+.instructor-info span {
+  color: #999fad;
+  font-size: 10px;
+}
+
+
+/* =========================================
+   TABLE DATA
+========================================= */
+
+.email {
+  color: #5b4bdb;
+  font-size: 12px;
+}
+
+.phone {
+  color: #555c6d;
+}
+
+.specialization {
+  color: #555c6d;
+}
+
+.course-count {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #eaf9ef;
+  color: #15803d;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.edit-btn,
+.delete-btn {
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  border: 1px solid #dcd8fb;
+  background: #f5f3ff;
+  color: #5b4bdb;
+}
+
+.edit-btn:hover {
+  background: #ebe8ff;
+}
+
+.delete-btn {
+  border: 1px solid #fecaca;
+  background: #fff5f5;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #fee2e2;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  padding: 70px 20px;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #eeebff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+}
+
+.empty-state h3 {
+  margin: 0 0 7px;
+  color: #303646;
+  font-size: 17px;
+}
+
+.empty-state p {
+  margin: 0 0 20px;
+  color: #969baa;
+  font-size: 12px;
+}
+
+
+/* =========================================
+   MODAL OVERLAY
+========================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: modalFadeIn 0.2s ease;
+}
+
+
+/* =========================================
+   INSTRUCTOR MODAL
+========================================= */
+
+.instructor-modal {
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+  animation: modalSlideIn 0.25s ease;
+}
+
+
+/* =========================================
+   MODAL HEADER
+========================================= */
+
+.modal-header {
+  padding: 22px 25px;
+  border-bottom: 1px solid #eef0f4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.modal-header h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #202638;
+}
+
+.modal-header p {
+  margin: 0;
+  color: #969baa;
+  font-size: 12px;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 7px;
+  background: #f5f6f9;
+  color: #777d8c;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  background: #eceef3;
+  color: #333;
+}
+
+
+/* =========================================
+   MODAL BODY
+========================================= */
+
+.modal-body {
+  padding: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #454b5a;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #dfe2e9;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #303646;
+  font-size: 12px;
+  transition: 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #5b4bdb;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.08);
+}
+
+.form-group input::placeholder {
+  color: #a5a9b4;
+}
+
+
+/* =========================================
+   MODAL FOOTER
+========================================= */
+
+.modal-footer {
+  padding: 18px 25px;
+  border-top: 1px solid #eef0f4;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-btn,
+.save-btn {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  border: 1px solid #dfe2e9;
+  background: #ffffff;
+  color: #555c6d;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #f5f6f9;
+}
+
+.save-btn {
+  border: none;
+  background: #5b4bdb;
+  color: #ffffff;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: #4939c5;
+}
+
+.cancel-btn:disabled,
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   DELETE MODAL
+========================================= */
+
+.delete-modal {
+  width: 100%;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+  animation: modalSlideIn 0.25s ease;
+}
+
+.delete-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #fff1f2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.delete-modal h2 {
+  margin: 0 0 10px;
+  color: #202638;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.delete-modal p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.delete-modal p strong {
+  color: #303646;
+}
+
+.delete-warning {
+  margin-top: 5px !important;
+  color: #dc2626 !important;
+  font-size: 11px !important;
+}
+
+.delete-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.cancel-delete-btn,
+.confirm-delete-btn {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-delete-btn {
+  border: 1px solid #dfe2e9;
+  background: #ffffff;
+  color: #555c6d;
+}
+
+.cancel-delete-btn:hover:not(:disabled) {
+  background: #f5f6f9;
+}
+
+.confirm-delete-btn {
+  border: none;
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.confirm-delete-btn:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.cancel-delete-btn:disabled,
+.confirm-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   MODAL ANIMATION
+========================================= */
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .instructors-page {
+    padding: 25px 20px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .instructors-page {
+    padding: 20px 15px;
+  }
+
+  .page-header {
+    flex-direction: column;
+  }
+
+  .add-btn {
+    width: 100%;
+  }
+
+  .header-content h1 {
+    font-size: 23px;
+  }
+
+  .instructor-modal {
+    max-width: 100%;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-btn,
+  .save-btn {
+    width: 100%;
+  }
+
+  .delete-modal {
+    max-width: 100%;
+    padding: 25px 20px;
+  }
+
+  .delete-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .cancel-delete-btn,
+  .confirm-delete-btn {
+    width: 100%;
+  }
+
+}

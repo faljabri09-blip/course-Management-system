@@ -1,4 +1,4 @@
-﻿using CourseManagementSystem.Models;
+﻿using CourseManagementSystem.DTOs;
 using CourseManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +16,22 @@ namespace CourseManagementSystem.Controllers
             _service = service;
         }
 
+        // =========================================
+        // Get All Students
+        // =========================================
+
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _service.GetAll());
+            var students = await _service.GetAll();
+
+            return Ok(students);
         }
+
+        // =========================================
+        // Get Student By ID
+        // =========================================
 
         [Authorize]
         [HttpGet("{id}")]
@@ -30,33 +40,59 @@ namespace CourseManagementSystem.Controllers
             var student = await _service.GetById(id);
 
             if (student == null)
+            {
                 return NotFound();
+            }
 
             return Ok(student);
         }
 
+        // =========================================
+        // Add Student
+        // =========================================
+
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Add(Student student)
+        public async Task<IActionResult> Add(StudentDTo dto)
         {
-            var result = await _service.Add(student);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok(result);
+            var student = await _service.Add(dto);
+
+            return Ok(student);
         }
+
+        // =========================================
+        // Update Student
+        // =========================================
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(
             int id,
-            Student student)
+            StudentDTo dto)
         {
-            var result = await _service.Update(id, student);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _service.Update(id, dto);
 
             if (!result)
+            {
                 return NotFound();
+            }
 
             return Ok("Student updated successfully");
         }
+
+        // =========================================
+        // Delete Student
+        // =========================================
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
@@ -65,7 +101,9 @@ namespace CourseManagementSystem.Controllers
             var result = await _service.Delete(id);
 
             if (!result)
+            {
                 return NotFound();
+            }
 
             return Ok("Student deleted successfully");
         }

@@ -111,6 +111,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "CourseManagementSystem.Controllers.CourseController",
+    "Method": "GetByInstructor",
+    "RelativePath": "api/Course/instructor/{instructorId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "instructorId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "CourseManagementSystem.Controllers.EnrollmentController",
     "Method": "GetAll",
     "RelativePath": "api/Enrollment",
@@ -240,8 +256,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "instructor",
-        "Type": "CourseManagementSystem.Models.Instructor",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.InstructorDto",
         "IsRequired": true
       }
     ],
@@ -277,8 +293,8 @@
         "IsRequired": true
       },
       {
-        "Name": "instructor",
-        "Type": "CourseManagementSystem.Models.Instructor",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.InstructorDto",
         "IsRequired": true
       }
     ],
@@ -319,8 +335,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "student",
-        "Type": "CourseManagementSystem.Models.Student",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.StudentDTo",
         "IsRequired": true
       }
     ],
@@ -356,8 +372,8 @@
         "IsRequired": true
       },
       {
-        "Name": "student",
-        "Type": "CourseManagementSystem.Models.Student",
+        "Name": "dto",
+        "Type": "CourseManagementSystem.DTOs.StudentDTo",
         "IsRequired": true
       }
     ],

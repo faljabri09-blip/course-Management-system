@@ -13,6 +13,10 @@ namespace CourseManagementSystem.Repositories
             _context = context;
         }
 
+        // =========================================
+        // Get All Students
+        // =========================================
+
         public async Task<List<Student>> GetAll()
         {
             return await _context.Students
@@ -20,6 +24,10 @@ namespace CourseManagementSystem.Repositories
                 .ThenInclude(e => e.Course)
                 .ToListAsync();
         }
+
+        // =========================================
+        // Get Student By ID
+        // =========================================
 
         public async Task<Student?> GetById(int id)
         {
@@ -29,13 +37,22 @@ namespace CourseManagementSystem.Repositories
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        // =========================================
+        // Add Student
+        // =========================================
+
         public async Task<Student> Add(Student student)
         {
             _context.Students.Add(student);
+
             await _context.SaveChangesAsync();
 
             return student;
         }
+
+        // =========================================
+        // Update Student
+        // =========================================
 
         public async Task<bool> Update(Student student)
         {
@@ -43,7 +60,9 @@ namespace CourseManagementSystem.Repositories
                 .FirstOrDefaultAsync(s => s.Id == student.Id);
 
             if (existing == null)
+            {
                 return false;
+            }
 
             existing.Name = student.Name;
             existing.Email = student.Email;
@@ -54,15 +73,22 @@ namespace CourseManagementSystem.Repositories
             return true;
         }
 
+        // =========================================
+        // Delete Student
+        // =========================================
+
         public async Task<bool> Delete(int id)
         {
             var student = await _context.Students
                 .FirstOrDefaultAsync(s => s.Id == id);
 
             if (student == null)
+            {
                 return false;
+            }
 
             _context.Students.Remove(student);
+
             await _context.SaveChangesAsync();
 
             return true;

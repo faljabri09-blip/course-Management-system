@@ -1,0 +1,884 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+
+  background: #f5f7fb;
+
+  color: #1f2937;
+}
+
+
+/* =========================================
+   PAGE CONTAINER
+========================================= */
+
+.enrollments-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f5f7fb;
+
+  padding-bottom: 50px;
+}
+
+
+/* =========================================
+   TOP HEADER
+========================================= */
+
+.top-header {
+  width: 100%;
+  height: 80px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e8ebf2;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 40px;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 100;
+}
+
+
+/* =========================================
+   HEADER LEFT
+========================================= */
+
+.header-left {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 12px;
+
+  background: #5b4bdb;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+
+  box-shadow:
+    0 6px 15px rgba(91, 75, 219, 0.2);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.logo-text strong {
+  font-size: 17px;
+
+  color: #202638;
+
+  font-weight: 700;
+}
+
+.logo-text span {
+  font-size: 10px;
+
+  color: #9298a8;
+}
+
+
+/* =========================================
+   HEADER TITLE
+========================================= */
+
+.header-title {
+  padding-left: 20px;
+
+  border-left: 1px solid #e5e7eb;
+}
+
+.header-title span {
+  font-size: 13px;
+
+  color: #6b7280;
+
+  font-weight: 500;
+}
+
+
+/* =========================================
+   HEADER RIGHT
+========================================= */
+
+.header-right {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: #5b4bdb;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.main-content {
+  width: 100%;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 35px 40px;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.page-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  margin: 0 0 7px;
+
+  font-size: 28px;
+
+  font-weight: 700;
+
+  color: #202638;
+}
+
+.page-header p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #8b91a1;
+}
+
+
+/* =========================================
+   DASHBOARD BUTTON
+========================================= */
+
+.dashboard-btn {
+  border: 1px solid #dedff0;
+
+  background: #ffffff;
+
+  color: #5b4bdb;
+
+  padding: 10px 17px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.dashboard-btn:hover {
+  background: #f4f2ff;
+
+  border-color: #cfcaf8;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   STATISTICS
+========================================= */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================================
+   STAT CARD
+========================================= */
+
+.stat-card {
+  background: #ffffff;
+
+  border: 1px solid #e9ebf1;
+
+  border-radius: 12px;
+
+  padding: 22px;
+
+  min-height: 125px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(30, 40, 80, 0.07);
+}
+
+.stat-content {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  color: #8d93a3;
+
+  margin-bottom: 8px;
+}
+
+.stat-card h2 {
+  margin: 0 0 6px;
+
+  font-size: 27px;
+
+  font-weight: 700;
+
+  color: #202638;
+}
+
+.stat-description {
+  font-size: 11px;
+
+  color: #9aa0ae;
+}
+
+
+/* =========================================
+   STAT ICON
+========================================= */
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+}
+
+.stat-icon.total {
+  background: #eeebff;
+}
+
+.stat-icon.active {
+  background: #e9f9ef;
+}
+
+.stat-icon.completed {
+  background: #e9f0ff;
+}
+
+.stat-icon.dropped {
+  background: #fff0f1;
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.enrollments-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e9ebf1;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.card-header {
+  min-height: 85px;
+
+  padding: 20px 25px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid #eef0f4;
+}
+
+.card-header h2 {
+  margin: 0 0 5px;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  color: #252a3a;
+}
+
+.card-header p {
+  margin: 0;
+
+  font-size: 12px;
+
+  color: #969baa;
+}
+
+
+/* =========================================
+   REFRESH BUTTON
+========================================= */
+
+.refresh-btn {
+  border: none;
+
+  background: #f4f2ff;
+
+  color: #5b4bdb;
+
+  padding: 9px 14px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.refresh-btn:hover {
+  background: #e9e6ff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 900px;
+}
+
+thead {
+  background: #fafbfc;
+}
+
+thead th {
+  padding: 15px 20px;
+
+  text-align: left;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  color: #8d93a3;
+
+  letter-spacing: 0.4px;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #eef0f4;
+}
+
+tbody td {
+  padding: 17px 20px;
+
+  font-size: 13px;
+
+  color: #555c6d;
+
+  border-bottom: 1px solid #f0f1f5;
+
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #fcfcfe;
+}
+
+
+/* =========================================
+   COURSE
+========================================= */
+
+.course-cell {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 220px;
+}
+
+.course-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+
+  background: #eeebff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+
+  flex-shrink: 0;
+}
+
+.course-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.course-info strong {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #303646;
+}
+
+.course-info span {
+  font-size: 10px;
+
+  color: #969baa;
+}
+
+
+/* =========================================
+   STUDENT
+========================================= */
+
+.student-cell {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.student-avatar {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  background: #eeebff;
+
+  color: #5b4bdb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.student-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.student-info strong {
+  font-size: 12px;
+
+  color: #303646;
+}
+
+.student-info span {
+  font-size: 10px;
+
+  color: #969baa;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+}
+
+
+/* ACTIVE */
+
+.status-badge.active {
+  background: #eaf9ef;
+
+  color: #15803d;
+}
+
+.status-badge.active .status-dot {
+  background: #22c55e;
+}
+
+
+/* COMPLETED */
+
+.status-badge.completed {
+  background: #e9f0ff;
+
+  color: #315bb5;
+}
+
+.status-badge.completed .status-dot {
+  background: #3b82f6;
+}
+
+
+/* DROPPED */
+
+.status-badge.dropped {
+  background: #fff0f1;
+
+  color: #dc2626;
+}
+
+.status-badge.dropped .status-dot {
+  background: #ef4444;
+}
+
+
+/* =========================================
+   GRADE
+========================================= */
+
+.grade {
+  font-weight: 700;
+
+  color: #5b4bdb;
+}
+
+.no-grade {
+  color: #a1a5b1;
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-message {
+  min-height: 280px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 40px 20px;
+}
+
+.empty-icon {
+  width: 65px;
+  height: 65px;
+
+  border-radius: 50%;
+
+  background: #f1efff;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+
+  margin-bottom: 15px;
+}
+
+.empty-message h3 {
+  margin: 0 0 7px;
+
+  font-size: 17px;
+
+  color: #303646;
+}
+
+.empty-message p {
+  margin: 0;
+
+  font-size: 12px;
+
+  color: #969baa;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.loading {
+  min-height: 280px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #8d93a2;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE - TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVE - MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .top-header {
+    height: 70px;
+
+    padding: 0 20px;
+  }
+
+  .header-title {
+    display: none;
+  }
+
+  .main-content {
+    padding: 25px 20px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .page-header h1 {
+    font-size: 23px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .card-header {
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .top-header {
+    padding: 0 15px;
+  }
+
+  .logo-text span {
+    display: none;
+  }
+
+  .header-title {
+    display: none;
+  }
+
+  .main-content {
+    padding: 20px 15px;
+  }
+
+  .page-header {
+    flex-direction: column;
+  }
+
+  .dashboard-btn {
+    width: 100%;
+  }
+
+  .card-header {
+    flex-direction: column;
+  }
+
+  .refresh-btn {
+    width: 100%;
+  }
+
+  .stat-card {
+    min-height: 115px;
+  }
+
+}

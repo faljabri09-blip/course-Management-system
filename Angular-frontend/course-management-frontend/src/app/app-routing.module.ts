@@ -1,22 +1,79 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+
+import {
+  RouterModule,
+  Routes
+} from '@angular/router';
+
+
+// =========================================
+// Authentication
+// =========================================
 
 import { LoginComponent } from './pages/login/login.component';
+
 import { RegisterComponent } from './pages/register/register.component';
+
+
+// =========================================
+// Admin Dashboard
+// =========================================
+
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+
+
+// =========================================
+// Student Dashboard
+// =========================================
 
 import { StudentDashboardComponent }
   from './pages/student-dashboard/student-dashboard.component';
 
-import { CoursesComponent } from './pages/courses/courses.component';
-import { AddCourseComponent } from './pages/add-course/add-course.component';
-import { EditCourseComponent } from './pages/edit-course/edit-course.component';
 
-import { StudentsComponent } from './pages/students/students.component';
-import { InstructorsComponent } from './pages/instructors/instructors.component';
-import { EnrollmentsComponent } from './pages/enrollments/enrollments.component';
+// =========================================
+// Courses
+// =========================================
+
+import { CoursesComponent }
+  from './pages/courses/courses.component';
+
+import { AddCourseComponent }
+  from './pages/add-course/add-course.component';
+
+import { EditCourseComponent }
+  from './pages/edit-course/edit-course.component';
+
+
+// =========================================
+// Instructors
+// =========================================
+
+import { InstructorsComponent }
+  from './pages/instructors/instructors.component';
+
+
+// =========================================
+// Enrollments
+// =========================================
+
+import { EnrollmentsComponent }
+  from './pages/enrollments/enrollments.component';
+
+
+// =========================================
+// Add Student
+// =========================================
+
+import { AddStudentComponent }
+  from './pages/add-student/add-student.component';
+
+
+// =========================================
+// Auth Guard
+// =========================================
 
 import { AuthGuard } from '../guards/auth.guard';
+
 
 
 const routes: Routes = [
@@ -77,6 +134,21 @@ const routes: Routes = [
 
 
   // =========================================
+  // Add Student
+  // Admin Only
+  // =========================================
+
+  {
+    path: 'add-student',
+    component: AddStudentComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['Admin']
+    }
+  },
+
+
+  // =========================================
   // Courses
   // Student + Admin
   // =========================================
@@ -114,21 +186,6 @@ const routes: Routes = [
   {
     path: 'courses/edit/:id',
     component: EditCourseComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Admin']
-    }
-  },
-
-
-  // =========================================
-  // Students
-  // Admin Only
-  // =========================================
-
-  {
-    path: 'students',
-    component: StudentsComponent,
     canActivate: [AuthGuard],
     data: {
       roles: ['Admin']

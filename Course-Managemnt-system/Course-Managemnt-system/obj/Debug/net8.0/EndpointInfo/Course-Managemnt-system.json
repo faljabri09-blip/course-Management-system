@@ -108,6 +108,29 @@
         }
       }
     },
+    "/api/Course/instructor/{instructorId}": {
+      "get": {
+        "tags": [
+          "Course"
+        ],
+        "parameters": [
+          {
+            "name": "instructorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Course/{id}": {
       "get": {
         "tags": [
@@ -382,17 +405,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/InstructorDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/InstructorDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/InstructorDto"
               }
             }
           }
@@ -445,17 +468,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/InstructorDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/InstructorDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Instructor"
+                "$ref": "#/components/schemas/InstructorDto"
               }
             }
           }
@@ -507,17 +530,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/StudentDTo"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/StudentDTo"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/StudentDTo"
               }
             }
           }
@@ -570,17 +593,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/StudentDTo"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/StudentDTo"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Student"
+                "$ref": "#/components/schemas/StudentDTo"
               }
             }
           }
@@ -655,8 +678,9 @@
   },
   "components": {
     "schemas": {
-      "Course": {
+      "CourseDto": {
         "required": [
+          "instructorId",
           "title"
         ],
         "type": "object",
@@ -673,46 +697,13 @@
             "nullable": true
           },
           "credits": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
           "price": {
-            "type": "number",
-            "format": "double"
-          },
-          "instructorId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "instructor": {
-            "$ref": "#/components/schemas/Instructor"
-          },
-          "enrollments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Enrollment"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "CourseDto": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "credits": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "price": {
+            "minimum": 0,
             "type": "number",
             "format": "double"
           },
@@ -770,43 +761,6 @@
         "type": "integer",
         "format": "int32"
       },
-      "Enrollment": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "studentId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "student": {
-            "$ref": "#/components/schemas/Student"
-          },
-          "courseId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "course": {
-            "$ref": "#/components/schemas/Course"
-          },
-          "enrollmentDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
-          },
-          "grade": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "EnrollmentDto": {
         "type": "object",
         "properties": {
@@ -830,7 +784,7 @@
         },
         "additionalProperties": false
       },
-      "Instructor": {
+      "InstructorDto": {
         "required": [
           "email",
           "name"
@@ -845,7 +799,8 @@
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": "string",
+            "format": "email"
           },
           "phone": {
             "type": "string",
@@ -853,13 +808,6 @@
           },
           "specialization": {
             "type": "string",
-            "nullable": true
-          },
-          "courses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Course"
-            },
             "nullable": true
           }
         },
@@ -901,32 +849,22 @@
         },
         "additionalProperties": false
       },
-      "Student": {
+      "StudentDTo": {
         "required": [
           "email",
           "name"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "name": {
             "type": "string"
           },
           "email": {
-            "type": "string"
+            "type": "string",
+            "format": "email"
           },
           "phone": {
             "type": "string",
-            "nullable": true
-          },
-          "enrollments": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Enrollment"
-            },
             "nullable": true
           }
         },
@@ -958,7 +896,7 @@
     "securitySchemes": {
       "Bearer": {
         "type": "http",
-        "description": "Enter JWT token as: Bearer {your token}",
+        "description": "Enter your JWT token",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }

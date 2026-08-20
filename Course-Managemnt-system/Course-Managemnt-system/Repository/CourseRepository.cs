@@ -13,12 +13,21 @@ namespace CourseManagementSystem.Repositories
             _context = context;
         }
 
+        // ==========================================
+        // GET ALL COURSES
+        // ==========================================
+
         public async Task<List<Course>> GetAll()
         {
             return await _context.Courses
                 .Include(c => c.Instructor)
                 .ToListAsync();
         }
+
+
+        // ==========================================
+        // GET COURSE BY ID
+        // ==========================================
 
         public async Task<Course?> GetById(int id)
         {
@@ -27,13 +36,37 @@ namespace CourseManagementSystem.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
+
+        // ==========================================
+        // GET COURSES BY INSTRUCTOR
+        // ==========================================
+
+        public async Task<List<Course>> GetByInstructorId(int instructorId)
+        {
+            return await _context.Courses
+                .Include(c => c.Instructor)
+                .Where(c => c.InstructorId == instructorId)
+                .ToListAsync();
+        }
+
+
+        // ==========================================
+        // ADD COURSE
+        // ==========================================
+
         public async Task<Course> Add(Course course)
         {
             _context.Courses.Add(course);
+
             await _context.SaveChangesAsync();
 
             return course;
         }
+
+
+        // ==========================================
+        // UPDATE COURSE
+        // ==========================================
 
         public async Task<bool> Update(Course course)
         {
@@ -54,6 +87,11 @@ namespace CourseManagementSystem.Repositories
             return true;
         }
 
+
+        // ==========================================
+        // DELETE COURSE
+        // ==========================================
+
         public async Task<bool> Delete(int id)
         {
             var course = await _context.Courses
@@ -63,6 +101,7 @@ namespace CourseManagementSystem.Repositories
                 return false;
 
             _context.Courses.Remove(course);
+
             await _context.SaveChangesAsync();
 
             return true;

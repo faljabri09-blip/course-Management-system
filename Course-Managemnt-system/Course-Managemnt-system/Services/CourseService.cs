@@ -13,15 +13,40 @@ namespace CourseManagementSystem.Services
             _repository = repository;
         }
 
+
+        // ==========================================
+        // GET ALL COURSES
+        // ==========================================
+
         public async Task<List<Course>> GetAll()
         {
             return await _repository.GetAll();
         }
 
+
+        // ==========================================
+        // GET COURSE BY ID
+        // ==========================================
+
         public async Task<Course?> GetById(int id)
         {
             return await _repository.GetById(id);
         }
+
+
+        // ==========================================
+        // GET COURSES BY INSTRUCTOR
+        // ==========================================
+
+        public async Task<List<Course>> GetByInstructorId(int instructorId)
+        {
+            return await _repository.GetByInstructorId(instructorId);
+        }
+
+
+        // ==========================================
+        // ADD COURSE
+        // ==========================================
 
         public async Task<Course> Add(CourseDto dto)
         {
@@ -37,6 +62,11 @@ namespace CourseManagementSystem.Services
             return await _repository.Add(course);
         }
 
+
+        // ==========================================
+        // UPDATE COURSE
+        // ==========================================
+
         public async Task<bool> Update(int id, CourseDto dto)
         {
             var course = new Course
@@ -51,6 +81,11 @@ namespace CourseManagementSystem.Services
 
             return await _repository.Update(course);
         }
+
+
+        // ==========================================
+        // DELETE COURSE
+        // ==========================================
 
         public async Task<bool> Delete(int id)
         {

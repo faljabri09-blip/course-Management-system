@@ -1,0 +1,281 @@
+<div class="add-student-page">
+
+  <!-- ========================================= -->
+  <!-- Header -->
+  <!-- ========================================= -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <h1>
+        Add New Student
+      </h1>
+
+      <p>
+        Create a new student account and add them to the system.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- Success Message -->
+  <!-- ========================================= -->
+
+  <div
+    class="success-message"
+    *ngIf="successMessage">
+
+    <i class="bi bi-check-circle-fill"></i>
+
+    {{ successMessage }}
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- Error Message -->
+  <!-- ========================================= -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    <i class="bi bi-exclamation-circle-fill"></i>
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- Form Card -->
+  <!-- ========================================= -->
+
+  <div class="form-card">
+
+
+    <!-- ========================================= -->
+    <!-- Card Header -->
+    <!-- ========================================= -->
+
+    <div class="form-card-header">
+
+      <div class="student-icon">
+
+        <i class="bi bi-person-plus-fill"></i>
+
+      </div>
+
+      <div>
+
+        <h2>
+          Student Information
+        </h2>
+
+        <p>
+          Enter the student's details below.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- Form -->
+    <!-- ========================================= -->
+
+    <form
+      (ngSubmit)="addStudent()"
+      #studentForm="ngForm">
+
+
+      <!-- ========================================= -->
+      <!-- Name -->
+      <!-- ========================================= -->
+
+      <div class="form-group">
+
+        <label for="name">
+          Full Name
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-person"></i>
+
+          <input
+            id="name"
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="Enter student's full name"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- Email -->
+      <!-- ========================================= -->
+
+      <div class="form-group">
+
+        <label for="email">
+          Email Address
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-envelope"></i>
+
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="Enter email address"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- Phone -->
+      <!-- ========================================= -->
+
+      <div class="form-group">
+
+        <label for="phone">
+          Phone Number
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-telephone"></i>
+
+          <input
+            id="phone"
+            type="tel"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="Enter phone number"
+            required>
+
+        </div>
+
+      </div>
+
+
+      <!-- ========================================= -->
+      <!-- Buttons -->
+      <!-- ========================================= -->
+
+      <div class="form-actions">
+
+        <!-- Cancel -->
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()">
+
+          <i class="bi bi-x-lg"></i>
+
+          Cancel
+
+        </button>
+
+
+        <!-- Add Student -->
+
+        <button
+          type="submit"
+          class="add-student-btn"
+          [disabled]="loading || !studentForm.valid">
+
+          <!-- Normal -->
+
+          <span *ngIf="!loading">
+
+            <i class="bi bi-person-plus-fill"></i>
+
+            Add Student
+
+          </span>
+
+
+          <!-- Loading -->
+
+          <span *ngIf="loading">
+
+            <span class="button-spinner"></span>
+
+            Adding Student...
+
+          </span>
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- Information -->
+  <!-- ========================================= -->
+
+  <div class="info-card">
+
+    <div class="info-icon">
+
+      <i class="bi bi-info-circle-fill"></i>
+
+    </div>
+
+    <div>
+
+      <strong>
+        Student Information
+      </strong>
+
+      <p>
+        Enter the student's name, email address and phone number
+        to create a new student record.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- Back To Dashboard -->
+  <!-- ========================================= -->
+
+  <div class="bottom-dashboard-link">
+
+    <button
+      type="button"
+      (click)="cancel()">
+
+      <i class="bi bi-arrow-left"></i>
+
+      Back to Dashboard
+
+    </button>
+
+  </div>
+
+</div>

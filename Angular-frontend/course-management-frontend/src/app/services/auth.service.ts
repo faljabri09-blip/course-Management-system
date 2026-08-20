@@ -12,6 +12,7 @@ export interface LoginResponse {
   token: string;
   username: string;
   role: string;
+  studentId?: number | null;
 }
 
 export interface RegisterRequest {
@@ -34,10 +35,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // =========================================
-  // Login
-  // =========================================
-
   login(data: LoginRequest): Observable<LoginResponse> {
 
     return this.http.post<LoginResponse>(
@@ -49,33 +46,41 @@ export class AuthService {
 
         console.log('Auth Response:', response);
 
-        // Save token
         localStorage.setItem(
           'token',
           response.token
         );
 
-        // Save username
         localStorage.setItem(
           'username',
           response.username
         );
 
-        // Save role
         localStorage.setItem(
           'role',
           response.role
         );
 
+        if (
+          response.studentId !== undefined &&
+          response.studentId !== null
+        ) {
+
+          localStorage.setItem(
+            'studentId',
+            response.studentId.toString()
+          );
+
+        } else {
+
+          localStorage.removeItem('studentId');
+
+        }
+
       })
 
     );
   }
-
-
-  // =========================================
-  // Register
-  // =========================================
 
   register(
     data: RegisterRequest
@@ -85,68 +90,51 @@ export class AuthService {
       `${this.apiUrl}/register`,
       data
     );
-
   }
-
-
-  // =========================================
-  // Logout
-  // =========================================
 
   logout(): void {
 
     localStorage.removeItem('token');
-
     localStorage.removeItem('username');
-
     localStorage.removeItem('role');
-
     localStorage.removeItem('studentId');
-
   }
-
-
-  // =========================================
-  // Get Token
-  // =========================================
 
   getToken(): string | null {
 
     return localStorage.getItem('token');
-
   }
-
-
-  // =========================================
-  // Get Username
-  // =========================================
 
   getUsername(): string {
 
     return localStorage.getItem('username') || '';
-
   }
-
-
-  // =========================================
-  // Get Role
-  // =========================================
 
   getRole(): string {
 
     return localStorage.getItem('role') || '';
-
   }
 
+  getStudentId(): number | null {
 
-  // =========================================
-  // Is Logged In
-  // =========================================
+    const studentId =
+      localStorage.getItem('studentId');
+
+    if (!studentId) {
+      return null;
+    }
+
+    const id = Number(studentId);
+
+    if (isNaN(id)) {
+      return null;
+    }
+
+    return id;
+  }
 
   isLoggedIn(): boolean {
 
     return !!this.getToken();
-
   }
-
 }

@@ -27,7 +27,6 @@
 
     <nav class="sidebar-menu">
 
-
       <!-- Admin Dashboard -->
 
       <a
@@ -43,7 +42,7 @@
       </a>
 
 
-      <!-- Student Dashboard -->
+      <!-- Students -->
 
       <a
         class="menu-item"
@@ -56,7 +55,6 @@
         </span>
 
       </a>
-
 
 
       <!-- Instructors -->
@@ -112,7 +110,6 @@
 
     <div class="sidebar-bottom">
 
-
       <!-- Settings -->
 
       <button
@@ -148,7 +145,6 @@
   </aside>
 
 
-
   <!-- ============================= -->
   <!-- Main Content -->
   <!-- ============================= -->
@@ -161,7 +157,6 @@
     <!-- ============================= -->
 
     <header class="top-header">
-
 
       <!-- Search -->
 
@@ -179,7 +174,6 @@
       <!-- User -->
 
       <div class="header-user">
-
 
         <!-- Notification -->
 
@@ -223,13 +217,11 @@
     </header>
 
 
-
     <!-- ============================= -->
     <!-- Page Title -->
     <!-- ============================= -->
 
     <section class="page-title">
-
 
       <div>
 
@@ -248,13 +240,12 @@
 
       <div class="page-actions">
 
-
         <!-- Add Student -->
 
         <button
           type="button"
           class="secondary-btn"
-          (click)="goToStudents()">
+          (click)="goToAddStudent()">
 
           <i class="bi bi-person-plus"></i>
 
@@ -281,17 +272,13 @@
     </section>
 
 
-
     <!-- ============================= -->
     <!-- Statistics -->
     <!-- ============================= -->
 
     <section class="stats-grid">
 
-
-      <!-- ============================= -->
       <!-- Total Students -->
-      <!-- ============================= -->
 
       <div class="stat-card">
 
@@ -329,10 +316,7 @@
       </div>
 
 
-
-      <!-- ============================= -->
       <!-- Total Instructors -->
-      <!-- ============================= -->
 
       <div class="stat-card">
 
@@ -362,10 +346,7 @@
       </div>
 
 
-
-      <!-- ============================= -->
       <!-- Total Courses -->
-      <!-- ============================= -->
 
       <div class="stat-card">
 
@@ -395,10 +376,7 @@
       </div>
 
 
-
-      <!-- ============================= -->
       <!-- Total Enrollments -->
-      <!-- ============================= -->
 
       <div class="stat-card">
 
@@ -438,20 +416,15 @@
     </section>
 
 
-
     <!-- ============================= -->
     <!-- Charts -->
     <!-- ============================= -->
 
     <section class="charts-grid">
 
-
-      <!-- ============================= -->
       <!-- Enrollment Overview -->
-      <!-- ============================= -->
 
       <div class="dashboard-card enrollment-chart-card">
-
 
         <div class="card-header">
 
@@ -490,20 +463,13 @@
       </div>
 
 
-
-      <!-- ============================= -->
       <!-- Right Charts -->
-      <!-- ============================= -->
 
       <div class="right-charts">
 
-
-        <!-- ============================= -->
         <!-- Courses by Category -->
-        <!-- ============================= -->
 
         <div class="dashboard-card small-chart-card">
-
 
           <div class="card-header">
 
@@ -523,7 +489,6 @@
 
 
           <div class="doughnut-area">
-
 
             <div class="doughnut-wrapper">
 
@@ -550,7 +515,6 @@
             <!-- Legend -->
 
             <div class="chart-legend">
-
 
               <div>
 
@@ -594,13 +558,9 @@
         </div>
 
 
-
-        <!-- ============================= -->
         <!-- Enrollment Status -->
-        <!-- ============================= -->
 
         <div class="dashboard-card small-chart-card">
-
 
           <div class="card-header">
 
@@ -634,16 +594,13 @@
     </section>
 
 
-
     <!-- ============================= -->
     <!-- Recent Enrollments -->
     <!-- ============================= -->
 
     <section class="dashboard-card recent-card">
 
-
       <div class="card-header">
-
 
         <div>
 
@@ -672,15 +629,11 @@
       </div>
 
 
-
-      <!-- ============================= -->
       <!-- Enrollment Table -->
-      <!-- ============================= -->
 
       <div class="table-wrapper">
 
         <table>
-
 
           <thead>
 
@@ -713,17 +666,14 @@
 
           <tbody>
 
-
             <tr
               *ngFor="let enrollment of recentEnrollments">
-
 
               <!-- Student -->
 
               <td>
 
                 <div class="student-cell">
-
 
                   <div class="student-avatar">
 
@@ -753,13 +703,11 @@
               </td>
 
 
-
               <!-- Course -->
 
               <td>
 
                 <div class="course-cell">
-
 
                   <div class="course-icon">
 
@@ -767,13 +715,11 @@
 
                   </div>
 
-
                   {{ enrollment.course }}
 
                 </div>
 
               </td>
-
 
 
               <!-- Date -->
@@ -785,39 +731,23 @@
               </td>
 
 
-
               <!-- Status -->
 
               <td>
 
-
                 <span
                   class="status-badge"
+                  [class.active]="enrollment.status === 'Active'"
+                  [class.completed]="enrollment.status === 'Completed'"
+                  [class.dropped]="enrollment.status === 'Dropped'">
 
-                  [class.active]="
-                    enrollment.status === 'Active'
-                  "
-
-                  [class.completed]="
-                    enrollment.status === 'Completed'
-                  "
-
-                  [class.dropped]="
-                    enrollment.status === 'Dropped'
-                  ">
-
-
-                  <span
-                    class="status-dot">
-                  </span>
-
+                  <span class="status-dot"></span>
 
                   {{ enrollment.status }}
 
                 </span>
 
               </td>
-
 
 
               <!-- Grade -->
@@ -841,7 +771,6 @@
       </div>
 
     </section>
-
 
   </main>
 

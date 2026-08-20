@@ -24,13 +24,38 @@ namespace CourseManagementSystem.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // =========================================
+            // Course Price
+            // =========================================
+
             modelBuilder.Entity<Course>()
                 .Property(c => c.Price)
                 .HasPrecision(18, 2);
 
+
+            // =========================================
+            // Enrollment Grade
+            // =========================================
+
             modelBuilder.Entity<Enrollment>()
                 .Property(e => e.Grade)
                 .HasPrecision(5, 2);
+
+
+            // =========================================
+            // User - Student Relationship
+            // =========================================
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.User)
+                .WithMany()
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+            // =========================================
+            // Course - Instructor Relationship
+            // =========================================
 
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Instructor)
@@ -38,11 +63,21 @@ namespace CourseManagementSystem.Data
                 .HasForeignKey(c => c.InstructorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+            // =========================================
+            // Student - Enrollment Relationship
+            // =========================================
+
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Student)
                 .WithMany(s => s.Enrollments)
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            // =========================================
+            // Course - Enrollment Relationship
+            // =========================================
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Course)

@@ -1,1 +1,518 @@
-<p>instructors works!</p>
+<div class="instructors-page">
+
+  <!-- PAGE HEADER -->
+
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <h1>Instructors</h1>
+
+      <p>
+        Manage instructors and view their courses.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="openAddModal()">
+
+      <span>+</span>
+      Add Instructor
+
+    </button>
+
+  </div>
+
+
+  <!-- SUCCESS MESSAGE -->
+
+  <div
+    class="message success-message"
+    *ngIf="successMessage">
+
+    <span>✓</span>
+
+    {{ successMessage }}
+
+  </div>
+
+
+  <!-- ERROR MESSAGE -->
+
+  <div
+    class="message error-message"
+    *ngIf="errorMessage">
+
+    <span>!</span>
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    <div class="spinner"></div>
+
+    <span>
+      Loading instructors...
+    </span>
+
+  </div>
+
+
+  <!-- INSTRUCTORS TABLE -->
+
+  <div
+    class="table-card"
+    *ngIf="!loading">
+
+    <div class="table-header">
+
+      <div>
+
+        <h2>All Instructors</h2>
+
+        <p>
+          {{ instructors.length }} instructor(s)
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div
+      class="table-wrapper"
+      *ngIf="instructors.length > 0">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>INSTRUCTOR</th>
+
+            <th>EMAIL</th>
+
+            <th>PHONE</th>
+
+            <th>SPECIALIZATION</th>
+
+            <th>COURSES</th>
+
+            <th>ACTIONS</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let instructor of instructors">
+
+            <!-- INSTRUCTOR -->
+
+            <td>
+
+              <div class="instructor-cell">
+
+                <div class="avatar">
+
+                  {{ getInitial(instructor.name) }}
+
+                </div>
+
+                <div class="instructor-info">
+
+                  <strong>
+                    {{ instructor.name }}
+                  </strong>
+
+                  <span>
+                    ID: {{ instructor.id }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- EMAIL -->
+
+            <td>
+
+              <span class="email">
+                {{ instructor.email }}
+              </span>
+
+            </td>
+
+
+            <!-- PHONE -->
+
+            <td>
+
+              <span class="phone">
+                {{ instructor.phone || '—' }}
+              </span>
+
+            </td>
+
+
+            <!-- SPECIALIZATION -->
+
+            <td>
+
+              <span class="specialization">
+                {{ instructor.specialization || '—' }}
+              </span>
+
+            </td>
+
+
+            <!-- COURSES -->
+
+            <td>
+
+              <span class="course-count">
+
+                {{ getCourseCount(instructor) }}
+
+                {{
+                  getCourseCount(instructor) === 1
+                    ? ' Course'
+                    : ' Courses'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+
+            <td>
+
+              <div class="actions">
+
+                <button
+                  type="button"
+                  class="edit-btn"
+                  (click)="openEditModal(instructor)">
+
+                  Edit
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="deleteInstructor(instructor)">
+
+                  Delete
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+
+    <div
+      class="empty-state"
+      *ngIf="instructors.length === 0">
+
+      <div class="empty-icon">
+        👨‍🏫
+      </div>
+
+      <h3>No instructors found</h3>
+
+      <p>
+        Add your first instructor to get started.
+      </p>
+
+      <button
+        type="button"
+        class="add-btn"
+        (click)="openAddModal()">
+
+        + Add Instructor
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ADD / EDIT MODAL -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showModal"
+    (click)="closeModal()">
+
+    <div
+      class="instructor-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2>
+
+            {{
+              isEditMode
+                ? 'Edit Instructor'
+                : 'Add Instructor'
+            }}
+
+          </h2>
+
+          <p>
+
+            {{
+              isEditMode
+                ? 'Update instructor information.'
+                : 'Enter instructor information.'
+            }}
+
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="close-btn"
+          (click)="closeModal()">
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <!-- MODAL BODY -->
+
+      <div class="modal-body">
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+          <label>
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="form.name"
+            placeholder="Enter instructor name">
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label>
+            Email
+          </label>
+
+          <input
+            type="email"
+            [(ngModel)]="form.email"
+            placeholder="Enter email address">
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="form-group">
+
+          <label>
+            Phone
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="form.phone"
+            placeholder="Enter phone number">
+
+        </div>
+
+
+        <!-- SPECIALIZATION -->
+
+        <div class="form-group">
+
+          <label>
+            Specialization
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="form.specialization"
+            placeholder="e.g. Database, Web Development">
+
+        </div>
+
+      </div>
+
+
+      <!-- MODAL FOOTER -->
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          [disabled]="saving"
+          (click)="closeModal()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="save-btn"
+          [disabled]="saving"
+          (click)="saveInstructor()">
+
+          <span *ngIf="!saving">
+
+            {{
+              isEditMode
+                ? 'Update Instructor'
+                : 'Add Instructor'
+            }}
+
+          </span>
+
+          <span *ngIf="saving">
+            Saving...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- DELETE CONFIRMATION MODAL -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showDeleteModal"
+    (click)="cancelDelete()">
+
+    <div
+      class="delete-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <div class="delete-icon">
+        !
+      </div>
+
+
+      <h2>
+        Delete Instructor?
+      </h2>
+
+
+      <p>
+
+        Are you sure you want to delete
+
+        <strong>
+          {{ instructorToDelete?.name }}
+        </strong>
+
+        ?
+
+      </p>
+
+
+      <p class="delete-warning">
+        This action cannot be undone.
+      </p>
+
+
+      <div class="delete-modal-actions">
+
+        <button
+          type="button"
+          class="cancel-delete-btn"
+          [disabled]="deleting"
+          (click)="cancelDelete()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="button"
+          class="confirm-delete-btn"
+          [disabled]="deleting"
+          (click)="confirmDelete()">
+
+          <span *ngIf="!deleting">
+            Delete Instructor
+          </span>
+
+          <span *ngIf="deleting">
+            Deleting...
+          </span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

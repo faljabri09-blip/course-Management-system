@@ -1,4 +1,4 @@
-﻿using CourseManagementSystem.Models;
+﻿using CourseManagementSystem.DTOs;
 using CourseManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +35,9 @@ namespace CourseManagementSystem.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Add(Instructor instructor)
+        public async Task<IActionResult> Add(InstructorDto dto)
         {
-            var result = await _service.Add(instructor);
+            var result = await _service.Add(dto);
 
             return Ok(result);
         }
@@ -46,9 +46,9 @@ namespace CourseManagementSystem.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(
             int id,
-            Instructor instructor)
+            InstructorDto dto)
         {
-            var result = await _service.Update(id, instructor);
+            var result = await _service.Update(id, dto);
 
             if (!result)
                 return NotFound();

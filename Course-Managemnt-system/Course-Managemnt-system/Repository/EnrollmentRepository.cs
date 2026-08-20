@@ -2,6 +2,7 @@
 using CourseManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CourseManagementSystem.Repositories
 {
     public class EnrollmentRepository

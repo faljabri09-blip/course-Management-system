@@ -15,11 +15,12 @@ namespace CourseManagementSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // ================================
+            // =========================================
             // Controllers
-            // ================================
+            // =========================================
 
-            builder.Services.AddControllers()
+            builder.Services
+                .AddControllers()
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.ReferenceHandler =
@@ -27,19 +28,21 @@ namespace CourseManagementSystem
                 });
 
 
-            // ================================
+            // =========================================
             // Database
-            // ================================
+            // =========================================
 
             builder.Services.AddDbContext<CourseContext>(options =>
                 options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection")
+                    builder.Configuration.GetConnectionString(
+                        "DefaultConnection"
+                    )
                 ));
 
 
-            // ================================
+            // =========================================
             // CORS
-            // ================================
+            // =========================================
 
             builder.Services.AddCors(options =>
             {
@@ -55,7 +58,8 @@ namespace CourseManagementSystem
                             {
                                 return uri.Host.Equals(
                                     "localhost",
-                                    StringComparison.OrdinalIgnoreCase);
+                                    StringComparison.OrdinalIgnoreCase
+                                );
                             }
 
                             return false;
@@ -63,13 +67,12 @@ namespace CourseManagementSystem
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
-        
-        });
+            });
 
 
-            // ================================
+            // =========================================
             // Repositories
-            // ================================
+            // =========================================
 
             builder.Services.AddScoped<CourseRepository>();
             builder.Services.AddScoped<StudentRepository>();
@@ -77,9 +80,9 @@ namespace CourseManagementSystem
             builder.Services.AddScoped<InstructorRepository>();
 
 
-            // ================================
+            // =========================================
             // Services
-            // ================================
+            // =========================================
 
             builder.Services.AddScoped<CourseService>();
             builder.Services.AddScoped<StudentService>();
@@ -87,49 +90,114 @@ namespace CourseManagementSystem
             builder.Services.AddScoped<InstructorService>();
 
 
-            // ================================
-            // JWT Authentication
-            // ================================
+            // =========================================
+            // JWT Settings
+            // =========================================
+
+            var jwtKey = builder.Configuration["Jwt:Key"];
+            var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+            var jwtAudience = builder.Configuration["Jwt:Audience"];
+
+
+            if (string.IsNullOrWhiteSpace(jwtKey))
+            {
+                throw new Exception(
+                    "JWT Key is missing from appsettings.json"
+                );
+            }
+
+            if (string.IsNullOrWhiteSpace(jwtIssuer))
+            {
+                throw new Exception(
+                    "JWT Issuer is missing from appsettings.json"
+                );
+            }
+
+            if (string.IsNullOrWhiteSpace(jwtAudience))
+            {
+                throw new Exception(
+                    "JWT Audience is missing from appsettings.json"
+                );
+            }
+
+
+            // =========================================
+            // Authentication
+            // =========================================
 
             builder.Services
                 .AddAuthentication(
-                    JwtBearerDefaults.AuthenticationScheme)
+                    JwtBearerDefaults.AuthenticationScheme
+                )
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters =
                         new TokenValidationParameters
                         {
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
-                            ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-
-                            ValidIssuer =
-                                builder.Configuration["Jwt:Issuer"],
-
-                            ValidAudience =
-                                builder.Configuration["Jwt:Audience"],
 
                             IssuerSigningKey =
                                 new SymmetricSecurityKey(
-                                    Encoding.UTF8.GetBytes(
-                                        builder.Configuration["Jwt:Key"]!
-                                    )
-                                )
+                                    Encoding.UTF8.GetBytes(jwtKey)
+                                ),
+
+                            ValidateIssuer = true,
+
+                            ValidIssuer = jwtIssuer,
+
+                            ValidateAudience = true,
+
+                            ValidAudience = jwtAudience,
+
+                            ValidateLifetime = true,
+
+                            ClockSkew = TimeSpan.Zero
                         };
+
+
+                    // =====================================
+                    // JWT Error Debugging
+                    // =====================================
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine(
+                                "=============================================="
+                            );
+
+                            Console.WriteLine(
+                                "JWT AUTHENTICATION FAILED"
+                            );
+
+                            Console.WriteLine(
+                                context.Exception.ToString()
+                            );
+
+                            Console.WriteLine(
+                                "=============================================="
+                            );
+
+                            Console.WriteLine();
+
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
 
 
-            // ================================
+            // =========================================
             // Authorization
-            // ================================
+            // =========================================
 
             builder.Services.AddAuthorization();
 
 
-            // ================================
+            // =========================================
             // Swagger
-            // ================================
+            // =========================================
 
             builder.Services.AddEndpointsApiExplorer();
 
@@ -141,20 +209,33 @@ namespace CourseManagementSystem
                     {
                         Title = "Course Management System API",
                         Version = "v1"
-                    });
+                    }
+                );
+
+
+                // =====================================
+                // Bearer Authentication
+                // =====================================
 
                 options.AddSecurityDefinition(
                     "Bearer",
                     new OpenApiSecurityScheme
                     {
                         Name = "Authorization",
+
                         Type = SecuritySchemeType.Http,
+
                         Scheme = "bearer",
+
                         BearerFormat = "JWT",
+
                         In = ParameterLocation.Header,
+
                         Description =
-                            "Enter JWT token as: Bearer {your token}"
-                    });
+                            "Enter your JWT token"
+                    }
+                );
+
 
                 options.AddSecurityRequirement(
                     new OpenApiSecurityRequirement
@@ -167,39 +248,40 @@ namespace CourseManagementSystem
                                     {
                                         Type =
                                             ReferenceType.SecurityScheme,
+
                                         Id = "Bearer"
                                     }
                             },
+
                             Array.Empty<string>()
                         }
-                    });
+                    }
+                );
             });
 
 
-            // ================================
+            // =========================================
             // Build
-            // ================================
+            // =========================================
 
             var app = builder.Build();
 
 
-            // ================================
+            // =========================================
             // Swagger
-            // ================================
+            // =========================================
 
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
+
                 app.UseSwaggerUI();
             }
 
 
-            // ================================
+            // =========================================
             // Middleware
-            // ================================
-
-            // إذا أردنا HTTP فقط، لا نستخدم HTTPS Redirection
-            // app.UseHttpsRedirection();
+            // =========================================
 
             app.UseCors("AllowAngular");
 
@@ -210,9 +292,9 @@ namespace CourseManagementSystem
             app.MapControllers();
 
 
-            // ================================
+            // =========================================
             // Run
-            // ================================
+            // =========================================
 
             app.Run();
         }
