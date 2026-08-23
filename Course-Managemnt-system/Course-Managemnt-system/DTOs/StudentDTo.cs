@@ -2,7 +2,7 @@
 
 namespace CourseManagementSystem.DTOs
 {
-    public class StudentDTo
+    public class StudentDto
     {
         [Required]
         public string Name { get; set; } = string.Empty;

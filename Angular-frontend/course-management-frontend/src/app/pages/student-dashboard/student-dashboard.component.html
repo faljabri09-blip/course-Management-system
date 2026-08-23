@@ -1,867 +1,495 @@
-<div class="dashboard-container">
+<div class="student-dashboard">
 
-  <!-- =========================================
-       SIDEBAR
-  ========================================== -->
+  <!-- PAGE TITLE -->
+  <section class="page-title">
 
-  <aside class="sidebar">
+    <div class="page-title-content">
 
-    <div class="sidebar-logo">
 
-      <div class="logo-icon">
-        👩‍🎓
+      <!-- TITLE -->
+      <div class="title-text">
+
+        <h1>
+          Student Dashboard
+        </h1>
+
+        <p>
+          Welcome back, {{ username }} 👋
+        </p>
+
       </div>
 
-      <div class="logo-text">
-        <strong>EduFlow</strong>
-        <span>Student Portal</span>
+    </div>
+
+  </section>
+
+
+  <!-- STATISTICS -->
+  <section class="stats-grid">
+
+    <!-- Available Courses -->
+    <div class="stat-card">
+
+      <div class="stat-content">
+
+        <span class="stat-label">
+          AVAILABLE COURSES
+        </span>
+
+        <h2>
+          {{ courses.length }}
+        </h2>
+
+        <span class="stat-description">
+          Courses available for registration
+        </span>
+
+      </div>
+
+      <div class="stat-icon courses">
+        📚
       </div>
 
     </div>
 
 
-    <nav class="sidebar-nav">
+    <!-- My Courses -->
+    <div class="stat-card">
 
-      <a
-        routerLink="/student-dashboard"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-item">
+      <div class="stat-content">
 
-        <span class="nav-icon">🏠</span>
+        <span class="stat-label">
+          MY COURSES
+        </span>
 
-        <span>Dashboard</span>
+        <h2>
+          {{ enrollments.length }}
+        </h2>
 
-      </a>
+        <span class="stat-description">
+          Registered courses
+        </span>
 
+      </div>
 
-      <a
-        routerLink="/courses"
-        routerLinkActive="active"
-        class="nav-item">
+      <div class="stat-icon instructors">
+        📝
+      </div>
 
-        <span class="nav-icon">📚</span>
-
-        <span>Courses</span>
-
-      </a>
-
-
-      <a
-        routerLink="/enrollments"
-        routerLinkActive="active"
-        class="nav-item">
-
-        <span class="nav-icon">📝</span>
-
-        <span>My Enrollments</span>
-
-      </a>
-
-    </nav>
+    </div>
 
 
-    <div class="sidebar-bottom">
+    <!-- Active -->
+    <div class="stat-card">
+
+      <div class="stat-content">
+
+        <span class="stat-label">
+          ACTIVE COURSES
+        </span>
+
+        <h2>
+          {{ activeCourses }}
+        </h2>
+
+        <span class="stat-description">
+          Currently active
+        </span>
+
+      </div>
+
+      <div class="stat-icon students">
+        ▶️
+      </div>
+
+    </div>
+
+
+    <!-- Completed -->
+    <div class="stat-card">
+
+      <div class="stat-content">
+
+        <span class="stat-label">
+          COMPLETED
+        </span>
+
+        <h2>
+          {{ completedCourses }}
+        </h2>
+
+        <span class="stat-description">
+          Completed courses
+        </span>
+
+      </div>
+
+      <div class="stat-icon enrollments">
+        🎓
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- AVAILABLE COURSES -->
+  <section class="dashboard-card recent-card">
+
+    <div class="card-header">
+
+      <div>
+
+        <h2>
+          Available Courses
+        </h2>
+
+        <p>
+          Browse available courses and register
+        </p>
+
+      </div>
 
       <button
         type="button"
-        class="logout-btn"
-        (click)="logout()">
+        class="view-all-btn"
+        routerLink="/courses">
 
-        <span>🚪</span>
-
-        <span>Logout</span>
+        View All →
 
       </button>
 
     </div>
 
-  </aside>
-
-
-
-  <!-- =========================================
-       MAIN CONTENT
-  ========================================== -->
-
-  <main class="main-content">
-
-
-    <!-- =========================================
-         HEADER
-    ========================================== -->
-
-    <header class="top-header">
-
-      <div class="header-left">
-
-        <div class="search-box">
-
-          <span class="search-icon">
-            🔍
-          </span>
-
-          <input
-            type="text"
-            placeholder="Search">
-
-        </div>
-
-      </div>
-
-
-      <div class="header-user">
-
-        <div class="notification">
-
-          🔔
-
-          <span class="notification-dot"></span>
-
-        </div>
-
-
-        <div class="header-divider"></div>
-
-
-        <div class="user-text">
-
-          <strong>
-            {{ username }}
-          </strong>
-
-          <span>
-            Student
-          </span>
-
-        </div>
-
-
-        <div class="user-avatar">
-
-          {{ userInitial }}
-
-        </div>
-
-      </div>
-
-    </header>
-
-
-
-    <!-- =========================================
-         PAGE TITLE
-    ========================================== -->
-
-    <section class="page-title">
-
-      <h1>
-        Student Dashboard
-      </h1>
-
-      <p>
-        Welcome back, {{ username }} 👋
-      </p>
-
-    </section>
-
-
-
-    <!-- =========================================
-         MESSAGES
-    ========================================== -->
 
     <div
-      class="success-message"
-      *ngIf="message">
+      class="loading"
+      *ngIf="loadingCourses">
 
-      {{ message }}
+      Loading courses...
 
     </div>
 
 
     <div
-      class="error-message"
-      *ngIf="errorMessage">
+      class="table-wrapper"
+      *ngIf="!loadingCourses">
 
-      {{ errorMessage }}
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>COURSE</th>
+            <th>CREDITS</th>
+            <th>PRICE</th>
+            <th>ACTION</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let course of courses">
+
+            <td>
+
+              <div class="course-cell">
+
+                <div class="course-icon">
+                  📚
+                </div>
+
+                <span>
+                  {{ course.title }}
+                </span>
+
+              </div>
+
+            </td>
+
+            <td>
+              {{ course.credits }}
+            </td>
+
+            <td>
+              {{ course.price }} OMR
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="primary-btn"
+                [disabled]="isEnrolled(course.id)"
+                (click)="enroll(course.id)">
+
+                {{
+                  isEnrolled(course.id)
+                    ? 'Registered'
+                    : 'Register'
+                }}
+
+              </button>
+
+            </td>
+
+          </tr>
+
+
+          <tr
+            *ngIf="courses.length === 0">
+
+            <td colspan="4">
+
+              <div class="empty-message">
+                No courses available.
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- MY ENROLLMENTS -->
+  <section class="dashboard-card recent-card">
+
+    <div class="card-header">
+
+      <div>
+
+        <h2>
+          My Enrollments
+        </h2>
+
+        <p>
+          Courses you are currently registered in
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        class="view-all-btn"
+        routerLink="/enrollments">
+
+        View All →
+
+      </button>
 
     </div>
 
 
+    <div
+      class="loading"
+      *ngIf="loadingEnrollments">
 
-    <!-- =========================================
-         STATISTICS
-    ========================================== -->
+      Loading enrollments...
 
-    <section class="stats-grid">
+    </div>
 
 
-      <!-- AVAILABLE COURSES -->
+    <div
+      class="empty-message"
+      *ngIf="
+        !loadingEnrollments &&
+        enrollments.length === 0
+      ">
 
-      <div class="stat-card">
+      You are not registered in any course yet.
 
-        <div class="stat-content">
+    </div>
 
-          <span class="stat-label">
-            AVAILABLE COURSES
-          </span>
 
-          <h2>
-            {{ courses.length }}
-          </h2>
+    <div
+      class="table-wrapper"
+      *ngIf="
+        !loadingEnrollments &&
+        enrollments.length > 0
+      ">
 
-          <span class="stat-description">
-            Courses available for registration
-          </span>
+      <table>
 
-        </div>
+        <thead>
 
+          <tr>
 
-        <div class="stat-icon courses">
-          📚
-        </div>
+            <th>COURSE</th>
+            <th>DATE</th>
+            <th>STATUS</th>
+            <th>GRADE</th>
+            <th>ACTION</th>
 
-      </div>
+          </tr>
 
+        </thead>
 
+        <tbody>
 
-      <!-- MY COURSES -->
+          <tr
+            *ngFor="let enrollment of enrollments">
 
-      <div class="stat-card">
+            <td>
 
-        <div class="stat-content">
+              <div class="course-cell">
 
-          <span class="stat-label">
-            MY COURSES
-          </span>
-
-          <h2>
-            {{ enrollments.length }}
-          </h2>
-
-          <span class="stat-description">
-            Registered courses
-          </span>
-
-        </div>
-
-
-        <div class="stat-icon instructors">
-          📝
-        </div>
-
-      </div>
-
-
-
-      <!-- ACTIVE COURSES -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            ACTIVE COURSES
-          </span>
-
-          <h2>
-            {{ activeCourses }}
-          </h2>
-
-          <span class="stat-description">
-            Currently active
-          </span>
-
-        </div>
-
-
-        <div class="stat-icon students">
-          ▶️
-        </div>
-
-      </div>
-
-
-
-      <!-- COMPLETED -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            COMPLETED
-          </span>
-
-          <h2>
-            {{ completedCourses }}
-          </h2>
-
-          <span class="stat-description">
-            Completed courses
-          </span>
-
-        </div>
-
-
-        <div class="stat-icon enrollments">
-          🎓
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         AVAILABLE COURSES
-    ========================================== -->
-
-    <section class="dashboard-card recent-card">
-
-      <div class="card-header">
-
-        <div>
-
-          <h2>
-            Available Courses
-          </h2>
-
-          <p>
-            Browse available courses and register
-          </p>
-
-        </div>
-
-
-        <button
-          type="button"
-          class="view-all-btn"
-          routerLink="/courses">
-
-          View All →
-
-        </button>
-
-      </div>
-
-
-
-      <!-- Loading -->
-
-      <div
-        class="loading"
-        *ngIf="loadingCourses">
-
-        Loading courses...
-
-      </div>
-
-
-
-      <!-- Courses -->
-
-      <div
-        class="table-wrapper"
-        *ngIf="!loadingCourses">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>
-                COURSE
-              </th>
-
-              <th>
-                CREDITS
-              </th>
-
-              <th>
-                PRICE
-              </th>
-
-              <th>
-                ACTION
-              </th>
-
-            </tr>
-
-          </thead>
-
-
-          <tbody>
-
-            <tr
-              *ngFor="let course of courses">
-
-
-              <td>
-
-                <div class="course-cell">
-
-                  <div class="course-icon">
-                    📚
-                  </div>
-
-                  <span>
-                    {{ course.title }}
-                  </span>
-
+                <div class="course-icon">
+                  📚
                 </div>
 
-              </td>
-
-
-              <td>
-                {{ course.credits }}
-              </td>
-
-
-              <td>
-                {{ course.price }} OMR
-              </td>
-
-
-              <td>
-
-                <button
-                  type="button"
-                  class="primary-btn"
-                  [disabled]="isEnrolled(course.id)"
-                  (click)="enroll(course.id)">
-
-                  <span
-                    *ngIf="!isEnrolled(course.id)">
-
-                    Register
-
-                  </span>
-
-
-                  <span
-                    *ngIf="isEnrolled(course.id)">
-
-                    Registered
-
-                  </span>
-
-                </button>
-
-              </td>
-
-            </tr>
-
-
-            <tr
-              *ngIf="courses.length === 0">
-
-              <td colspan="4">
-
-                <div class="empty-message">
-
-                  No courses available.
-
-                </div>
-
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- =========================================
-         MY ENROLLMENTS
-    ========================================== -->
-
-    <section class="dashboard-card recent-card">
-
-      <div class="card-header">
-
-        <div>
-
-          <h2>
-            My Enrollments
-          </h2>
-
-          <p>
-            Courses you are currently registered in
-          </p>
-
-        </div>
-
-
-        <button
-          type="button"
-          class="view-all-btn"
-          routerLink="/enrollments">
-
-          View All →
-
-        </button>
-
-      </div>
-
-
-
-      <!-- Loading -->
-
-      <div
-        class="loading"
-        *ngIf="loadingEnrollments">
-
-        Loading enrollments...
-
-      </div>
-
-
-
-      <!-- Empty -->
-
-      <div
-        class="empty-message"
-        *ngIf="
-          !loadingEnrollments &&
-          enrollments.length === 0
-        ">
-
-        You are not registered in any course yet.
-
-      </div>
-
-
-
-      <!-- Table -->
-
-      <div
-        class="table-wrapper"
-        *ngIf="
-          !loadingEnrollments &&
-          enrollments.length > 0
-        ">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>
-                COURSE
-              </th>
-
-              <th>
-                DATE
-              </th>
-
-              <th>
-                STATUS
-              </th>
-
-              <th>
-                GRADE
-              </th>
-
-              <th>
-                ACTION
-              </th>
-
-            </tr>
-
-          </thead>
-
-
-          <tbody>
-
-            <tr
-              *ngFor="let enrollment of enrollments">
-
-
-              <!-- COURSE -->
-
-              <td>
-
-                <div class="course-cell">
-
-                  <div class="course-icon">
-                    📚
-                  </div>
-
-                  <span>
-                    Course {{ enrollment.courseId }}
-                  </span>
-
-                </div>
-
-              </td>
-
-
-
-              <!-- DATE -->
-
-              <td>
-
-                {{ enrollment.enrollmentDate | date:'dd MMM yyyy' }}
-
-              </td>
-
-
-
-              <!-- STATUS -->
-
-              <td>
-
-                <span
-                  class="status-badge"
-                  [class.active]="
-                    enrollment.status === 'Active'
-                  "
-                  [class.completed]="
-                    enrollment.status === 'Completed'
-                  "
-                  [class.dropped]="
-                    enrollment.status === 'Dropped'
-                  ">
-
-                  <span class="status-dot"></span>
-
-                  {{ enrollment.status }}
-
+                <span>
+                  Course {{ enrollment.courseId }}
                 </span>
 
-              </td>
+              </div>
+
+            </td>
+
+            <td>
+              {{ enrollment.enrollmentDate | date:'dd MMM yyyy' }}
+            </td>
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.active]="enrollment.status === 'Active'"
+                [class.completed]="enrollment.status === 'Completed'"
+                [class.dropped]="enrollment.status === 'Dropped'">
+
+                <span class="status-dot"></span>
+
+                {{ enrollment.status }}
+
+              </span>
+
+            </td>
+
+            <td>
+
+              <span *ngIf="enrollment.grade !== null">
+                {{ enrollment.grade }}
+              </span>
+
+              <span *ngIf="enrollment.grade === null">
+                -
+              </span>
+
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="drop-btn"
+                *ngIf="enrollment.status === 'Active'"
+                [disabled]="isDropping(enrollment.id)"
+                (click)="openDropModal(enrollment)">
+
+                {{
+                  isDropping(enrollment.id)
+                    ? 'Dropping...'
+                    : 'Drop'
+                }}
+
+              </button>
+
+              <span
+                class="action-empty"
+                *ngIf="enrollment.status !== 'Active'">
+
+                —
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</div>
 
 
+<!-- DROP MODAL -->
 
-              <!-- GRADE -->
-
-              <td>
-
-                <span
-                  *ngIf="enrollment.grade !== null">
-
-                  {{ enrollment.grade }}
-
-                </span>
-
-
-                <span
-                  *ngIf="enrollment.grade === null">
-
-                  -
-
-                </span>
-
-              </td>
-
-
-
-              <!-- ACTION -->
-
-              <td>
-
-                <!-- DROP BUTTON -->
-
-                <button
-                  type="button"
-                  class="drop-btn"
-                  *ngIf="
-                    enrollment.status === 'Active'
-                  "
-                  [disabled]="
-                    isDropping(enrollment.id)
-                  "
-                  (click)="
-                    openDropModal(enrollment)
-                  ">
-
-
-                  <span
-                    *ngIf="
-                      !isDropping(enrollment.id)
-                    ">
-
-                    Drop
-
-                  </span>
-
-
-                  <span
-                    *ngIf="
-                      isDropping(enrollment.id)
-                    ">
-
-                    Dropping...
-
-                  </span>
-
-                </button>
-
-
-                <!-- NON ACTIVE -->
-
-                <span
-                  *ngIf="
-                    enrollment.status !== 'Active'
-                  ">
-
-                  —
-
-                </span>
-
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-
-  <!-- =====================================================
-       DROP COURSE MODAL
-  ====================================================== -->
+<div
+  class="modal-overlay"
+  *ngIf="showDropModal"
+  (click)="closeDropModal()">
 
   <div
-    class="modal-overlay"
-    *ngIf="showDropModal"
-    (click)="closeDropModal()">
+    class="drop-modal"
+    (click)="$event.stopPropagation()">
 
+    <div class="modal-icon">
+      ⚠️
+    </div>
 
-    <!-- MODAL BOX -->
+    <h2>
+      Drop Course?
+    </h2>
+
+    <p>
+      Are you sure you want to drop this course?
+    </p>
 
     <div
-      class="drop-modal"
-      (click)="$event.stopPropagation()">
+      class="selected-course"
+      *ngIf="selectedEnrollment">
 
+      <span>
+        Course
+      </span>
 
-      <!-- ICON -->
+      <strong>
+        {{ selectedEnrollment.courseId }}
+      </strong>
 
-      <div class="modal-icon">
+    </div>
 
-        ⚠️
+    <div class="modal-actions">
 
-      </div>
+      <button
+        type="button"
+        class="cancel-btn"
+        [disabled]="droppingCourseId !== null"
+        (click)="closeDropModal()">
 
+        Cancel
 
+      </button>
 
-      <!-- TITLE -->
+      <button
+        type="button"
+        class="confirm-drop-btn"
+        [disabled]="droppingCourseId !== null"
+        (click)="confirmDropCourse()">
 
-      <h2>
+        {{
+          droppingCourseId === null
+            ? 'Drop Course'
+            : 'Dropping...'
+        }}
 
-        Drop Course?
-
-      </h2>
-
-
-
-      <!-- DESCRIPTION -->
-
-      <p>
-
-        Are you sure you want to drop this course?
-
-      </p>
-
-
-
-      <!-- SELECTED COURSE -->
-
-      <div
-        class="selected-course"
-        *ngIf="selectedEnrollment">
-
-
-        <span>
-
-          Course
-
-        </span>
-
-
-        <strong>
-
-          {{ selectedEnrollment.courseId }}
-
-        </strong>
-
-      </div>
-
-
-
-      <!-- BUTTONS -->
-
-      <div class="modal-actions">
-
-
-        <!-- CANCEL -->
-
-        <button
-          type="button"
-          class="cancel-btn"
-          [disabled]="
-            droppingCourseId !== null
-          "
-          (click)="closeDropModal()">
-
-          Cancel
-
-        </button>
-
-
-
-        <!-- CONFIRM -->
-
-        <button
-          type="button"
-          class="confirm-drop-btn"
-          [disabled]="
-            droppingCourseId !== null
-          "
-          (click)="confirmDropCourse()">
-
-
-          <span
-            *ngIf="
-              droppingCourseId === null
-            ">
-
-            Drop Course
-
-          </span>
-
-
-          <span
-            *ngIf="
-              droppingCourseId !== null
-            ">
-
-            Dropping...
-
-          </span>
-
-        </button>
-
-      </div>
+      </button>
 
     </div>
 

@@ -16,11 +16,13 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
+
   // =====================================
   // Messages
   // =====================================
 
   errorMessage: string = '';
+
 
   // =====================================
   // Loading
@@ -45,7 +47,6 @@ export class LoginComponent {
 
   login(): void {
 
-    // Clear previous error
     this.errorMessage = '';
 
 
@@ -73,7 +74,7 @@ export class LoginComponent {
 
 
     // =====================================
-    // Call Login API
+    // Login API
     // =====================================
 
     this.authService.login({
@@ -85,18 +86,13 @@ export class LoginComponent {
     }).subscribe({
 
       // =====================================
-      // Login Success
+      // SUCCESS
       // =====================================
 
       next: (response) => {
 
         console.log(
           'Login successful'
-        );
-
-        console.log(
-          'Token:',
-          response.token
         );
 
         console.log(
@@ -109,20 +105,31 @@ export class LoginComponent {
           response.role
         );
 
+        console.log(
+          'Token:',
+          response.token
+        );
+
 
         this.loading = false;
 
 
         // =====================================
-        // Redirect According To Role
+        // Get Role
         // =====================================
 
-        if (
-          response.role.toLowerCase() === 'student'
-        ) {
+        const role =
+          response.role.trim().toLowerCase();
+
+
+        // =====================================
+        // STUDENT
+        // =====================================
+
+        if (role === 'student') {
 
           console.log(
-            'Redirecting to Student Dashboard'
+            'Redirecting Student...'
           );
 
           this.router.navigate([
@@ -131,12 +138,15 @@ export class LoginComponent {
 
         }
 
-        else if (
-          response.role.toLowerCase() === 'admin'
-        ) {
+
+        // =====================================
+        // ADMIN
+        // =====================================
+
+        else if (role === 'admin') {
 
           console.log(
-            'Redirecting to Admin Dashboard'
+            'Redirecting Admin...'
           );
 
           this.router.navigate([
@@ -145,23 +155,44 @@ export class LoginComponent {
 
         }
 
-        else {
+
+        // =====================================
+        // INSTRUCTOR
+        // =====================================
+
+        else if (role === 'instructor') {
 
           console.log(
+            'Redirecting Instructor...'
+          );
+
+          this.router.navigate([
+            '/instructor-dashboard'
+          ]);
+
+        }
+
+
+        // =====================================
+        // UNKNOWN ROLE
+        // =====================================
+
+        else {
+
+          console.error(
             'Unknown role:',
             response.role
           );
 
           this.errorMessage =
             'User role is not recognized.';
-
         }
 
       },
 
 
       // =====================================
-      // Login Error
+      // ERROR
       // =====================================
 
       error: (error) => {
@@ -171,13 +202,8 @@ export class LoginComponent {
           error
         );
 
-
         this.loading = false;
 
-
-        // =====================================
-        // Unauthorized
-        // =====================================
 
         if (error.status === 401) {
 
@@ -186,22 +212,12 @@ export class LoginComponent {
 
         }
 
-
-        // =====================================
-        // Bad Request
-        // =====================================
-
         else if (error.status === 400) {
 
           this.errorMessage =
             'Please check your login information.';
 
         }
-
-
-        // =====================================
-        // Server Connection Error
-        // =====================================
 
         else if (error.status === 0) {
 
@@ -210,16 +226,10 @@ export class LoginComponent {
 
         }
 
-
-        // =====================================
-        // Other Errors
-        // =====================================
-
         else {
 
           this.errorMessage =
             'Something went wrong. Please try again later.';
-
         }
 
       }

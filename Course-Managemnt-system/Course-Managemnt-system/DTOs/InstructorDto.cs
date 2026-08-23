@@ -16,5 +16,11 @@ namespace CourseManagementSystem.DTOs
         public string Phone { get; set; } = string.Empty;
 
         public string Specialization { get; set; } = string.Empty;
+
+        // =========================================
+        // Courses taught by Instructor
+        // =========================================
+
+        public List<string> Courses { get; set; } = new List<string>();
     }
 }

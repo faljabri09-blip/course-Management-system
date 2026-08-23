@@ -1,0 +1,294 @@
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- LOGO -->
+    <div class="sidebar-logo">
+
+      <div class="logo-box">
+        <img
+          src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png"
+          alt="EduFlow">
+      </div>
+
+      <div class="logo-text">
+        <strong>EduFlow</strong>
+        <span>Course Management</span>
+      </div>
+
+    </div>
+
+
+    <!-- MENU -->
+    <nav class="sidebar-menu">
+
+
+      <!-- ============================= -->
+      <!-- ADMIN DASHBOARD -->
+      <!-- ADMIN ONLY -->
+      <!-- ============================= -->
+
+      <a
+        *ngIf="userRole?.trim()?.toLowerCase() === 'admin'"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="menu-item">
+
+        <span class="menu-icon">📊</span>
+
+        <span>Admin</span>
+
+      </a>
+
+
+      <!-- ============================= -->
+      <!-- STUDENT DASHBOARD -->
+      <!-- ADMIN + INSTRUCTOR + STUDENT -->
+      <!-- ============================= -->
+
+      <a
+        *ngIf="
+          userRole?.trim()?.toLowerCase() === 'admin' ||
+          userRole?.trim()?.toLowerCase() === 'instructor' ||
+          userRole?.trim()?.toLowerCase() === 'student'
+        "
+        routerLink="/student-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="menu-item">
+
+        <span class="menu-icon">
+          👨‍🎓
+        </span>
+
+        <span>
+          Students
+        </span>
+
+      </a>
+
+
+      <!-- ============================= -->
+      <!-- ADMIN → INSTRUCTORS -->
+      <!-- ADMIN ONLY -->
+      <!-- ============================= -->
+
+      <a
+        *ngIf="userRole?.trim()?.toLowerCase() === 'admin'"
+        routerLink="/instructors"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="menu-item">
+
+        <span class="menu-icon">
+          👨‍🏫
+        </span>
+
+        <span>
+          Instructors
+        </span>
+
+      </a>
+
+
+      <!-- ============================= -->
+      <!-- INSTRUCTOR DASHBOARD -->
+      <!-- INSTRUCTOR ONLY -->
+      <!-- ============================= -->
+
+      <a
+        *ngIf="userRole?.trim()?.toLowerCase() === 'instructor'"
+        routerLink="/instructor-dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="menu-item">
+
+        <span class="menu-icon">
+          👨‍🏫
+        </span>
+
+        <span>
+          Instructor
+        </span>
+
+      </a>
+
+
+      <!-- ============================= -->
+      <!-- COURSES -->
+      <!-- ALL USERS -->
+      <!-- ============================= -->
+
+      <a
+        routerLink="/courses"
+        routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-icon">
+          📚
+        </span>
+
+        <span>
+          Courses
+        </span>
+
+      </a>
+
+
+      <!-- ============================= -->
+      <!-- ENROLLMENTS -->
+      <!-- STUDENT + ADMIN + INSTRUCTOR -->
+      <!-- ============================= -->
+
+      <a
+        *ngIf="
+          userRole?.trim()?.toLowerCase() === 'student' ||
+          userRole?.trim()?.toLowerCase() === 'admin' ||
+          userRole?.trim()?.toLowerCase() === 'instructor'
+        "
+        routerLink="/enrollments"
+        routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-icon">
+          📝
+        </span>
+
+        <span>
+          Enrollments
+        </span>
+
+      </a>
+
+
+      <!-- ============================= -->
+      <!-- ADD STUDENT -->
+      <!-- ADMIN + INSTRUCTOR -->
+      <!-- ============================= -->
+
+      <a
+        *ngIf="
+          userRole?.trim()?.toLowerCase() === 'admin' ||
+          userRole?.trim()?.toLowerCase() === 'instructor'
+        "
+        routerLink="/add-student"
+        routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-icon">
+          👨‍🎓
+        </span>
+
+        <span>
+          Add Student
+        </span>
+
+      </a>
+
+
+    </nav>
+
+
+    <!-- ============================= -->
+    <!-- SIDEBAR BOTTOM -->
+    <!-- ============================= -->
+
+    <div class="sidebar-bottom">
+
+      <button
+        type="button"
+        class="bottom-item"
+        (click)="logout()">
+
+        <span class="menu-icon">
+          🚪
+        </span>
+
+        <span>
+          Logout
+        </span>
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- ============================= -->
+  <!-- MAIN CONTENT -->
+  <!-- ============================= -->
+
+  <main class="main-content">
+
+
+    <!-- HEADER -->
+    <header class="top-header">
+
+
+      <!-- SEARCH -->
+      <div class="search-box">
+
+        <span class="search-icon">
+          🔍
+        </span>
+
+        <input
+          type="text"
+          placeholder="Search">
+
+      </div>
+
+
+      <!-- USER -->
+      <div class="header-user">
+
+
+        <!-- NOTIFICATION -->
+        <div class="notification">
+
+          🔔
+
+          <span class="notification-dot"></span>
+
+        </div>
+
+
+        <div class="header-divider"></div>
+
+
+        <!-- USER INFORMATION -->
+        <div class="user-text">
+
+          <strong>
+            {{ username }}
+          </strong>
+
+          <span>
+            {{ userRole }}
+          </span>
+
+        </div>
+
+
+        <!-- USER AVATAR -->
+        <div class="user-avatar">
+
+          {{ userInitial }}
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- PAGE CONTENT -->
+    <router-outlet></router-outlet>
+
+
+  </main>
+
+</div>

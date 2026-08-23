@@ -1,25 +1,17 @@
 <div class="courses-page">
 
-  <!-- ========================= -->
-  <!-- Header -->
-  <!-- ========================= -->
+  <!-- =========================================
+       PAGE HEADER
+  ========================================== -->
 
-  <div class="page-header">
+  <section class="page-header">
 
     <div class="header-content">
-
-      <h1>Courses</h1>
-
-      <p>
-        Manage all courses in the system
-      </p>
 
     </div>
 
 
-    <!-- ========================= -->
-    <!-- Add Course - Admin Only -->
-    <!-- ========================= -->
+    <!-- ADMIN ONLY -->
 
     <button
       *ngIf="isAdmin"
@@ -27,36 +19,44 @@
       class="add-btn"
       (click)="addCourse()">
 
-      <span>+</span>
+      <span class="add-icon">
+        +
+      </span>
 
       Add Course
 
     </button>
 
-  </div>
+  </section>
 
 
-  <!-- ========================= -->
-  <!-- Error Message -->
-  <!-- ========================= -->
+  <!-- =========================================
+       ERROR MESSAGE
+  ========================================== -->
 
   <div
     class="error-message"
     *ngIf="errorMessage">
 
-    <span>⚠</span>
+    <span class="error-icon-small">
+      ⚠️
+    </span>
 
-    {{ errorMessage }}
+    <span>
+      {{ errorMessage }}
+    </span>
 
   </div>
 
 
-  <!-- ========================= -->
-  <!-- Loading -->
-  <!-- ========================= -->
+
+
+  <!-- =========================================
+       LOADING
+  ========================================== -->
 
   <div
-    class="loading"
+    class="loading-container"
     *ngIf="loading">
 
     <div class="spinner"></div>
@@ -68,89 +68,79 @@
   </div>
 
 
-  <!-- ========================= -->
-  <!-- Courses Table -->
-  <!-- ========================= -->
+  <!-- =========================================
+       COURSES CONTENT
+  ========================================== -->
 
-  <div
-    class="table-container"
+  <section
+    class="courses-card"
     *ngIf="
       !loading &&
       courses.length > 0
     ">
 
 
-    <!-- ========================= -->
-    <!-- Table Header -->
-    <!-- ========================= -->
+    <!-- CARD HEADER -->
 
-    <div class="table-header">
+    <div class="courses-card-header">
 
       <div>
-
+<div class="page-title-icon">
+  📚
+</div>
         <h2>
-          All Courses
+          Available Courses
         </h2>
 
-        <span class="course-count">
+        <p>
+          Explore the courses available in EduFlow
+        </p>
 
-          {{ courses.length }}
-
-          {{
-            courses.length === 1
-              ? 'Course'
-              : 'Courses'
-          }}
-
-        </span>
-
+   <span>
+     AVAILABLE COURSES
+   </span>
+   <strong>
+     {{ courses.length }}
+   </strong>
       </div>
 
     </div>
 
 
-    <!-- ========================= -->
-    <!-- Table -->
-    <!-- ========================= -->
+    <!-- =========================================
+         TABLE
+    ========================================== -->
 
     <div class="table-wrapper">
 
       <table>
-
-        <!-- ========================= -->
-        <!-- Table Header -->
-        <!-- ========================= -->
 
         <thead>
 
           <tr>
 
             <th>
-              ID
+              COURSE
             </th>
 
             <th>
-              Course
+              DESCRIPTION
             </th>
 
             <th>
-              Description
+              CREDITS
             </th>
 
             <th>
-              Credits
+              PRICE
             </th>
 
             <th>
-              Price
+              INSTRUCTOR
             </th>
 
             <th>
-              Instructor
-            </th>
-
-            <th>
-              Actions
+              ACTION
             </th>
 
           </tr>
@@ -158,69 +148,53 @@
         </thead>
 
 
-        <!-- ========================= -->
-        <!-- Table Body -->
-        <!-- ========================= -->
-
         <tbody>
 
           <tr
             *ngFor="let course of courses">
 
 
-            <!-- ========================= -->
-            <!-- ID -->
-            <!-- ========================= -->
+            <!-- COURSE -->
 
             <td>
 
-              <span class="course-id">
+              <div class="course-cell">
 
-                {{ course.id }}
-
-              </span>
-
-            </td>
-
-
-            <!-- ========================= -->
-            <!-- Course -->
-            <!-- ========================= -->
-
-            <td>
-
-              <div class="course-title">
-
-                <strong>
-
+                <div class="course-icon">
                   📚
-                  {{ course.title }}
+                </div>
 
-                </strong>
+                <div class="course-info">
+
+                  <strong>
+                    {{ course.title }}
+                  </strong>
+
+                  <span>
+                    Course {{ course.id }}
+                  </span>
+
+                </div>
 
               </div>
 
             </td>
 
 
-            <!-- ========================= -->
-            <!-- Description -->
-            <!-- ========================= -->
+            <!-- DESCRIPTION -->
 
             <td>
 
-              <span class="description">
+              <div class="description-cell">
 
                 {{ course.description }}
 
-              </span>
+              </div>
 
             </td>
 
 
-            <!-- ========================= -->
-            <!-- Credits -->
-            <!-- ========================= -->
+            <!-- CREDITS -->
 
             <td>
 
@@ -239,9 +213,7 @@
             </td>
 
 
-            <!-- ========================= -->
-            <!-- Price -->
-            <!-- ========================= -->
+            <!-- PRICE -->
 
             <td>
 
@@ -249,142 +221,110 @@
 
                 {{ course.price | number:'1.2-2' }}
 
+                OMR
+
               </span>
 
             </td>
 
 
-            <!-- ========================= -->
-            <!-- Instructor -->
-            <!-- ========================= -->
+            <!-- INSTRUCTOR -->
 
             <td>
 
               <span class="instructor">
 
-                Instructor
-                {{ course.instructorId }}
+                Instructor {{ course.instructorId }}
 
               </span>
 
             </td>
 
 
-            <!-- ========================= -->
-            <!-- Actions -->
-            <!-- ========================= -->
+            <!-- ACTION -->
 
-            <td class="actions">
+            <td>
+
+              <div class="actions">
 
 
-              <!-- ================================= -->
-              <!-- STUDENT: ENROLL -->
-              <!-- ================================= -->
+                <!-- =========================
+                     STUDENT - ENROLL
+                ========================== -->
 
-              <button
-                *ngIf="isStudent"
-                type="button"
-                class="course-action-btn enroll-btn"
-                title="Enroll in Course"
-                (click)="enrollCourse(course.id)">
+                <button
+                  *ngIf="isStudent"
+                  type="button"
+                  class="course-action-btn enroll-btn"
+                  (click)="enrollCourse(course.id)">
 
-                <span class="action-icon">
-                  +
-                </span>
+                  <span>
+                    +
+                  </span>
 
-                <span>
                   Enroll
-                </span>
 
-              </button>
+                </button>
 
 
-              <!-- ================================= -->
-              <!-- STUDENT: DROP -->
-              <!-- ================================= -->
+                <!-- =========================
+                     STUDENT - DROP
+                ========================== -->
 
-              <button
-                *ngIf="isStudent"
-                type="button"
-                class="course-action-btn drop-btn"
-                title="Drop Course"
-                (click)="dropCourse(course.id)">
+                <button
+                  *ngIf="isStudent"
+                  type="button"
+                  class="course-action-btn drop-btn"
+                  (click)="dropCourse(course.id)">
 
-                <span class="action-icon">
-                  ×
-                </span>
+                  <span>
+                    ×
+                  </span>
 
-                <span>
                   Drop
-                </span>
 
-              </button>
+                </button>
 
 
-              <!-- ================================= -->
-              <!-- ADMIN: EDIT -->
-              <!-- ================================= -->
+                <!-- =========================
+                     ADMIN - EDIT
+                ========================== -->
 
-              <button
-                *ngIf="isAdmin"
-                type="button"
-                class="edit-btn"
-                title="Edit Course"
-                (click)="editCourse(course.id)">
+                <button
+                  *ngIf="isAdmin"
+                  type="button"
+                  class="edit-btn"
+                  (click)="editCourse(course.id)">
 
-                ✏️
+                  ✏️
 
-                <span>
                   Edit
-                </span>
 
-              </button>
+                </button>
 
 
-              <!-- ================================= -->
-              <!-- ADMIN: DELETE -->
-              <!-- ================================= -->
+                <!-- =========================
+                     ADMIN - DELETE
+                ========================== -->
 
-              <button
-                *ngIf="isAdmin"
-                type="button"
-                class="delete-btn"
-                title="Delete Course"
-                (click)="deleteCourse(
-                  course.id,
-                  course.title
-                )">
+                <button
+                  *ngIf="isAdmin"
+                  type="button"
+                  class="delete-btn"
+                  (click)="
+                    deleteCourse(
+                      course.id,
+                      course.title
+                    )
+                  ">
 
-                🗑️
+                  🗑️
 
-                <span>
                   Delete
-                </span>
 
-              </button>
+                </button>
 
-
-              <!-- ================================= -->
-              <!-- ADMIN: ENROLL -->
-              <!-- ================================= -->
-
-              <button
-                *ngIf="isAdmin"
-                type="button"
-                class="course-action-btn enroll-btn"
-                title="Enroll"
-                (click)="enrollCourse(course.id)">
-
-                <span class="action-icon">
-                  +
-                </span>
-
-                <span>
-                  Enroll
-                </span>
-
-              </button>
-
+              </div>
 
             </td>
 
@@ -396,14 +336,14 @@
 
     </div>
 
-  </div>
+  </section>
 
 
-  <!-- ========================= -->
-  <!-- Empty State -->
-  <!-- ========================= -->
+  <!-- =========================================
+       EMPTY STATE
+  ========================================== -->
 
-  <div
+  <section
     class="empty-state"
     *ngIf="
       !loading &&
@@ -420,12 +360,9 @@
     </h2>
 
     <p>
-      There are currently no courses
-      in the system.
+      There are currently no courses available.
     </p>
 
-
-    <!-- Admin Only -->
 
     <button
       *ngIf="isAdmin"
@@ -433,41 +370,37 @@
       class="add-btn"
       (click)="addCourse()">
 
-      <span>+</span>
+      <span>
+        +
+      </span>
 
       Add First Course
 
     </button>
 
-  </div>
+  </section>
 
 
-  <!-- ================================================= -->
-  <!-- Delete Confirmation Modal - ADMIN -->
-  <!-- ================================================= -->
+  <!-- =========================================
+       DELETE CONFIRMATION MODAL
+  ========================================== -->
 
   <div
     class="modal-overlay"
     *ngIf="showDeleteModal"
     (click)="cancelDelete()">
 
-
     <div
       class="modal-box delete-modal"
       (click)="$event.stopPropagation()">
 
-
       <div class="modal-icon delete-icon">
-
         🗑️
-
       </div>
-
 
       <h2>
         Delete Course?
       </h2>
-
 
       <p>
 
@@ -481,7 +414,6 @@
 
       </p>
 
-
       <p class="warning-text">
 
         This action cannot be undone.
@@ -490,7 +422,6 @@
 
 
       <div class="modal-actions">
-
 
         <button
           type="button"
@@ -501,7 +432,6 @@
 
         </button>
 
-
         <button
           type="button"
           class="confirm-delete-btn"
@@ -511,7 +441,6 @@
 
         </button>
 
-
       </div>
 
     </div>
@@ -519,37 +448,30 @@
   </div>
 
 
-  <!-- ================================================= -->
-  <!-- Success Modal -->
-  <!-- ================================================= -->
+  <!-- =========================================
+       SUCCESS MODAL
+  ========================================== -->
 
   <div
     class="modal-overlay"
     *ngIf="showSuccessModal"
     (click)="closeSuccessModal()">
 
-
     <div
       class="modal-box success-modal"
       (click)="$event.stopPropagation()">
 
-
       <div class="modal-icon success-icon">
-
         ✓
-
       </div>
-
 
       <h2>
         Course Deleted
       </h2>
 
-
       <p>
         The course has been deleted successfully.
       </p>
-
 
       <button
         type="button"
@@ -560,45 +482,35 @@
 
       </button>
 
-
     </div>
 
   </div>
 
 
-  <!-- ================================================= -->
-  <!-- Error Modal -->
-  <!-- ================================================= -->
+  <!-- =========================================
+       ERROR MODAL
+  ========================================== -->
 
   <div
     class="modal-overlay"
     *ngIf="showErrorModal"
     (click)="closeErrorModal()">
 
-
     <div
       class="modal-box error-modal"
       (click)="$event.stopPropagation()">
 
-
       <div class="modal-icon error-icon">
-
         !
-
       </div>
-
 
       <h2>
         Unable to Delete
       </h2>
 
-
       <p>
-
         {{ modalErrorMessage }}
-
       </p>
-
 
       <button
         type="button"
@@ -609,10 +521,8 @@
 
       </button>
 
-
     </div>
 
   </div>
-
 
 </div>

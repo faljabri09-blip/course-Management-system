@@ -7,15 +7,6 @@ namespace CourseManagementSystem.Models
         public int Id { get; set; }
 
         // =========================================
-        // User Relationship
-        // =========================================
-
-        public int UserId { get; set; }
-
-        public User? User { get; set; }
-
-
-        // =========================================
         // Student Information
         // =========================================
 

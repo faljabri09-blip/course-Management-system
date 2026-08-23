@@ -19,7 +19,6 @@ interface Enrollment {
   enrollmentDate: string;
   status: string;
   grade: number | null;
-  course?: Course;
 }
 
 @Component({
@@ -29,90 +28,103 @@ interface Enrollment {
 })
 export class StudentDashboardComponent implements OnInit {
 
-  username: string = 'Student';
-
-  studentId: number = 1;
+  username = 'Student';
 
   courses: Course[] = [];
-
   enrollments: Enrollment[] = [];
 
-  loadingCourses: boolean = false;
+  activeCourses = 0;
+  completedCourses = 0;
 
-  loadingEnrollments: boolean = false;
+  loadingCourses = false;
+  loadingEnrollments = false;
 
-  message: string = '';
+  message = '';
+  errorMessage = '';
 
-  errorMessage: string = '';
-
-  // ==============================
-  // DROP MODAL
-  // ==============================
-
-  showDropModal: boolean = false;
+  showDropModal = false;
 
   selectedEnrollment: Enrollment | null = null;
 
   droppingCourseId: number | null = null;
-
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
-
-  // ==============================
-  // INIT
-  // ==============================
-
   ngOnInit(): void {
-
-    this.loadStudent();
-
+    this.loadUser();
     this.loadCourses();
-
     this.loadEnrollments();
-
   }
 
 
-  // ==============================
-  // LOAD STUDENT
-  // ==============================
+  // =====================================================
+  // USER
+  // =====================================================
 
-  loadStudent(): void {
+  loadUser(): void {
 
-    const savedStudentId =
-      localStorage.getItem('studentId');
+    const token = localStorage.getItem('token');
 
-    const savedUsername =
-      localStorage.getItem('username');
-
-
-    if (savedStudentId) {
-
-      this.studentId = Number(savedStudentId);
-
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
     }
 
+    try {
 
-    if (savedUsername) {
+      const payload = JSON.parse(
+        atob(
+          token
+            .split('.')[1]
+            .replace(/-/g, '+')
+            .replace(/_/g, '/')
+        )
+      );
 
-      this.username = savedUsername;
+      console.log('JWT Payload:', payload);
 
+      this.username =
+        payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'
+        ]
+        ||
+        payload[
+          'http://schemas.microsoft.com/ws/2008/06/identity/claims/name'
+        ]
+        ||
+        payload.name
+        ||
+        payload.unique_name
+        ||
+        payload.username
+        ||
+        payload.sub
+        ||
+        'Student';
+
+    } catch (error) {
+
+      console.error(
+        'Unable to read user from token:',
+        error
+      );
+
+      this.username = 'Student';
     }
-
   }
 
 
-  // ==============================
-  // LOAD COURSES
-  // ==============================
+  // =====================================================
+  // COURSES
+  // =====================================================
 
   loadCourses(): void {
 
     this.loadingCourses = true;
+    this.errorMessage = '';
 
     this.http
       .get<Course[]>(
@@ -122,7 +134,7 @@ export class StudentDashboardComponent implements OnInit {
 
         next: (data) => {
 
-          this.courses = data;
+          this.courses = data || [];
 
           this.loadingCourses = false;
 
@@ -143,13 +155,12 @@ export class StudentDashboardComponent implements OnInit {
         }
 
       });
-
   }
 
 
-  // ==============================
-  // LOAD ENROLLMENTS
-  // ==============================
+  // =====================================================
+  // ENROLLMENTS
+  // =====================================================
 
   loadEnrollments(): void {
 
@@ -157,18 +168,15 @@ export class StudentDashboardComponent implements OnInit {
 
     this.http
       .get<Enrollment[]>(
-        `${environment.apiUrl}/Enrollment/student/${this.studentId}`
+        `${environment.apiUrl}/Enrollment`
       )
       .subscribe({
 
         next: (data) => {
 
-          console.log(
-            'Enrollments:',
-            data
-          );
+          this.enrollments = data || [];
 
-          this.enrollments = data;
+          this.calculateStatistics();
 
           this.loadingEnrollments = false;
 
@@ -181,21 +189,40 @@ export class StudentDashboardComponent implements OnInit {
             error
           );
 
-          this.loadingEnrollments = false;
-
           this.errorMessage =
             'Unable to load enrollments.';
+
+          this.loadingEnrollments = false;
 
         }
 
       });
-
   }
 
 
-  // ==============================
-  // CHECK ENROLLMENT
-  // ==============================
+  // =====================================================
+  // STATISTICS
+  // =====================================================
+
+  calculateStatistics(): void {
+
+    this.activeCourses =
+      this.enrollments.filter(
+        enrollment =>
+          enrollment.status === 'Active'
+      ).length;
+
+    this.completedCourses =
+      this.enrollments.filter(
+        enrollment =>
+          enrollment.status === 'Completed'
+      ).length;
+  }
+
+
+  // =====================================================
+  // CHECK IF ENROLLED
+  // =====================================================
 
   isEnrolled(courseId: number): boolean {
 
@@ -204,57 +231,30 @@ export class StudentDashboardComponent implements OnInit {
         enrollment.courseId === courseId &&
         enrollment.status !== 'Dropped'
     );
-
   }
 
 
-  // ==============================
+  // =====================================================
   // REGISTER COURSE
-  // ==============================
+  // =====================================================
 
   enroll(courseId: number): void {
 
     this.message = '';
-
     this.errorMessage = '';
 
-
-    if (this.isEnrolled(courseId)) {
-
-      this.errorMessage =
-        'You are already enrolled in this course.';
-
-      return;
-
-    }
-
-
-    const enrollment = {
-
-      studentId: this.studentId,
-
-      courseId: courseId,
-
-      status: 'Active',
-
-      grade: null
-
+    const request = {
+      courseId: courseId
     };
 
-
     this.http
-      .post<Enrollment>(
+      .post(
         `${environment.apiUrl}/Enrollment`,
-        enrollment
+        request
       )
       .subscribe({
 
-        next: (data) => {
-
-          console.log(
-            'Enrollment successful:',
-            data
-          );
+        next: () => {
 
           this.message =
             'Course registered successfully.';
@@ -271,177 +271,86 @@ export class StudentDashboardComponent implements OnInit {
           );
 
           this.errorMessage =
+            error?.error?.message ||
+            error?.error ||
             'Unable to register for this course.';
 
         }
 
       });
-
   }
 
 
   // =====================================================
-  // OPEN DROP MODAL
+  // DROP MODAL
   // =====================================================
 
-  openDropModal(enrollment: Enrollment): void {
-
-    console.log(
-      'Drop button clicked'
-    );
-
-    console.log(
-      'Selected enrollment:',
-      enrollment
-    );
-
-
-    // Save selected enrollment
+  openDropModal(
+    enrollment: Enrollment
+  ): void {
 
     this.selectedEnrollment = enrollment;
 
-
-    // Open modal
-
     this.showDropModal = true;
-
-
-    // Clear messages
-
-    this.message = '';
-
-    this.errorMessage = '';
-
   }
 
 
-  // =====================================================
-  // CLOSE DROP MODAL
-  // =====================================================
-
   closeDropModal(): void {
 
-    // Don't close while deleting
-
     if (this.droppingCourseId !== null) {
-
       return;
-
     }
-
 
     this.showDropModal = false;
 
     this.selectedEnrollment = null;
+  }
 
+
+  isDropping(
+    enrollmentId: number
+  ): boolean {
+
+    return this.droppingCourseId === enrollmentId;
   }
 
 
   // =====================================================
-  // CONFIRM DROP COURSE
+  // CONFIRM DROP
   // =====================================================
 
   confirmDropCourse(): void {
 
-    console.log(
-      'Confirm Drop clicked'
-    );
-
-
-    // Check selected enrollment
-
-    if (this.selectedEnrollment === null) {
-
-      console.error(
-        'No enrollment selected.'
-      );
-
+    if (!this.selectedEnrollment) {
       return;
-
     }
 
-
-    const enrollmentId =
+    const id =
       this.selectedEnrollment.id;
 
-
-    console.log(
-      'Enrollment ID:',
-      enrollmentId
-    );
-
-
-    // Check ID
-
-    if (!enrollmentId) {
-
-      this.errorMessage =
-        'Enrollment ID is missing.';
-
-      return;
-
-    }
-
-
-    // Start loading
-
-    this.droppingCourseId =
-      enrollmentId;
-
-
-    this.message = '';
-
-    this.errorMessage = '';
-
-
-    // ==========================================
-    // DELETE REQUEST
-    // ==========================================
+    this.droppingCourseId = id;
 
     this.http
-      .delete(
-        `${environment.apiUrl}/Enrollment/${enrollmentId}`
+      .put(
+        `${environment.apiUrl}/Enrollment/${id}/drop`,
+        {}
       )
       .subscribe({
 
-        next: (response) => {
+        next: () => {
 
-          console.log(
-            'Drop successful:',
-            response
-          );
+          this.message =
+            'Course dropped successfully.';
 
-
-          // Remove enrollment from screen
-
-          this.enrollments =
-            this.enrollments.filter(
-              enrollment =>
-                enrollment.id !== enrollmentId
-            );
-
-
-          // Close modal
+          this.droppingCourseId = null;
 
           this.showDropModal = false;
 
           this.selectedEnrollment = null;
 
-
-          // Stop loading
-
-          this.droppingCourseId = null;
-
-
-          // Success message
-
-          this.message =
-            'Course dropped successfully.';
-
-          this.errorMessage = '';
+          this.loadEnrollments();
 
         },
-
 
         error: (error) => {
 
@@ -450,123 +359,15 @@ export class StudentDashboardComponent implements OnInit {
             error
           );
 
-
-          console.error(
-            'Status:',
-            error.status
-          );
-
-
-          console.error(
-            'Error:',
-            error.error
-          );
-
+          this.errorMessage =
+            error?.error?.message ||
+            'Unable to drop this course.';
 
           this.droppingCourseId = null;
-
-
-          if (error.status === 401) {
-
-            this.errorMessage =
-              'Unauthorized. Please login again.';
-
-          }
-
-          else if (error.status === 403) {
-
-            this.errorMessage =
-              'You are not authorized to drop this course.';
-
-          }
-
-          else if (error.status === 404) {
-
-            this.errorMessage =
-              'Enrollment not found.';
-
-          }
-
-          else {
-
-            this.errorMessage =
-              'Unable to drop the course.';
-
-          }
 
         }
 
       });
-
-  }
-
-
-  // =====================================================
-  // CHECK IF DROPPING
-  // =====================================================
-
-  isDropping(enrollmentId: number): boolean {
-
-    return this.droppingCourseId === enrollmentId;
-
-  }
-
-
-  // ==============================
-  // LOGOUT
-  // ==============================
-
-  logout(): void {
-
-    localStorage.removeItem('token');
-
-    localStorage.removeItem('studentId');
-
-    localStorage.removeItem('username');
-
-    this.router.navigate(['/login']);
-
-  }
-
-
-  // ==============================
-  // USER INITIAL
-  // ==============================
-
-  get userInitial(): string {
-
-    return this.username
-      ? this.username.charAt(0).toUpperCase()
-      : 'S';
-
-  }
-
-
-  // ==============================
-  // ACTIVE COURSES
-  // ==============================
-
-  get activeCourses(): number {
-
-    return this.enrollments.filter(
-      enrollment =>
-        enrollment.status === 'Active'
-    ).length;
-
-  }
-
-
-  // ==============================
-  // COMPLETED COURSES
-  // ==============================
-
-  get completedCourses(): number {
-
-    return this.enrollments.filter(
-      enrollment =>
-        enrollment.status === 'Completed'
-    ).length;
-
   }
 
 }

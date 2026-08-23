@@ -530,17 +530,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentDTo"
+                "$ref": "#/components/schemas/StudentDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentDTo"
+                "$ref": "#/components/schemas/StudentDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentDTo"
+                "$ref": "#/components/schemas/StudentDto"
               }
             }
           }
@@ -593,17 +593,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentDTo"
+                "$ref": "#/components/schemas/StudentDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentDTo"
+                "$ref": "#/components/schemas/StudentDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/StudentDTo"
+                "$ref": "#/components/schemas/StudentDto"
               }
             }
           }
@@ -809,6 +809,13 @@
           "specialization": {
             "type": "string",
             "nullable": true
+          },
+          "courses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -849,7 +856,7 @@
         },
         "additionalProperties": false
       },
-      "StudentDTo": {
+      "StudentDto": {
         "required": [
           "email",
           "name"

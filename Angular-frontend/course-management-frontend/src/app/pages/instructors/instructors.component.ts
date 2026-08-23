@@ -1,31 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
-interface Instructor {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  specialization: string;
-  courses?: Course[];
-}
-
-interface Course {
-  id: number;
-  title: string;
-  description: string;
-  credits: number;
-  price: number;
-  instructorId: number;
-}
-
-interface InstructorDto {
-  name: string;
-  email: string;
-  phone: string;
-  specialization: string;
-}
+import {
+  Instructor,
+  InstructorService
+} from '../../services/instructor.service';
 
 @Component({
   selector: 'app-instructors',
@@ -34,268 +13,521 @@ interface InstructorDto {
 })
 export class InstructorsComponent implements OnInit {
 
+  // =========================================
+  // INSTRUCTORS
+  // =========================================
+
   instructors: Instructor[] = [];
 
-  loading: boolean = false;
 
+  // =========================================
+  // MAIN LOADING
+  // =========================================
+
+  loading: boolean = false;
   errorMessage: string = '';
 
-  successMessage: string = '';
 
-  showModal: boolean = false;
+  // =========================================
+  // EDIT MODAL
+  // =========================================
 
-  isEditMode: boolean = false;
+  showEditModal: boolean = false;
 
-  selectedInstructorId: number | null = null;
+  editLoading: boolean = false;
 
-  saving: boolean = false;
+  editErrorMessage: string = '';
 
-  // DELETE MODAL
-  showDeleteModal: boolean = false;
-
-  instructorToDelete: Instructor | null = null;
-
-  deleting: boolean = false;
-
-  form: InstructorDto = {
+  editForm: Instructor = {
+    id: 0,
     name: '',
     email: '',
     phone: '',
-    specialization: ''
+    specialization: '',
+    courses: []
   };
 
 
+  // =========================================
+  // DELETE MODAL
+  // =========================================
+
+  showDeleteModal: boolean = false;
+
+  deleteLoading: boolean = false;
+
+  deleteErrorMessage: string = '';
+
+  deletingInstructor: Instructor | null = null;
+
+
+  // =========================================
+  // CONSTRUCTOR
+  // =========================================
+
   constructor(
-    private http: HttpClient
+    private instructorService: InstructorService,
+    private router: Router
   ) {}
 
+
+  // =========================================
+  // ON INIT
+  // =========================================
 
   ngOnInit(): void {
     this.loadInstructors();
   }
 
 
-  // ==========================================
-  // LOAD INSTRUCTORS
-  // ==========================================
+  // =========================================
+  // LOAD ALL INSTRUCTORS
+  // =========================================
 
   loadInstructors(): void {
 
     this.loading = true;
-
     this.errorMessage = '';
 
-    this.http
-      .get<Instructor[]>(
-        `${environment.apiUrl}/Instructor`
-      )
-      .subscribe({
+    this.instructorService.getAll().subscribe({
 
-        next: (data) => {
+      next: (data: Instructor[]) => {
 
-          this.instructors = data;
+        console.log('Instructors loaded:', data);
 
-          this.loading = false;
+        this.instructors = data || [];
 
-        },
+        this.loading = false;
+      },
 
-        error: (error) => {
+      error: (error) => {
 
-          console.error(
-            'Error loading instructors:',
-            error
-          );
+        console.error(
+          'Error loading instructors:',
+          error
+        );
 
-          this.errorMessage =
-            'Unable to load instructors.';
+        console.error(
+          'Status:',
+          error?.status
+        );
 
-          this.loading = false;
+        console.error(
+          'Backend response:',
+          error?.error
+        );
 
-        }
+        this.errorMessage =
+          'Unable to load instructors.';
 
-      });
+        this.loading = false;
+      }
+
+    });
 
   }
 
 
-  // ==========================================
-  // OPEN ADD MODAL
-  // ==========================================
+  // =========================================
+  // INSTRUCTORS WITH COURSES
+  // =========================================
 
-  openAddModal(): void {
+  getInstructorsWithCourses(): number {
 
-    this.isEditMode = false;
-
-    this.selectedInstructorId = null;
-
-    this.form = {
-      name: '',
-      email: '',
-      phone: '',
-      specialization: ''
-    };
-
-    this.errorMessage = '';
-
-    this.successMessage = '';
-
-    this.showModal = true;
+    return this.instructors.filter(
+      (instructor: Instructor) =>
+        instructor.courses &&
+        instructor.courses.length > 0
+    ).length;
 
   }
 
 
-  // ==========================================
-  // OPEN EDIT MODAL
-  // ==========================================
+  // =========================================
+  // COURSES TEXT
+  // =========================================
 
-  openEditModal(instructor: Instructor): void {
+  getCoursesText(
+    courses: string[] | undefined
+  ): string {
 
-    this.isEditMode = true;
+    if (
+      !courses ||
+      courses.length === 0
+    ) {
+      return 'No courses';
+    }
 
-    this.selectedInstructorId = instructor.id;
+    return courses.join(', ');
+  }
 
-    this.form = {
-      name: instructor.name,
-      email: instructor.email,
-      phone: instructor.phone,
-      specialization: instructor.specialization
-    };
 
-    this.errorMessage = '';
+  // =========================================
+  // ADD INSTRUCTOR
+  // =========================================
 
-    this.successMessage = '';
+  addInstructor(): void {
 
-    this.showModal = true;
+    this.router.navigate([
+      '/instructors/add'
+    ]);
 
   }
 
 
-  // ==========================================
-  // CLOSE ADD / EDIT MODAL
-  // ==========================================
+  // =========================================
+  // VIEW INSTRUCTOR
+  // =========================================
 
-  closeModal(): void {
+  viewInstructor(id: number): void {
 
-    if (this.saving) {
+    this.router.navigate([
+      '/instructors',
+      id
+    ]);
+
+  }
+
+
+  // =========================================
+  // EDIT INSTRUCTOR
+  // =========================================
+  //
+  // IMPORTANT:
+  // We DO NOT navigate to another page.
+  // We open the Edit Modal directly.
+  //
+  // =========================================
+
+  editInstructor(id: number): void {
+
+    console.log('==============================');
+    console.log('EDIT BUTTON CLICKED');
+    console.log('Instructor ID:', id);
+    console.log(
+      'Token:',
+      localStorage.getItem('token')
+    );
+    console.log('==============================');
+
+
+    // =======================================
+    // FIND INSTRUCTOR FROM CURRENT LIST
+    // =======================================
+
+    const instructor = this.instructors.find(
+      (item: Instructor) =>
+        item.id === id
+    );
+
+
+    if (!instructor) {
+
+      console.error(
+        'Instructor not found:',
+        id
+      );
+
+      this.editErrorMessage =
+        'Instructor information could not be found.';
+
+      this.showEditModal = true;
+
       return;
     }
 
-    this.showModal = false;
+
+    // =======================================
+    // RESET EDIT STATE
+    // =======================================
+
+    this.editErrorMessage = '';
+
+    this.editLoading = false;
+
+
+    // =======================================
+    // COPY DATA INTO EDIT FORM
+    // =======================================
+
+    this.editForm = {
+
+      id: instructor.id,
+
+      name:
+        instructor.name || '',
+
+      email:
+        instructor.email || '',
+
+      phone:
+        instructor.phone || '',
+
+      specialization:
+        instructor.specialization || '',
+
+      courses:
+        instructor.courses
+          ? [...instructor.courses]
+          : []
+
+    };
+
+
+    // =======================================
+    // OPEN MODAL
+    // =======================================
+
+    this.showEditModal = true;
+
+
+    console.log(
+      'Edit modal opened:',
+      this.editForm
+    );
 
   }
 
 
-  // ==========================================
+  // =========================================
+  // CLOSE EDIT MODAL
+  // =========================================
+
+  closeEditModal(): void {
+
+    if (this.editLoading) {
+      return;
+    }
+
+    this.showEditModal = false;
+
+    this.editErrorMessage = '';
+
+  }
+
+
+  // =========================================
+  // CLOSE EDIT MODAL ON BACKDROP
+  // =========================================
+
+  closeEditOnBackdrop(
+    event: MouseEvent
+  ): void {
+
+    if (
+      event.target === event.currentTarget &&
+      !this.editLoading
+    ) {
+
+      this.closeEditModal();
+
+    }
+
+  }
+
+
+  // =========================================
   // SAVE INSTRUCTOR
-  // ==========================================
+  // =========================================
 
   saveInstructor(): void {
 
-    this.errorMessage = '';
+    // =======================================
+    // PREVENT DOUBLE CLICK
+    // =======================================
 
-    this.successMessage = '';
-
-
-    if (
-      !this.form.name.trim() ||
-      !this.form.email.trim()
-    ) {
-
-      this.errorMessage =
-        'Name and Email are required.';
-
+    if (this.editLoading) {
       return;
-
     }
 
 
-    this.saving = true;
-
-
-    // ========================================
-    // UPDATE
-    // ========================================
+    // =======================================
+    // VALIDATION
+    // =======================================
 
     if (
-      this.isEditMode &&
-      this.selectedInstructorId !== null
+      !this.editForm.name ||
+      !this.editForm.name.trim()
     ) {
 
-      this.http
-        .put(
-          `${environment.apiUrl}/Instructor/${this.selectedInstructorId}`,
-          this.form
-        )
-        .subscribe({
+      this.editErrorMessage =
+        'Instructor name is required.';
 
-          next: () => {
+      return;
+    }
 
-            this.saving = false;
 
-            this.showModal = false;
+    if (
+      !this.editForm.email ||
+      !this.editForm.email.trim()
+    ) {
 
-            this.successMessage =
-              'Instructor updated successfully.';
+      this.editErrorMessage =
+        'Instructor email is required.';
 
-            this.loadInstructors();
+      return;
+    }
 
-          },
 
-          error: (error) => {
+    // =======================================
+    // START LOADING
+    // =======================================
 
-            console.error(
-              'Update instructor error:',
-              error
+    this.editLoading = true;
+
+    this.editErrorMessage = '';
+
+
+    // =======================================
+    // PREPARE UPDATE DATA
+    // =======================================
+
+    const updatedInstructor: Instructor = {
+
+      id:
+        this.editForm.id,
+
+      name:
+        this.editForm.name.trim(),
+
+      email:
+        this.editForm.email.trim(),
+
+      phone:
+        this.editForm.phone
+          ? this.editForm.phone.trim()
+          : '',
+
+      specialization:
+        this.editForm.specialization
+          ? this.editForm.specialization.trim()
+          : '',
+
+      courses:
+        this.editForm.courses
+          ? [...this.editForm.courses]
+          : []
+
+    };
+
+
+    console.log(
+      '================================'
+    );
+
+    console.log(
+      'UPDATING INSTRUCTOR'
+    );
+
+    console.log(
+      'ID:',
+      updatedInstructor.id
+    );
+
+    console.log(
+      'DATA:',
+      updatedInstructor
+    );
+
+    console.log(
+      '================================'
+    );
+
+
+    // =======================================
+    // UPDATE API
+    // =======================================
+
+    this.instructorService
+      .update(
+        updatedInstructor.id,
+        updatedInstructor
+      )
+      .subscribe({
+
+        // ===================================
+        // SUCCESS
+        // ===================================
+
+        next: (response) => {
+
+          console.log(
+            'Instructor updated successfully:',
+            response
+          );
+
+
+          // =================================
+          // UPDATE LOCAL LIST
+          // =================================
+
+          const index =
+            this.instructors.findIndex(
+              (item: Instructor) =>
+                item.id === updatedInstructor.id
             );
 
-            this.saving = false;
 
-            this.errorMessage =
-              'Unable to update instructor.';
+          if (index !== -1) {
+
+            this.instructors[index] = {
+              ...updatedInstructor
+            };
+
+            this.instructors = [
+              ...this.instructors
+            ];
 
           }
 
-        });
 
-      return;
-    }
+          // =================================
+          // CLOSE MODAL
+          // =================================
+
+          this.editLoading = false;
+
+          this.showEditModal = false;
+
+          this.editErrorMessage = '';
 
 
-    // ========================================
-    // ADD
-    // ========================================
-
-    this.http
-      .post<Instructor>(
-        `${environment.apiUrl}/Instructor`,
-        this.form
-      )
-      .subscribe({
-
-        next: () => {
-
-          this.saving = false;
-
-          this.showModal = false;
-
-          this.successMessage =
-            'Instructor added successfully.';
-
-          this.loadInstructors();
+          console.log(
+            'Instructor list updated locally.'
+          );
 
         },
+
+
+        // ===================================
+        // ERROR
+        // ===================================
 
         error: (error) => {
 
           console.error(
-            'Add instructor error:',
+            'UPDATE INSTRUCTOR ERROR:',
             error
           );
 
-          this.saving = false;
+          console.error(
+            'STATUS:',
+            error?.status
+          );
 
-          this.errorMessage =
-            'Unable to add instructor.';
+          console.error(
+            'BACKEND RESPONSE:',
+            error?.error
+          );
+
+
+          this.editErrorMessage =
+            error?.error?.message ||
+            error?.error?.title ||
+            'Unable to update instructor.';
+
+
+          this.editLoading = false;
 
         }
 
@@ -304,130 +536,229 @@ export class InstructorsComponent implements OnInit {
   }
 
 
-  // ==========================================
-  // OPEN DELETE MODAL
-  // ==========================================
+  // =========================================
+  // DELETE INSTRUCTOR
+  // =========================================
 
-  deleteInstructor(instructor: Instructor): void {
+  deleteInstructor(id: number): void {
 
-    this.instructorToDelete = instructor;
+    console.log(
+      'DELETE BUTTON CLICKED:',
+      id
+    );
 
-    this.errorMessage = '';
 
-    this.successMessage = '';
+    // =======================================
+    // FIND INSTRUCTOR
+    // =======================================
+
+    const instructor =
+      this.instructors.find(
+        (item: Instructor) =>
+          item.id === id
+      );
+
+
+    if (!instructor) {
+
+      console.error(
+        'Instructor not found:',
+        id
+      );
+
+      return;
+    }
+
+
+    // =======================================
+    // STORE INSTRUCTOR
+    // =======================================
+
+    this.deletingInstructor = {
+      ...instructor
+    };
+
+
+    // =======================================
+    // RESET DELETE STATE
+    // =======================================
+
+    this.deleteErrorMessage = '';
+
+    this.deleteLoading = false;
+
+
+    // =======================================
+    // OPEN DELETE MODAL
+    // =======================================
 
     this.showDeleteModal = true;
 
+
+    console.log(
+      'Delete modal opened for:',
+      instructor
+    );
+
   }
 
 
-  // ==========================================
-  // CANCEL DELETE
-  // ==========================================
+  // =========================================
+  // CLOSE DELETE MODAL
+  // =========================================
 
-  cancelDelete(): void {
+  closeDeleteModal(): void {
 
-    if (this.deleting) {
+    if (this.deleteLoading) {
       return;
     }
+
 
     this.showDeleteModal = false;
 
-    this.instructorToDelete = null;
+    this.deletingInstructor = null;
+
+    this.deleteErrorMessage = '';
 
   }
 
 
-  // ==========================================
+  // =========================================
+  // CLOSE DELETE ON BACKDROP
+  // =========================================
+
+  closeDeleteOnBackdrop(
+    event: MouseEvent
+  ): void {
+
+    if (
+      event.target === event.currentTarget &&
+      !this.deleteLoading
+    ) {
+
+      this.closeDeleteModal();
+
+    }
+
+  }
+
+
+  // =========================================
   // CONFIRM DELETE
-  // ==========================================
+  // =========================================
 
   confirmDelete(): void {
 
-    if (!this.instructorToDelete) {
+    if (
+      this.deleteLoading ||
+      !this.deletingInstructor
+    ) {
       return;
     }
 
-    this.deleting = true;
 
     const instructorId =
-      this.instructorToDelete.id;
+      this.deletingInstructor.id;
 
 
-    this.http
-      .delete(
-        `${environment.apiUrl}/Instructor/${instructorId}`
-      )
+    // =======================================
+    // START LOADING
+    // =======================================
+
+    this.deleteLoading = true;
+
+    this.deleteErrorMessage = '';
+
+
+    console.log(
+      'Deleting instructor:',
+      instructorId
+    );
+
+
+    // =======================================
+    // DELETE API
+    // =======================================
+
+    this.instructorService
+      .delete(instructorId)
       .subscribe({
+
+        // ===================================
+        // SUCCESS
+        // ===================================
 
         next: () => {
 
-          this.deleting = false;
+          console.log(
+            'Instructor deleted successfully.'
+          );
 
-          this.showDeleteModal = false;
 
-          this.successMessage =
-            'Instructor deleted successfully.';
+          // ================================
+          // REMOVE FROM LOCAL LIST
+          // ================================
 
           this.instructors =
             this.instructors.filter(
-              instructor =>
-                instructor.id !== instructorId
+              (item: Instructor) =>
+                item.id !== instructorId
             );
 
-          this.instructorToDelete = null;
+
+          // ================================
+          // CLOSE MODAL
+          // ================================
+
+          this.deleteLoading = false;
+
+          this.showDeleteModal = false;
+
+          this.deletingInstructor = null;
+
+          this.deleteErrorMessage = '';
+
+
+          console.log(
+            'Instructor removed from list.'
+          );
 
         },
+
+
+        // ===================================
+        // ERROR
+        // ===================================
 
         error: (error) => {
 
           console.error(
-            'Delete instructor error:',
+            'DELETE INSTRUCTOR ERROR:',
             error
           );
 
-          this.deleting = false;
+          console.error(
+            'STATUS:',
+            error?.status
+          );
 
-          this.errorMessage =
+          console.error(
+            'BACKEND RESPONSE:',
+            error?.error
+          );
+
+
+          this.deleteErrorMessage =
+            error?.error?.message ||
+            error?.error?.title ||
             'Unable to delete instructor.';
+
+
+          this.deleteLoading = false;
 
         }
 
       });
-
-  }
-
-
-  // ==========================================
-  // COURSE COUNT
-  // ==========================================
-
-  getCourseCount(
-    instructor: Instructor
-  ): number {
-
-    return instructor.courses
-      ? instructor.courses.length
-      : 0;
-
-  }
-
-
-  // ==========================================
-  // GET INITIAL
-  // ==========================================
-
-  getInitial(
-    name: string
-  ): string {
-
-    if (!name) {
-      return 'I';
-    }
-
-    return name
-      .charAt(0)
-      .toUpperCase();
 
   }
 

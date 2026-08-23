@@ -10,24 +10,33 @@ import {
 // Authentication
 // =========================================
 
-import { LoginComponent } from './pages/login/login.component';
+import { LoginComponent }
+  from './pages/login/login.component';
 
-import { RegisterComponent } from './pages/register/register.component';
-
-
-// =========================================
-// Admin Dashboard
-// =========================================
-
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { RegisterComponent }
+  from './pages/register/register.component';
 
 
 // =========================================
-// Student Dashboard
+// Dashboard Layout
 // =========================================
+
+import { DashboardLayoutComponent }
+  from './layouts/dashboard-layout/dashboard-layout.component';
+
+
+// =========================================
+// Dashboards
+// =========================================
+
+import { DashboardComponent }
+  from './pages/dashboard/dashboard.component';
 
 import { StudentDashboardComponent }
   from './pages/student-dashboard/student-dashboard.component';
+
+import { InstructorDashboardComponent }
+  from './pages/instructor-dashboard/instructor-dashboard.component';
 
 
 // =========================================
@@ -46,6 +55,7 @@ import { EditCourseComponent }
 
 // =========================================
 // Instructors
+// Admin Instructors Page
 // =========================================
 
 import { InstructorsComponent }
@@ -61,7 +71,7 @@ import { EnrollmentsComponent }
 
 
 // =========================================
-// Add Student
+// Students
 // =========================================
 
 import { AddStudentComponent }
@@ -72,14 +82,14 @@ import { AddStudentComponent }
 // Auth Guard
 // =========================================
 
-import { AuthGuard } from '../guards/auth.guard';
-
+import { AuthGuard }
+  from '../guards/auth.guard';
 
 
 const routes: Routes = [
 
   // =========================================
-  // Default Route
+  // DEFAULT
   // =========================================
 
   {
@@ -90,13 +100,18 @@ const routes: Routes = [
 
 
   // =========================================
-  // Authentication
+  // LOGIN
   // =========================================
 
   {
     path: 'login',
     component: LoginComponent
   },
+
+
+  // =========================================
+  // REGISTER
+  // =========================================
 
   {
     path: 'register',
@@ -105,126 +120,203 @@ const routes: Routes = [
 
 
   // =========================================
-  // Admin Dashboard
+  // DASHBOARD LAYOUT
   // =========================================
 
   {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Admin']
-    }
+    path: '',
+    component: DashboardLayoutComponent,
+
+    children: [
+
+      // =====================================
+      // ADMIN DASHBOARD
+      // =====================================
+
+      {
+        path: 'dashboard',
+
+        component: DashboardComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: ['Admin']
+        }
+      },
+
+
+      // =====================================
+      // STUDENT DASHBOARD
+      // =====================================
+
+      {
+        path: 'student-dashboard',
+
+        component: StudentDashboardComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Student',
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // INSTRUCTOR DASHBOARD
+      // =====================================
+      // هذه صفحة المدرب الخاصة
+      // لا نغيرها
+      // =====================================
+
+      {
+        path: 'instructor-dashboard',
+
+        component: InstructorDashboardComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // ADMIN → INSTRUCTORS
+      // =====================================
+      // هذه صفحة عرض جميع المدربين
+      // الخاصة بالـ Admin
+      // =====================================
+
+      {
+        path: 'instructors',
+
+        component: InstructorsComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: ['Admin']
+        }
+      },
+
+
+      // =====================================
+      // ADD STUDENT
+      // =====================================
+
+      {
+        path: 'add-student',
+
+        component: AddStudentComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // COURSES
+      // =====================================
+
+      {
+        path: 'courses',
+
+        component: CoursesComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Student',
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // ADD COURSE
+      // =====================================
+
+      {
+        path: 'courses/add',
+
+        component: AddCourseComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // EDIT COURSE
+      // =====================================
+
+      {
+        path: 'courses/edit/:id',
+
+        component: EditCourseComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // ENROLLMENTS
+      // =====================================
+
+      {
+        path: 'enrollments',
+
+        component: EnrollmentsComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Student',
+            'Admin',
+            'Instructor'
+          ]
+        }
+      }
+
+    ]
   },
 
 
   // =========================================
-  // Student Dashboard
-  // Student + Admin
-  // =========================================
-
-  {
-    path: 'student-dashboard',
-    component: StudentDashboardComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Student', 'Admin']
-    }
-  },
-
-
-  // =========================================
-  // Add Student
-  // Admin Only
-  // =========================================
-
-  {
-    path: 'add-student',
-    component: AddStudentComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Admin']
-    }
-  },
-
-
-  // =========================================
-  // Courses
-  // Student + Admin
-  // =========================================
-
-  {
-    path: 'courses',
-    component: CoursesComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Student', 'Admin']
-    }
-  },
-
-
-  // =========================================
-  // Add Course
-  // Admin Only
-  // =========================================
-
-  {
-    path: 'courses/add',
-    component: AddCourseComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Admin']
-    }
-  },
-
-
-  // =========================================
-  // Edit Course
-  // Admin Only
-  // =========================================
-
-  {
-    path: 'courses/edit/:id',
-    component: EditCourseComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Admin']
-    }
-  },
-
-
-  // =========================================
-  // Instructors
-  // Admin Only
-  // =========================================
-
-  {
-    path: 'instructors',
-    component: InstructorsComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Admin']
-    }
-  },
-
-
-  // =========================================
-  // Enrollments
-  // Student + Admin
-  // =========================================
-
-  {
-    path: 'enrollments',
-    component: EnrollmentsComponent,
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['Student', 'Admin']
-    }
-  },
-
-
-  // =========================================
-  // Unknown Route
+  // UNKNOWN ROUTE
   // =========================================
 
   {
@@ -246,5 +338,4 @@ const routes: Routes = [
   ]
 
 })
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}

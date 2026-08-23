@@ -13,6 +13,10 @@ namespace CourseManagementSystem.Services
             _repository = repository;
         }
 
+        // =========================================
+        // Get All Instructors
+        // =========================================
+
         public async Task<List<InstructorDto>> GetAll()
         {
             var instructors = await _repository.GetAll();
@@ -23,16 +27,29 @@ namespace CourseManagementSystem.Services
                 Name = i.Name,
                 Email = i.Email,
                 Phone = i.Phone,
-                Specialization = i.Specialization
+                Specialization = i.Specialization,
+
+                // Courses taught by instructor
+                Courses = i.Courses
+                    .Select(c => c.Title)
+                    .ToList()
+
             }).ToList();
         }
+
+
+        // =========================================
+        // Get Instructor By ID
+        // =========================================
 
         public async Task<InstructorDto?> GetById(int id)
         {
             var instructor = await _repository.GetById(id);
 
             if (instructor == null)
+            {
                 return null;
+            }
 
             return new InstructorDto
             {
@@ -40,9 +57,19 @@ namespace CourseManagementSystem.Services
                 Name = instructor.Name,
                 Email = instructor.Email,
                 Phone = instructor.Phone,
-                Specialization = instructor.Specialization
+                Specialization = instructor.Specialization,
+
+                // Courses taught by instructor
+                Courses = instructor.Courses
+                    .Select(c => c.Title)
+                    .ToList()
             };
         }
+
+
+        // =========================================
+        // Add Instructor
+        // =========================================
 
         public async Task<Instructor> Add(InstructorDto dto)
         {
@@ -57,6 +84,11 @@ namespace CourseManagementSystem.Services
             return await _repository.Add(instructor);
         }
 
+
+        // =========================================
+        // Update Instructor
+        // =========================================
+
         public async Task<bool> Update(int id, InstructorDto dto)
         {
             var instructor = new Instructor
@@ -70,6 +102,11 @@ namespace CourseManagementSystem.Services
 
             return await _repository.Update(instructor);
         }
+
+
+        // =========================================
+        // Delete Instructor
+        // =========================================
 
         public async Task<bool> Delete(int id)
         {

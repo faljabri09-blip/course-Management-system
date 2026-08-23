@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -29,47 +29,76 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
 // =========================================
+// Student Dashboard
+// =========================================
+
+import {
+  StudentDashboardComponent
+} from './pages/student-dashboard/student-dashboard.component';
+
+
+// =========================================
+// Instructor Dashboard
+// Instructor Only
+// =========================================
+
+import {
+  InstructorDashboardComponent
+} from './pages/instructor-dashboard/instructor-dashboard.component';
+
+
+// =========================================
 // Courses
 // =========================================
 
-import { CoursesComponent } from './pages/courses/courses.component';
-import { AddCourseComponent } from './pages/add-course/add-course.component';
-import { EditCourseComponent } from './pages/edit-course/edit-course.component';
+import {
+  CoursesComponent
+} from './pages/courses/courses.component';
 
+import {
+  AddCourseComponent
+} from './pages/add-course/add-course.component';
 
-// =========================================
-// Instructors
-// =========================================
-
-import { InstructorsComponent } from './pages/instructors/instructors.component';
+import {
+  EditCourseComponent
+} from './pages/edit-course/edit-course.component';
 
 
 // =========================================
 // Enrollments
 // =========================================
 
-import { EnrollmentsComponent } from './pages/enrollments/enrollments.component';
+import {
+  EnrollmentsComponent
+} from './pages/enrollments/enrollments.component';
 
 
 // =========================================
-// Student
+// Student Pages
 // =========================================
 
-import { StudentDashboardComponent } from './pages/student-dashboard/student-dashboard.component';
+import {
+  AvailableCoursesComponent
+} from './pages/available-courses/available-courses.component';
 
-import { AvailableCoursesComponent } from './pages/available-courses/available-courses.component';
+import {
+  MyEnrollmentsComponent
+} from './pages/my-enrollments/my-enrollments.component';
 
-import { MyEnrollmentsComponent } from './pages/my-enrollments/my-enrollments.component';
-
-import { AddStudentComponent } from './pages/add-student/add-student.component';
+import {
+  AddStudentComponent
+} from './pages/add-student/add-student.component';
 
 
 // =========================================
 // Interceptor
 // =========================================
 
-import { AuthInterceptor } from './interceptors/auth.interceptor';
-
+import {
+  AuthInterceptor
+} from './interceptors/auth.interceptor';
+import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
+import { InstructorsComponent } from './pages/instructors/instructors.component';
 
 
 @NgModule({
@@ -80,31 +109,64 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
   declarations: [
 
+    // Main
     AppComponent,
 
+
+    // =======================================
     // Authentication
+    // =======================================
+
     LoginComponent,
     RegisterComponent,
 
+
+    // =======================================
     // Admin Dashboard
+    // =======================================
+
     DashboardComponent,
 
+
+    // =======================================
+    // Student Dashboard
+    // =======================================
+
+    StudentDashboardComponent,
+
+
+    // =======================================
+    // Instructor Dashboard
+    // =======================================
+
+    InstructorDashboardComponent,
+
+
+    // =======================================
     // Courses
+    // =======================================
+
     CoursesComponent,
     AddCourseComponent,
     EditCourseComponent,
 
-    // Instructors
-    InstructorsComponent,
 
+    // =======================================
     // Enrollments
+    // =======================================
+
     EnrollmentsComponent,
 
-    // Student
-    StudentDashboardComponent,
+
+    // =======================================
+    // Student Pages
+    // =======================================
+
     AvailableCoursesComponent,
     MyEnrollmentsComponent,
-    AddStudentComponent
+    AddStudentComponent,
+    DashboardLayoutComponent,
+    InstructorsComponent
 
   ],
 
@@ -117,11 +179,13 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
     BrowserModule,
 
-    AppRoutingModule,
+    CommonModule,
 
     FormsModule,
 
-    HttpClientModule
+    HttpClientModule,
+
+    AppRoutingModule
 
   ],
 
@@ -153,4 +217,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 })
 
-export class AppModule { }
+export class AppModule {
+
+}

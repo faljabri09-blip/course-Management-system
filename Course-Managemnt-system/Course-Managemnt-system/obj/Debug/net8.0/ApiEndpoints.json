@@ -336,7 +336,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CourseManagementSystem.DTOs.StudentDTo",
+        "Type": "CourseManagementSystem.DTOs.StudentDto",
         "IsRequired": true
       }
     ],
@@ -373,7 +373,7 @@
       },
       {
         "Name": "dto",
-        "Type": "CourseManagementSystem.DTOs.StudentDTo",
+        "Type": "CourseManagementSystem.DTOs.StudentDto",
         "IsRequired": true
       }
     ],

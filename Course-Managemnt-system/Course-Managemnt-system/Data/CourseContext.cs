@@ -42,16 +42,7 @@ namespace CourseManagementSystem.Data
                 .HasPrecision(5, 2);
 
 
-            // =========================================
-            // User - Student Relationship
-            // =========================================
-
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.User)
-                .WithMany()
-                .HasForeignKey(s => s.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+         
 
             // =========================================
             // Course - Instructor Relationship

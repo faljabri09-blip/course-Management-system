@@ -1,777 +1,479 @@
-<div class="dashboard-layout">
+<!-- ================================================= -->
+<!-- PAGE TITLE -->
+<!-- ================================================= -->
 
-  <!-- ============================= -->
-  <!-- Sidebar -->
-  <!-- ============================= -->
+<section class="page-title">
 
-  <aside class="sidebar">
+  <div>
 
-    <div class="sidebar-logo">
+    <h1>
+      Dashboard Overview
+    </h1>
 
-      <div class="logo-box">
+    <p>
+      Welcome back, here is what's happening today.
+    </p>
 
-        <img
-          src="assets/BCO.d22afff8-734a-47f4-aa68-dd80034394aa.png"
-          alt="EduFlow Logo">
+  </div>
 
-      </div>
+  <div class="page-actions">
 
-      <span>EduFlow</span>
+    <button
+      type="button"
+      class="secondary-btn"
+      (click)="goToAddStudent()">
+
+      <i class="bi bi-person-plus"></i>
+
+      Add Student
+
+    </button>
+
+    <button
+      type="button"
+      class="primary-btn"
+      (click)="goToCourses()">
+
+      <i class="bi bi-plus-lg"></i>
+
+      Add Course
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- STATISTICS -->
+<!-- ================================================= -->
+
+<section class="stats-grid">
+
+  <div class="stat-card">
+
+    <div class="stat-content">
+
+      <span class="stat-label">
+        TOTAL STUDENTS
+      </span>
+
+      <h2>
+        {{ totalStudents | number }}
+      </h2>
+
+      <small class="growth">
+
+        <i class="bi bi-arrow-up-right"></i>
+
+        12%
+
+        <span>
+          vs last month
+        </span>
+
+      </small>
 
     </div>
 
+    <div class="stat-icon students">
+      <i class="bi bi-people-fill"></i>
+    </div>
 
-    <!-- ============================= -->
-    <!-- Navigation -->
-    <!-- ============================= -->
-
-    <nav class="sidebar-menu">
-
-      <!-- Admin Dashboard -->
-
-      <a
-        class="menu-item active"
-        routerLink="/dashboard">
-
-        <i class="bi bi-grid-1x2-fill menu-icon"></i>
-
-        <span>
-          Dashboard
-        </span>
-
-      </a>
+  </div>
 
 
-      <!-- Students -->
+  <div class="stat-card">
 
-      <a
-        class="menu-item"
-        routerLink="/student-dashboard">
+    <div class="stat-content">
 
-        <i class="bi bi-people-fill menu-icon"></i>
+      <span class="stat-label">
+        TOTAL INSTRUCTORS
+      </span>
 
-        <span>
-          Students
-        </span>
+      <h2>
+        {{ totalInstructors }}
+      </h2>
 
-      </a>
-
-
-      <!-- Instructors -->
-
-      <a
-        class="menu-item"
-        routerLink="/instructors">
-
-        <i class="bi bi-person-workspace menu-icon"></i>
-
-        <span>
-          Instructors
-        </span>
-
-      </a>
-
-
-      <!-- Courses -->
-
-      <a
-        class="menu-item"
-        routerLink="/courses">
-
-        <i class="bi bi-book-half menu-icon"></i>
-
-        <span>
-          Courses
-        </span>
-
-      </a>
-
-
-      <!-- Enrollments -->
-
-      <a
-        class="menu-item"
-        routerLink="/enrollments">
-
-        <i class="bi bi-clipboard-check-fill menu-icon"></i>
-
-        <span>
-          Enrollments
-        </span>
-
-      </a>
-
-    </nav>
-
-
-    <!-- ============================= -->
-    <!-- Sidebar Bottom -->
-    <!-- ============================= -->
-
-    <div class="sidebar-bottom">
-
-      <!-- Settings -->
-
-      <button
-        type="button"
-        class="bottom-item">
-
-        <i class="bi bi-gear-fill"></i>
-
-        <span>
-          Settings
-        </span>
-
-      </button>
-
-
-      <!-- Logout -->
-
-      <button
-        type="button"
-        class="bottom-item"
-        (click)="logout()">
-
-        <i class="bi bi-box-arrow-right"></i>
-
-        <span>
-          Logout
-        </span>
-
-      </button>
+      <small class="stat-description">
+        Active this semester
+      </small>
 
     </div>
 
-  </aside>
+    <div class="stat-icon instructors">
+      <i class="bi bi-person-workspace"></i>
+    </div>
+
+  </div>
 
 
-  <!-- ============================= -->
-  <!-- Main Content -->
-  <!-- ============================= -->
+  <div class="stat-card">
 
-  <main class="main-content">
+    <div class="stat-content">
 
+      <span class="stat-label">
+        TOTAL COURSES
+      </span>
 
-    <!-- ============================= -->
-    <!-- Header -->
-    <!-- ============================= -->
+      <h2>
+        {{ totalCourses }}
+      </h2>
 
-    <header class="top-header">
+      <small class="stat-description">
+        Across 8 categories
+      </small>
 
-      <!-- Search -->
+    </div>
 
-      <div class="search-box">
+    <div class="stat-icon courses">
+      <i class="bi bi-book-half"></i>
+    </div>
 
-        <i class="bi bi-search search-icon"></i>
-
-        <input
-          type="text"
-          placeholder="Search records, students, or courses...">
-
-      </div>
-
-
-      <!-- User -->
-
-      <div class="header-user">
-
-        <!-- Notification -->
-
-        <div class="notification">
-
-          <i class="bi bi-bell"></i>
-
-          <span class="notification-dot"></span>
-
-        </div>
+  </div>
 
 
-        <div class="header-divider"></div>
+  <div class="stat-card">
+
+    <div class="stat-content">
+
+      <span class="stat-label">
+        TOTAL ENROLLMENTS
+      </span>
+
+      <h2>
+        {{ totalEnrollments | number }}
+      </h2>
+
+      <small class="growth">
+
+        <i class="bi bi-arrow-up-right"></i>
+
+        5%
+
+        <span>
+          vs last month
+        </span>
+
+      </small>
+
+    </div>
+
+    <div class="stat-icon enrollments">
+      <i class="bi bi-clipboard-check-fill"></i>
+    </div>
+
+  </div>
+
+</section>
 
 
-        <!-- User Information -->
+<!-- ================================================= -->
+<!-- CHARTS -->
+<!-- ================================================= -->
 
-        <div class="user-text">
+<section class="charts-grid">
 
-          <strong>
-            {{ username }}
-          </strong>
+  <!-- Enrollment Overview -->
 
-          <span>
-            Administrator
-          </span>
+  <div class="dashboard-card enrollment-chart-card">
 
-        </div>
-
-
-        <!-- Avatar -->
-
-        <div class="user-avatar">
-
-          {{ userInitial }}
-
-        </div>
-
-      </div>
-
-    </header>
-
-
-    <!-- ============================= -->
-    <!-- Page Title -->
-    <!-- ============================= -->
-
-    <section class="page-title">
+    <div class="card-header">
 
       <div>
 
-        <h1>
-          Dashboard Overview
-        </h1>
+        <h2>
+          Enrollment Overview
+        </h2>
 
         <p>
-          Welcome back, here is what's happening today.
+          Monthly trends from Jan to Jun
         </p>
 
       </div>
 
+      <button
+        type="button"
+        class="more-btn">
 
-      <!-- Page Actions -->
+        <i class="bi bi-three-dots"></i>
 
-      <div class="page-actions">
+      </button>
 
-        <!-- Add Student -->
+    </div>
 
-        <button
-          type="button"
-          class="secondary-btn"
-          (click)="goToAddStudent()">
+    <div class="line-chart-wrapper">
 
-          <i class="bi bi-person-plus"></i>
+      <canvas id="enrollmentChart"></canvas>
 
-          Add Student
+    </div>
 
-        </button>
+  </div>
 
 
-        <!-- Add Course -->
+  <!-- Right Charts -->
 
-        <button
-          type="button"
-          class="primary-btn"
-          (click)="goToCourses()">
+  <div class="right-charts">
 
-          <i class="bi bi-plus-lg"></i>
+    <!-- Courses By Category -->
 
-          Add Course
-
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- ============================= -->
-    <!-- Statistics -->
-    <!-- ============================= -->
-
-    <section class="stats-grid">
-
-      <!-- Total Students -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            TOTAL STUDENTS
-          </span>
-
-          <h2>
-            {{ totalStudents | number }}
-          </h2>
-
-          <small class="growth">
-
-            <i class="bi bi-arrow-up-right"></i>
-
-            12%
-
-            <span>
-              vs last month
-            </span>
-
-          </small>
-
-        </div>
-
-
-        <div class="stat-icon students">
-
-          <i class="bi bi-people-fill"></i>
-
-        </div>
-
-      </div>
-
-
-      <!-- Total Instructors -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            TOTAL INSTRUCTORS
-          </span>
-
-          <h2>
-            {{ totalInstructors }}
-          </h2>
-
-          <small class="stat-description">
-            Active this semester
-          </small>
-
-        </div>
-
-
-        <div class="stat-icon instructors">
-
-          <i class="bi bi-person-workspace"></i>
-
-        </div>
-
-      </div>
-
-
-      <!-- Total Courses -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            TOTAL COURSES
-          </span>
-
-          <h2>
-            {{ totalCourses }}
-          </h2>
-
-          <small class="stat-description">
-            Across 8 categories
-          </small>
-
-        </div>
-
-
-        <div class="stat-icon courses">
-
-          <i class="bi bi-book-half"></i>
-
-        </div>
-
-      </div>
-
-
-      <!-- Total Enrollments -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            TOTAL ENROLLMENTS
-          </span>
-
-          <h2>
-            {{ totalEnrollments | number }}
-          </h2>
-
-          <small class="growth">
-
-            <i class="bi bi-arrow-up-right"></i>
-
-            5%
-
-            <span>
-              vs last month
-            </span>
-
-          </small>
-
-        </div>
-
-
-        <div class="stat-icon enrollments">
-
-          <i class="bi bi-clipboard-check-fill"></i>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ============================= -->
-    <!-- Charts -->
-    <!-- ============================= -->
-
-    <section class="charts-grid">
-
-      <!-- Enrollment Overview -->
-
-      <div class="dashboard-card enrollment-chart-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <h2>
-              Enrollment Overview
-            </h2>
-
-            <p>
-              Monthly trends from Jan to Jun
-            </p>
-
-          </div>
-
-
-          <button
-            type="button"
-            class="more-btn">
-
-            <i class="bi bi-three-dots"></i>
-
-          </button>
-
-        </div>
-
-
-        <div class="line-chart-wrapper">
-
-          <canvas
-            id="enrollmentChart">
-          </canvas>
-
-        </div>
-
-      </div>
-
-
-      <!-- Right Charts -->
-
-      <div class="right-charts">
-
-        <!-- Courses by Category -->
-
-        <div class="dashboard-card small-chart-card">
-
-          <div class="card-header">
-
-            <div>
-
-              <h2>
-                Courses by Category
-              </h2>
-
-              <p>
-                Course distribution
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="doughnut-area">
-
-            <div class="doughnut-wrapper">
-
-              <canvas
-                id="coursesChart">
-              </canvas>
-
-
-              <div class="doughnut-center">
-
-                <strong>
-                  {{ totalCourses }}
-                </strong>
-
-                <span>
-                  Total
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <!-- Legend -->
-
-            <div class="chart-legend">
-
-              <div>
-
-                <span class="legend-dot tech"></span>
-
-                Tech
-
-              </div>
-
-
-              <div>
-
-                <span class="legend-dot design"></span>
-
-                Design
-
-              </div>
-
-
-              <div>
-
-                <span class="legend-dot business"></span>
-
-                Business
-
-              </div>
-
-
-              <div>
-
-                <span class="legend-dot other"></span>
-
-                Other
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- Enrollment Status -->
-
-        <div class="dashboard-card small-chart-card">
-
-          <div class="card-header">
-
-            <div>
-
-              <h2>
-                Enrollment Status
-              </h2>
-
-              <p>
-                Current enrollment progress
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="bar-chart-wrapper">
-
-            <canvas
-              id="statusChart">
-            </canvas>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ============================= -->
-    <!-- Recent Enrollments -->
-    <!-- ============================= -->
-
-    <section class="dashboard-card recent-card">
+    <div class="dashboard-card small-chart-card">
 
       <div class="card-header">
 
         <div>
 
           <h2>
-            Recent Enrollments
+            Courses by Category
           </h2>
 
           <p>
-            Latest student registrations and progress.
+            Course distribution
           </p>
 
         </div>
 
+      </div>
 
-        <button
-          type="button"
-          class="view-all-btn"
-          (click)="goToEnrollments()">
+      <div class="doughnut-area">
 
-          View All
+        <div class="doughnut-wrapper">
 
-          <i class="bi bi-arrow-right"></i>
+          <canvas id="coursesChart"></canvas>
 
-        </button>
+          <div class="doughnut-center">
+
+            <strong>
+              {{ totalCourses }}
+            </strong>
+
+            <span>
+              Total
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="chart-legend">
+
+          <div>
+            <span class="legend-dot tech"></span>
+            Tech
+          </div>
+
+          <div>
+            <span class="legend-dot design"></span>
+            Design
+          </div>
+
+          <div>
+            <span class="legend-dot business"></span>
+            Business
+          </div>
+
+          <div>
+            <span class="legend-dot other"></span>
+            Other
+          </div>
+
+        </div>
 
       </div>
 
-
-      <!-- Enrollment Table -->
-
-      <div class="table-wrapper">
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>
-                STUDENT
-              </th>
-
-              <th>
-                COURSE
-              </th>
-
-              <th>
-                DATE
-              </th>
-
-              <th>
-                STATUS
-              </th>
-
-              <th>
-                GRADE
-              </th>
-
-            </tr>
-
-          </thead>
+    </div>
 
 
-          <tbody>
+    <!-- Enrollment Status -->
 
-            <tr
-              *ngFor="let enrollment of recentEnrollments">
+    <div class="dashboard-card small-chart-card">
 
-              <!-- Student -->
+      <div class="card-header">
 
-              <td>
+        <div>
 
-                <div class="student-cell">
+          <h2>
+            Enrollment Status
+          </h2>
 
-                  <div class="student-avatar">
+          <p>
+            Current enrollment progress
+          </p>
 
-                    {{
-                      enrollment.student
-                        .charAt(0)
-                        .toUpperCase()
-                    }}
-
-                  </div>
-
-
-                  <div class="student-info">
-
-                    <span>
-                      {{ enrollment.student }}
-                    </span>
-
-                    <small>
-                      Student
-                    </small>
-
-                  </div>
-
-                </div>
-
-              </td>
-
-
-              <!-- Course -->
-
-              <td>
-
-                <div class="course-cell">
-
-                  <div class="course-icon">
-
-                    <i class="bi bi-book"></i>
-
-                  </div>
-
-                  {{ enrollment.course }}
-
-                </div>
-
-              </td>
-
-
-              <!-- Date -->
-
-              <td>
-
-                {{ enrollment.date }}
-
-              </td>
-
-
-              <!-- Status -->
-
-              <td>
-
-                <span
-                  class="status-badge"
-                  [class.active]="enrollment.status === 'Active'"
-                  [class.completed]="enrollment.status === 'Completed'"
-                  [class.dropped]="enrollment.status === 'Dropped'">
-
-                  <span class="status-dot"></span>
-
-                  {{ enrollment.status }}
-
-                </span>
-
-              </td>
-
-
-              <!-- Grade -->
-
-              <td>
-
-                <span class="grade">
-
-                  {{ enrollment.grade }}
-
-                </span>
-
-              </td>
-
-            </tr>
-
-          </tbody>
-
-        </table>
+        </div>
 
       </div>
 
-    </section>
+      <div class="bar-chart-wrapper">
 
-  </main>
+        <canvas id="statusChart"></canvas>
 
-</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- RECENT ENROLLMENTS -->
+<!-- ================================================= -->
+
+<section class="dashboard-card recent-card">
+
+  <div class="card-header">
+
+    <div>
+
+      <h2>
+        Recent Enrollments
+      </h2>
+
+      <p>
+        Latest student registrations and progress.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="view-all-btn"
+      (click)="goToEnrollments()">
+
+      View All
+
+      <i class="bi bi-arrow-right"></i>
+
+    </button>
+
+  </div>
+
+
+  <div class="table-wrapper">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>STUDENT</th>
+          <th>COURSE</th>
+          <th>DATE</th>
+          <th>STATUS</th>
+          <th>GRADE</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let enrollment of recentEnrollments">
+
+          <td>
+
+            <div class="student-cell">
+
+              <div class="student-avatar">
+
+                {{
+                  enrollment.student
+                    .charAt(0)
+                    .toUpperCase()
+                }}
+
+              </div>
+
+              <div class="student-info">
+
+                <span>
+                  {{ enrollment.student }}
+                </span>
+
+                <small>
+                  Student
+                </small>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <td>
+
+            <div class="course-cell">
+
+              <div class="course-icon">
+
+                <i class="bi bi-book"></i>
+
+              </div>
+
+              {{ enrollment.course }}
+
+            </div>
+
+          </td>
+
+
+          <td>
+            {{ enrollment.date }}
+          </td>
+
+
+          <td>
+
+            <span
+              class="status-badge"
+              [class.active]="enrollment.status === 'Active'"
+              [class.completed]="enrollment.status === 'Completed'"
+              [class.dropped]="enrollment.status === 'Dropped'">
+
+              <span class="status-dot"></span>
+
+              {{ enrollment.status }}
+
+            </span>
+
+          </td>
+
+
+          <td>
+
+            <span class="grade">
+              {{ enrollment.grade }}
+            </span>
+
+          </td>
+
+        </tr>
+
+
+        <tr
+          *ngIf="recentEnrollments.length === 0">
+
+          <td colspan="5">
+
+            <div class="empty-message">
+              No recent enrollments found.
+            </div>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+

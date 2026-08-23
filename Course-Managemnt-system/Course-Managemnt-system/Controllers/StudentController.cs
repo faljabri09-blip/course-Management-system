@@ -53,7 +53,7 @@ namespace CourseManagementSystem.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Add(StudentDTo dto)
+        public async Task<IActionResult> Add(StudentDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace CourseManagementSystem.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(
             int id,
-            StudentDTo dto)
+            StudentDto dto)
         {
             if (!ModelState.IsValid)
             {

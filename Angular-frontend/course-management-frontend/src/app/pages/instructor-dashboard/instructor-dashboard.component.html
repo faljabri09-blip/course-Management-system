@@ -1,0 +1,410 @@
+<div class="instructor-dashboard-page">
+
+  <!-- ========================================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================================= -->
+
+  <section class="page-title">
+
+    <div>
+
+      <h1>
+        Instructor Dashboard
+      </h1>
+
+      <p>
+        Welcome back, {{ instructor?.name || username }}.
+      </p>
+
+    </div>
+
+
+    <div class="page-actions">
+
+      <button
+        type="button"
+        class="secondary-btn"
+        (click)="goToStudents()">
+
+        <i class="bi bi-people"></i>
+
+        View Students
+
+      </button>
+
+
+      <button
+        type="button"
+        class="primary-btn"
+        (click)="goToCourses()">
+
+        <i class="bi bi-book"></i>
+
+        View Courses
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+  <!-- LOADING -->
+  <!-- ========================================= -->
+
+  <section
+    class="dashboard-card"
+    *ngIf="loading">
+
+    <div class="empty-message">
+
+      <i class="bi bi-arrow-repeat"></i>
+
+      Loading instructor information...
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+  <!-- ERROR -->
+  <!-- ========================================= -->
+
+  <section
+    class="dashboard-card"
+    *ngIf="!loading && errorMessage">
+
+    <div class="empty-message">
+
+      <i class="bi bi-exclamation-triangle"></i>
+
+      {{ errorMessage }}
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+  <!-- INSTRUCTOR CONTENT -->
+  <!-- ========================================= -->
+
+  <div
+    *ngIf="!loading && instructor">
+
+
+    <!-- ======================================= -->
+    <!-- INSTRUCTOR INFORMATION -->
+    <!-- ======================================= -->
+
+    <section class="dashboard-card instructor-profile-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            My Profile
+          </h2>
+
+          <p>
+            Your instructor account information.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="instructor-profile">
+
+        <!-- Avatar -->
+
+        <div class="instructor-avatar">
+
+          {{ userInitial }}
+
+        </div>
+
+
+        <!-- Information -->
+
+        <div class="instructor-details">
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              NAME
+            </span>
+
+            <strong>
+              {{ instructor.name }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              EMAIL
+            </span>
+
+            <strong>
+              {{ instructor.email }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              PHONE
+            </span>
+
+            <strong>
+              {{ instructor.phone || '-' }}
+            </strong>
+
+          </div>
+
+
+          <div class="detail-item">
+
+            <span class="detail-label">
+              SPECIALIZATION
+            </span>
+
+            <strong>
+              {{ instructor.specialization || '-' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================= -->
+    <!-- STATISTICS -->
+    <!-- ======================================= -->
+
+    <section class="stats-grid">
+
+
+      <!-- MY COURSES -->
+
+      <div class="stat-card">
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            MY COURSES
+          </span>
+
+          <h2>
+            {{ totalCourses }}
+          </h2>
+
+          <small class="stat-description">
+            Courses you teach
+          </small>
+
+        </div>
+
+
+        <div class="stat-icon courses">
+
+          <i class="bi bi-book-half"></i>
+
+        </div>
+
+      </div>
+
+
+      <!-- MY STUDENTS -->
+
+      <div class="stat-card">
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            MY STUDENTS
+          </span>
+
+          <h2>
+            {{ totalStudents }}
+          </h2>
+
+          <small class="stat-description">
+            Students enrolled
+          </small>
+
+        </div>
+
+
+        <div class="stat-icon students">
+
+          <i class="bi bi-people-fill"></i>
+
+        </div>
+
+      </div>
+
+
+      <!-- ENROLLMENTS -->
+
+      <div class="stat-card">
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            ENROLLMENTS
+          </span>
+
+          <h2>
+            {{ totalEnrollments }}
+          </h2>
+
+          <small class="stat-description">
+            Total enrollments
+          </small>
+
+        </div>
+
+
+        <div class="stat-icon enrollments">
+
+          <i class="bi bi-clipboard-check-fill"></i>
+
+        </div>
+
+      </div>
+
+
+      <!-- ROLE -->
+
+      <div class="stat-card">
+
+        <div class="stat-content">
+
+          <span class="stat-label">
+            ACCOUNT ROLE
+          </span>
+
+          <h2>
+            {{ role || 'Instructor' }}
+          </h2>
+
+          <small class="stat-description">
+            Teaching account
+          </small>
+
+        </div>
+
+
+        <div class="stat-icon instructors">
+
+          <i class="bi bi-person-workspace"></i>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================= -->
+    <!-- MY COURSES -->
+    <!-- ======================================= -->
+
+    <section class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            My Courses
+          </h2>
+
+          <p>
+            Courses currently assigned to you.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="view-all-btn"
+          (click)="goToCourses()">
+
+          View All
+
+          <i class="bi bi-arrow-right"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- Courses -->
+
+      <div
+        class="course-grid"
+        *ngIf="instructor.courses && instructor.courses.length > 0">
+
+
+        <div
+          class="course-card"
+          *ngFor="let course of instructor.courses">
+
+
+          <div class="course-card-icon">
+
+            <i class="bi bi-book-half"></i>
+
+          </div>
+
+
+          <div class="course-card-content">
+
+            <h3>
+              {{ course }}
+            </h3>
+
+            <p>
+              Course assigned to you.
+            </p>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- No Courses -->
+
+      <div
+        class="empty-message"
+        *ngIf="!instructor.courses || instructor.courses.length === 0">
+
+        <i class="bi bi-book"></i>
+
+        No courses assigned yet.
+
+      </div>
+
+    </section>
+  </div>
+
+</div>

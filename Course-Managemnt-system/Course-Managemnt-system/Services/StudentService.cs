@@ -35,7 +35,7 @@ namespace CourseManagementSystem.Services
         // Add Student
         // =========================================
 
-        public async Task<Student> Add(StudentDTo dto)
+        public async Task<Student> Add(StudentDto dto)
         {
             var student = new Student
             {
@@ -51,7 +51,7 @@ namespace CourseManagementSystem.Services
         // Update Student
         // =========================================
 
-        public async Task<bool> Update(int id, StudentDTo dto)
+        public async Task<bool> Update(int id, StudentDto dto)
         {
             var student = new Student
             {
