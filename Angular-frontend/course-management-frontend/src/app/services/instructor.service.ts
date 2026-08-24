@@ -24,8 +24,7 @@ export class InstructorService {
   ) {}
 
   // =========================================
-  // Get All Instructors
-  // Used by Admin → Instructors
+  // GET ALL INSTRUCTORS
   // =========================================
 
   getAll(): Observable<Instructor[]> {
@@ -35,7 +34,7 @@ export class InstructorService {
   }
 
   // =========================================
-  // Get Instructor By ID
+  // GET INSTRUCTOR BY ID
   // =========================================
 
   getById(id: number): Observable<Instructor> {
@@ -45,7 +44,7 @@ export class InstructorService {
   }
 
   // =========================================
-  // Add Instructor
+  // ADD INSTRUCTOR
   // =========================================
 
   add(instructor: Instructor): Observable<Instructor> {
@@ -56,26 +55,37 @@ export class InstructorService {
   }
 
   // =========================================
-  // Update Instructor
+  // UPDATE INSTRUCTOR
   // =========================================
 
   update(
     id: number,
     instructor: Instructor
-  ): Observable<any> {
+  ): Observable<string> {
+
     return this.http.put(
       `${this.apiUrl}/${id}`,
-      instructor
+      instructor,
+      {
+        responseType: 'text'
+      }
     );
+
   }
 
   // =========================================
-  // Delete Instructor
+  // DELETE INSTRUCTOR
   // =========================================
 
-  delete(id: number): Observable<any> {
+  delete(id: number): Observable<string> {
+
     return this.http.delete(
-      `${this.apiUrl}/${id}`
+      `${this.apiUrl}/${id}`,
+      {
+        responseType: 'text'
+      }
     );
+
   }
+
 }

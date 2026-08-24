@@ -1,26 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-interface Course {
-  id: number;
-  title: string;
-  description: string;
-  credits: number;
-  price: number;
-  instructorId: number;
-}
+import {
+  EnrollmentService,
+  Enrollment
+} from '../../services/enrollment.service';
 
-interface Enrollment {
-  id: number;
-  studentId: number;
-  courseId: number;
-  enrollmentDate: string;
-  status: string;
-  grade: number | null;
-  course?: Course;
-}
+import {
+  StudentService,
+  Student
+} from '../../services/student.service';
+
 
 @Component({
   selector: 'app-enrollments',
@@ -29,11 +21,33 @@ interface Enrollment {
 })
 export class EnrollmentsComponent implements OnInit {
 
-  username: string = 'Student';
+  // =========================================
+  // USER INFORMATION
+  // =========================================
 
-  studentId: number = 1;
+  username: string = '';
+  studentId: number = 0;
+  role: string = '';
+  isAdmin: boolean = false;
+
+
+  // =========================================
+  // ENROLLMENTS
+  // =========================================
 
   enrollments: Enrollment[] = [];
+
+
+  // =========================================
+  // STUDENTS
+  // =========================================
+
+  students: Student[] = [];
+
+
+  // =========================================
+  // LOADING
+  // =========================================
 
   loading: boolean = false;
 
@@ -41,24 +55,36 @@ export class EnrollmentsComponent implements OnInit {
 
   successMessage: string = '';
 
+
+  // =========================================
+  // CONSTRUCTOR
+  // =========================================
+
   constructor(
-    private http: HttpClient,
+    private enrollmentService: EnrollmentService,
+    private studentService: StudentService,
     private router: Router
   ) {}
 
+
+  // =========================================
+  // ON INIT
+  // =========================================
+
   ngOnInit(): void {
 
-    this.loadStudent();
+    this.loadUser();
 
     this.loadEnrollments();
 
   }
 
-  // ==========================================
-  // LOAD STUDENT
-  // ==========================================
 
-  loadStudent(): void {
+  // =========================================
+  // LOAD USER
+  // =========================================
+
+  loadUser(): void {
 
     const savedStudentId =
       localStorage.getItem('studentId');
@@ -66,23 +92,52 @@ export class EnrollmentsComponent implements OnInit {
     const savedUsername =
       localStorage.getItem('username');
 
+    const savedRole =
+      localStorage.getItem('role');
+
+
     if (savedStudentId) {
 
-      this.studentId = Number(savedStudentId);
+      this.studentId =
+        Number(savedStudentId);
 
     }
+
 
     if (savedUsername) {
 
-      this.username = savedUsername;
+      this.username =
+        savedUsername;
 
     }
 
+
+    if (savedRole) {
+
+      this.role =
+        savedRole;
+
+    }
+
+
+    this.isAdmin =
+      this.role.trim().toLowerCase() === 'admin';
+
+
+    console.log('=================================');
+    console.log('CURRENT USER');
+    console.log('Username:', this.username);
+    console.log('Student ID:', this.studentId);
+    console.log('Role:', this.role);
+    console.log('Is Admin:', this.isAdmin);
+    console.log('=================================');
+
   }
 
-  // ==========================================
+
+  // =========================================
   // LOAD ENROLLMENTS
-  // ==========================================
+  // =========================================
 
   loadEnrollments(): void {
 
@@ -90,98 +145,550 @@ export class EnrollmentsComponent implements OnInit {
 
     this.errorMessage = '';
 
-    this.http.get<Enrollment[]>(
-      `${environment.apiUrl}/Enrollment/student/${this.studentId}`
-    )
-    .subscribe({
+    this.successMessage = '';
 
-      next: (data: Enrollment[]) => {
 
-        this.enrollments = data;
+    // =========================================
+    // ADMIN
+    // =========================================
 
-        this.loading = false;
+    if (this.isAdmin) {
 
-        console.log(
-          'Student enrollments:',
-          this.enrollments
-        );
+      console.log('Loading ALL enrollments for Admin...');
 
-      },
 
-      error: (error) => {
+      this.enrollmentService
+        .getAll()
+        .subscribe({
 
-        console.error(
-          'Error loading enrollments:',
-          error
-        );
+          next: (data: Enrollment[]) => {
 
-        this.loading = false;
+            console.log(
+              'ALL ENROLLMENTS FROM API:',
+              data
+            );
 
-        if (error.status === 401) {
 
-          this.errorMessage =
-            'Unauthorized. Please login again.';
+            this.enrollments =
+              data || [];
 
-        } else if (error.status === 403) {
 
-          this.errorMessage =
-            'You are not authorized to view enrollments.';
+            // Clear old students
 
-        } else {
+            this.students = [];
 
-          this.errorMessage =
-            'Unable to load enrollments.';
+
+            // =========================================
+            // GET UNIQUE STUDENT IDS
+            // =========================================
+
+            const studentIds =
+              Array.from(
+                new Set(
+                  this.enrollments
+                    .map(
+                      enrollment =>
+                        Number(enrollment.studentId)
+                    )
+                    .filter(
+                      id => id > 0
+                    )
+                )
+              );
+
+
+            console.log(
+              'Student IDs found in enrollments:',
+              studentIds
+            );
+
+
+            // =========================================
+            // NO STUDENTS
+            // =========================================
+
+            if (studentIds.length === 0) {
+
+              console.log(
+                'No valid student IDs found.'
+              );
+
+              this.loading = false;
+
+              return;
+
+            }
+
+
+            // =========================================
+            // LOAD EACH STUDENT BY ID
+            // =========================================
+
+            const requests =
+              studentIds.map(
+                (id: number) =>
+
+                  this.studentService
+                    .getById(id)
+                    .pipe(
+
+                      catchError(error => {
+
+                        console.error(
+                          `Error loading Student ID ${id}:`,
+                          error
+                        );
+
+                        return of(null);
+
+                      })
+
+                    )
+              );
+
+
+            forkJoin(requests)
+              .subscribe({
+
+                next: (students) => {
+
+                  console.log(
+                    'STUDENTS LOADED BY ID:',
+                    students
+                  );
+
+
+                  // =========================================
+                  // STORE ONLY VALID STUDENTS
+                  // =========================================
+
+                  this.students =
+                    students.filter(
+                      (student): student is Student =>
+                        student !== null
+                    );
+
+
+                  console.log(
+                    'STUDENTS STORED:',
+                    this.students
+                  );
+
+
+                  // =========================================
+                  // CONNECT STUDENT TO ENROLLMENT
+                  // =========================================
+
+                  this.enrollments =
+                    this.enrollments.map(
+                      (enrollment: Enrollment) => {
+
+                        const student =
+                          this.students.find(
+                            (item: Student) =>
+                              Number(item.id) ===
+                              Number(enrollment.studentId)
+                          );
+
+
+                        console.log(
+                          '--------------------------------'
+                        );
+
+                        console.log(
+                          'Enrollment ID:',
+                          enrollment.id
+                        );
+
+                        console.log(
+                          'Enrollment Student ID:',
+                          enrollment.studentId
+                        );
+
+                        console.log(
+                          'Matched Student:',
+                          student
+                        );
+
+
+                        if (student) {
+
+                          return {
+
+                            ...enrollment,
+
+                            student: student
+
+                          };
+
+                        }
+
+
+                        return enrollment;
+
+                      }
+                    );
+
+
+                  console.log(
+                    'FINAL ENROLLMENTS:',
+                    this.enrollments
+                  );
+
+
+                  this.loading = false;
+
+                },
+
+                error: (error) => {
+
+                  console.error(
+                    'Error loading students:',
+                    error
+                  );
+
+                  this.loading = false;
+
+                  this.handleError(
+                    error,
+                    'Unable to load student information.'
+                  );
+
+                }
+
+              });
+
+          },
+
+          error: (error) => {
+
+            console.error(
+              'Error loading enrollments:',
+              error
+            );
+
+            this.loading = false;
+
+            this.handleError(
+              error,
+              'Unable to load enrollments.'
+            );
+
+          }
+
+        });
+
+
+      return;
+
+    }
+
+
+    // =========================================
+    // STUDENT
+    // =========================================
+
+    console.log(
+      'Loading enrollments for student:',
+      this.studentId
+    );
+
+
+    if (!this.studentId || this.studentId <= 0) {
+
+      this.errorMessage =
+        'Student information was not found. Please login again.';
+
+      this.loading = false;
+
+      return;
+
+    }
+
+
+    this.enrollmentService
+      .getByStudent(this.studentId)
+      .subscribe({
+
+        next: (data: Enrollment[]) => {
+
+          console.log(
+            'STUDENT ENROLLMENTS:',
+            data
+          );
+
+
+          this.enrollments =
+            data || [];
+
+
+          this.loading = false;
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'Error loading student enrollments:',
+            error
+          );
+
+          this.loading = false;
+
+          this.handleError(
+            error,
+            'Unable to load enrollments.'
+          );
 
         }
 
-      }
-
-    });
+      });
 
   }
 
-  // ==========================================
+
+  // =========================================
+  // GET STUDENT NAME
+  // =========================================
+
+  getStudentName(
+    studentId: number
+  ): string {
+
+    const id =
+      Number(studentId);
+
+
+    // =========================================
+    // SEARCH IN STUDENTS ARRAY
+    // =========================================
+
+    const student =
+      this.students.find(
+        (item: Student) =>
+          Number(item.id) === id
+      );
+
+
+    if (student) {
+
+      const name =
+        this.extractStudentName(student);
+
+
+      if (name) {
+
+        return name;
+
+      }
+
+    }
+
+
+    // =========================================
+    // SEARCH INSIDE ENROLLMENT
+    // =========================================
+
+    const enrollment =
+      this.enrollments.find(
+        (item: Enrollment) =>
+          Number(item.studentId) === id
+      );
+
+
+    if (
+      enrollment &&
+      enrollment.student
+    ) {
+
+      const name =
+        this.extractStudentName(
+          enrollment.student
+        );
+
+
+      if (name) {
+
+        return name;
+
+      }
+
+    }
+
+
+    // =========================================
+    // STUDENT LOGGED-IN USER
+    // =========================================
+
+    if (
+      !this.isAdmin &&
+      this.studentId === id &&
+      this.username
+    ) {
+
+      return this.username;
+
+    }
+
+
+    // =========================================
+    // FINAL FALLBACK
+    // =========================================
+
+    return 'Unknown Student';
+
+  }
+
+
+  // =========================================
+  // EXTRACT STUDENT NAME
+  // =========================================
+
+  private extractStudentName(
+    student: any
+  ): string {
+
+    if (!student) {
+
+      return '';
+
+    }
+
+
+    // name
+
+    if (
+      typeof student.name === 'string' &&
+      student.name.trim() &&
+      student.name.trim().toLowerCase() !== 'string'
+    ) {
+
+      return student.name.trim();
+
+    }
+
+
+    // fullName
+
+    if (
+      typeof student.fullName === 'string' &&
+      student.fullName.trim() &&
+      student.fullName.trim().toLowerCase() !== 'string'
+    ) {
+
+      return student.fullName.trim();
+
+    }
+
+
+    // username
+
+    if (
+      typeof student.username === 'string' &&
+      student.username.trim() &&
+      student.username.trim().toLowerCase() !== 'string'
+    ) {
+
+      return student.username.trim();
+
+    }
+
+
+    // user.name
+
+    if (
+      student.user &&
+      typeof student.user.name === 'string' &&
+      student.user.name.trim() &&
+      student.user.name.trim().toLowerCase() !== 'string'
+    ) {
+
+      return student.user.name.trim();
+
+    }
+
+
+    // user.fullName
+
+    if (
+      student.user &&
+      typeof student.user.fullName === 'string' &&
+      student.user.fullName.trim() &&
+      student.user.fullName.trim().toLowerCase() !== 'string'
+    ) {
+
+      return student.user.fullName.trim();
+
+    }
+
+
+    // user.username
+
+    if (
+      student.user &&
+      typeof student.user.username === 'string' &&
+      student.user.username.trim() &&
+      student.user.username.trim().toLowerCase() !== 'string'
+    ) {
+
+      return student.user.username.trim();
+
+    }
+
+
+    return '';
+
+  }
+
+
+  // =========================================
   // ACTIVE COURSES
-  // ==========================================
+  // =========================================
 
   get activeCount(): number {
 
     return this.enrollments.filter(
       enrollment =>
-        enrollment.status === 'Active'
+        enrollment.status
+          .toLowerCase() === 'active'
     ).length;
 
   }
 
-  // ==========================================
+
+  // =========================================
   // COMPLETED COURSES
-  // ==========================================
+  // =========================================
 
   get completedCount(): number {
 
     return this.enrollments.filter(
       enrollment =>
-        enrollment.status === 'Completed'
+        enrollment.status
+          .toLowerCase() === 'completed'
     ).length;
 
   }
 
-  // ==========================================
+
+  // =========================================
   // DROPPED COURSES
-  // ==========================================
+  // =========================================
 
   get droppedCount(): number {
 
     return this.enrollments.filter(
       enrollment =>
-        enrollment.status === 'Dropped'
+        enrollment.status
+          .toLowerCase() === 'dropped'
     ).length;
 
   }
 
-  // ==========================================
+
+  // =========================================
   // USER INITIAL
-  // ==========================================
+  // =========================================
 
   get userInitial(): string {
 
@@ -191,15 +698,48 @@ export class EnrollmentsComponent implements OnInit {
 
     }
 
+
     return this.username
       .charAt(0)
       .toUpperCase();
 
   }
 
-  // ==========================================
+
+  // =========================================
+  // HANDLE ERROR
+  // =========================================
+
+  private handleError(
+    error: any,
+    defaultMessage: string
+  ): void {
+
+    if (error?.status === 401) {
+
+      this.errorMessage =
+        'Unauthorized. Please login again.';
+
+    }
+    else if (error?.status === 403) {
+
+      this.errorMessage =
+        'You are not authorized to view this information.';
+
+    }
+    else {
+
+      this.errorMessage =
+        defaultMessage;
+
+    }
+
+  }
+
+
+  // =========================================
   // LOGOUT
-  // ==========================================
+  // =========================================
 
   logout(): void {
 
@@ -209,7 +749,12 @@ export class EnrollmentsComponent implements OnInit {
 
     localStorage.removeItem('username');
 
-    this.router.navigate(['/login']);
+    localStorage.removeItem('role');
+
+
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
 

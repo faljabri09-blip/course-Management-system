@@ -369,4 +369,385 @@
 
   </section>
 
+  <!-- ========================================= -->
+<!-- ADD INSTRUCTOR MODAL -->
+<!-- ========================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showAddModal"
+  (click)="closeAddOnBackdrop($event)">
+
+  <div
+    class="modal-container"
+    (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+
+      <div>
+        <h2>Add Instructor</h2>
+        <p>Create a new instructor account.</p>
+      </div>
+
+      <button
+        type="button"
+        class="modal-close"
+        (click)="closeAddModal()"
+        [disabled]="addLoading">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="modal-error"
+      *ngIf="addErrorMessage">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      {{ addErrorMessage }}
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="form-group">
+
+        <label>
+          Instructor Name
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="addForm.name"
+          placeholder="Enter instructor name"
+          [disabled]="addLoading">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          [(ngModel)]="addForm.email"
+          placeholder="Enter email"
+          [disabled]="addLoading">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Phone
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="addForm.phone"
+          placeholder="Enter phone number"
+          [disabled]="addLoading">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Specialization
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="addForm.specialization"
+          placeholder="e.g. Database"
+          [disabled]="addLoading">
+
+      </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="secondary-modal-btn"
+        (click)="closeAddModal()"
+        [disabled]="addLoading">
+
+        Cancel
+
+      </button>
+
+
+      <button
+        type="button"
+        class="primary-modal-btn"
+        (click)="saveNewInstructor()"
+        [disabled]="addLoading">
+
+        <i
+          class="bi"
+          [ngClass]="addLoading
+            ? 'bi-arrow-repeat'
+            : 'bi-person-plus'">
+        </i>
+
+        {{ addLoading ? 'Adding...' : 'Add Instructor' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- EDIT INSTRUCTOR MODAL -->
+<!-- ========================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showEditModal"
+  (click)="closeEditOnBackdrop($event)">
+
+  <div
+    class="modal-container"
+    (click)="$event.stopPropagation()">
+
+    <div class="modal-header">
+
+      <div>
+        <h2>Edit Instructor</h2>
+        <p>Update instructor information.</p>
+      </div>
+
+      <button
+        type="button"
+        class="modal-close"
+        (click)="closeEditModal()"
+        [disabled]="editLoading">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <div
+      class="modal-error"
+      *ngIf="editErrorMessage">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      {{ editErrorMessage }}
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <div class="form-group">
+
+        <label>
+          Instructor Name
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="editForm.name"
+          placeholder="Enter instructor name"
+          [disabled]="editLoading">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          type="email"
+          [(ngModel)]="editForm.email"
+          placeholder="Enter email"
+          [disabled]="editLoading">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Phone
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="editForm.phone"
+          placeholder="Enter phone number"
+          [disabled]="editLoading">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Specialization
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="editForm.specialization"
+          placeholder="e.g. Database"
+          [disabled]="editLoading">
+
+      </div>
+
+    </div>
+
+
+    <div class="modal-footer">
+
+      <button
+        type="button"
+        class="secondary-modal-btn"
+        (click)="closeEditModal()"
+        [disabled]="editLoading">
+
+        Cancel
+
+      </button>
+
+
+      <button
+        type="button"
+        class="primary-modal-btn"
+        (click)="saveInstructor()"
+        [disabled]="editLoading">
+
+        <i
+          class="bi"
+          [ngClass]="editLoading
+            ? 'bi-arrow-repeat'
+            : 'bi-check-lg'">
+        </i>
+
+        {{ editLoading ? 'Saving...' : 'Save Changes' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- DELETE INSTRUCTOR MODAL -->
+<!-- ========================================= -->
+
+<div
+  class="modal-overlay"
+  *ngIf="showDeleteModal"
+  (click)="closeDeleteOnBackdrop($event)">
+
+  <div
+    class="modal-container delete-modal"
+    (click)="$event.stopPropagation()">
+
+    <div class="delete-icon">
+
+      <i class="bi bi-trash"></i>
+
+    </div>
+
+
+    <h2>
+      Delete Instructor?
+    </h2>
+
+
+    <p class="delete-text">
+
+      Are you sure you want to delete
+
+      <strong>
+        {{ deletingInstructor?.name }}
+      </strong>
+
+      ?
+
+      <br>
+
+      This action cannot be undone.
+
+    </p>
+
+
+    <div
+      class="modal-error"
+      *ngIf="deleteErrorMessage">
+
+      <i class="bi bi-exclamation-circle"></i>
+
+      {{ deleteErrorMessage }}
+
+    </div>
+
+
+    <div class="modal-footer delete-footer">
+
+      <button
+        type="button"
+        class="secondary-modal-btn"
+        (click)="closeDeleteModal()"
+        [disabled]="deleteLoading">
+
+        Cancel
+
+      </button>
+
+
+      <button
+        type="button"
+        class="danger-modal-btn"
+        (click)="confirmDelete()"
+        [disabled]="deleteLoading">
+
+        <i
+          class="bi"
+          [ngClass]="deleteLoading
+            ? 'bi-arrow-repeat'
+            : 'bi-trash'">
+        </i>
+
+        {{ deleteLoading ? 'Deleting...' : 'Delete Instructor' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
 </div>

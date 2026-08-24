@@ -14,11 +14,24 @@
 
       <div>
 
-        <h1>
+        <!-- ADMIN -->
+
+        <h1 *ngIf="isAdmin">
+          All Enrollments
+        </h1>
+
+        <p *ngIf="isAdmin">
+          View all student registrations and enrollment progress.
+        </p>
+
+
+        <!-- STUDENT -->
+
+        <h1 *ngIf="!isAdmin">
           My Enrollments
         </h1>
 
-        <p>
+        <p *ngIf="!isAdmin">
           View and manage your enrolled courses.
         </p>
 
@@ -59,7 +72,7 @@
 
     <section class="stats-grid">
 
-      <!-- TOTAL ENROLLMENTS -->
+      <!-- TOTAL -->
 
       <div class="stat-card">
 
@@ -74,7 +87,15 @@
           </h2>
 
           <span class="stat-description">
-            All registered courses
+
+            <span *ngIf="isAdmin">
+              All student registrations
+            </span>
+
+            <span *ngIf="!isAdmin">
+              All registered courses
+            </span>
+
           </span>
 
         </div>
@@ -175,20 +196,40 @@
 
     <section class="enrollments-card">
 
+
+      <!-- ========================================
+           CARD HEADER
+      ========================================= -->
+
       <div class="card-header">
 
         <div>
 
-          <h2>
+          <!-- ADMIN -->
+
+          <h2 *ngIf="isAdmin">
+            Recent Enrollments
+          </h2>
+
+          <p *ngIf="isAdmin">
+            Latest student registrations and progress.
+          </p>
+
+
+          <!-- STUDENT -->
+
+          <h2 *ngIf="!isAdmin">
             My Enrollments
           </h2>
 
-          <p>
-            Courses you are currently registered in
+          <p *ngIf="!isAdmin">
+            Courses you are currently registered in.
           </p>
 
         </div>
 
+
+        <!-- REFRESH -->
 
         <button
           type="button"
@@ -215,7 +256,11 @@
           ⏳
         </div>
 
-        <p>
+        <p *ngIf="isAdmin">
+          Loading enrollments...
+        </p>
+
+        <p *ngIf="!isAdmin">
           Loading your enrollments...
         </p>
 
@@ -242,11 +287,16 @@
           No Enrollments Found
         </h3>
 
-        <p>
+        <p *ngIf="isAdmin">
+          No student registrations found.
+        </p>
+
+        <p *ngIf="!isAdmin">
           You are not registered in any course yet.
         </p>
 
         <button
+          *ngIf="!isAdmin"
           type="button"
           class="browse-btn"
           routerLink="/courses">
@@ -259,14 +309,207 @@
 
 
       <!-- ========================================
-           TABLE
+           ADMIN TABLE
       ========================================= -->
 
       <div
         class="table-wrapper"
         *ngIf="
           !loading &&
-          enrollments.length > 0
+          enrollments.length > 0 &&
+          isAdmin
+        ">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                STUDENT
+              </th>
+
+              <th>
+                COURSE
+              </th>
+
+              <th>
+                ENROLLMENT DATE
+              </th>
+
+              <th>
+                STATUS
+              </th>
+
+              <th>
+                GRADE
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="let enrollment of enrollments">
+
+
+              <!-- =================================
+                   STUDENT
+              ================================== -->
+
+              <td>
+
+                <div class="course-cell">
+
+                  <div class="course-icon">
+                    👤
+                  </div>
+
+                  <div class="course-info">
+
+                    <strong>
+                      {{ enrollment.student?.name || 'Unknown Student' }}
+                    </strong>
+
+                    <span>
+                      Student ID:
+                      {{ enrollment.studentId }}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- =================================
+                   COURSE
+              ================================== -->
+
+              <td>
+
+                <div class="course-cell">
+
+                  <div class="course-icon">
+                    📚
+                  </div>
+
+                  <div class="course-info">
+
+                    <strong>
+                      {{
+                        enrollment.course?.title ||
+                        'Course ' + enrollment.courseId
+                      }}
+                    </strong>
+
+                    <span>
+                      Course ID:
+                      {{ enrollment.courseId }}
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- =================================
+                   ENROLLMENT DATE
+              ================================== -->
+
+              <td>
+
+                {{
+                  enrollment.enrollmentDate
+                    | date:'dd MMM yyyy'
+                }}
+
+              </td>
+
+
+              <!-- =================================
+                   STATUS
+              ================================== -->
+
+              <td>
+
+                <span
+                  class="status-badge"
+                  [class.active]="
+                    enrollment.status.toLowerCase() === 'active'
+                  "
+                  [class.completed]="
+                    enrollment.status.toLowerCase() === 'completed'
+                  "
+                  [class.dropped]="
+                    enrollment.status.toLowerCase() === 'dropped'
+                  ">
+
+                  <span class="status-dot"></span>
+
+                  {{ enrollment.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- =================================
+                   GRADE
+              ================================== -->
+
+              <td>
+
+                <span
+                  class="grade"
+                  *ngIf="
+                    enrollment.grade !== null &&
+                    enrollment.grade !== undefined
+                  ">
+
+                  {{ enrollment.grade }}
+
+                </span>
+
+                <span
+                  class="no-grade"
+                  *ngIf="
+                    enrollment.grade === null ||
+                    enrollment.grade === undefined
+                  ">
+
+                  Not graded
+
+                </span>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- ========================================
+           STUDENT TABLE
+      ========================================= -->
+
+      <div
+        class="table-wrapper"
+        *ngIf="
+          !loading &&
+          enrollments.length > 0 &&
+          !isAdmin
         ">
 
         <table>
@@ -307,11 +550,12 @@
           <tbody>
 
             <tr
-              *ngFor="
-                let enrollment of enrollments
-              ">
+              *ngFor="let enrollment of enrollments">
 
-              <!-- COURSE -->
+
+              <!-- =================================
+                   COURSE
+              ================================== -->
 
               <td>
 
@@ -324,12 +568,10 @@
                   <div class="course-info">
 
                     <strong>
-
                       {{
                         enrollment.course?.title ||
                         'Course ' + enrollment.courseId
                       }}
-
                     </strong>
 
                     <span>
@@ -344,50 +586,48 @@
               </td>
 
 
-              <!-- CREDITS -->
+              <!-- =================================
+                   CREDITS
+              ================================== -->
 
               <td>
 
-                <span
-                  *ngIf="enrollment.course">
+                <span *ngIf="enrollment.course">
 
                   {{ enrollment.course.credits }}
 
                 </span>
 
-                <span
-                  *ngIf="!enrollment.course">
-
+                <span *ngIf="!enrollment.course">
                   -
-
                 </span>
 
               </td>
 
 
-              <!-- PRICE -->
+              <!-- =================================
+                   PRICE
+              ================================== -->
 
               <td>
 
-                <span
-                  *ngIf="enrollment.course">
+                <span *ngIf="enrollment.course">
 
                   {{ enrollment.course.price }}
                   OMR
 
                 </span>
 
-                <span
-                  *ngIf="!enrollment.course">
-
+                <span *ngIf="!enrollment.course">
                   -
-
                 </span>
 
               </td>
 
 
-              <!-- DATE -->
+              <!-- =================================
+                   ENROLLMENT DATE
+              ================================== -->
 
               <td>
 
@@ -399,20 +639,22 @@
               </td>
 
 
-              <!-- STATUS -->
+              <!-- =================================
+                   STATUS
+              ================================== -->
 
               <td>
 
                 <span
                   class="status-badge"
                   [class.active]="
-                    enrollment.status === 'Active'
+                    enrollment.status.toLowerCase() === 'active'
                   "
                   [class.completed]="
-                    enrollment.status === 'Completed'
+                    enrollment.status.toLowerCase() === 'completed'
                   "
                   [class.dropped]="
-                    enrollment.status === 'Dropped'
+                    enrollment.status.toLowerCase() === 'dropped'
                   ">
 
                   <span class="status-dot"></span>
@@ -424,25 +666,28 @@
               </td>
 
 
-              <!-- GRADE -->
+              <!-- =================================
+                   GRADE
+              ================================== -->
 
               <td>
 
                 <span
                   class="grade"
                   *ngIf="
-                    enrollment.grade !== null
+                    enrollment.grade !== null &&
+                    enrollment.grade !== undefined
                   ">
 
                   {{ enrollment.grade }}
 
                 </span>
 
-
                 <span
                   class="no-grade"
                   *ngIf="
-                    enrollment.grade === null
+                    enrollment.grade === null ||
+                    enrollment.grade === undefined
                   ">
 
                   Not graded

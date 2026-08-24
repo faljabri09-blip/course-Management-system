@@ -29,6 +29,26 @@ export class InstructorsComponent implements OnInit {
 
 
   // =========================================
+  // ADD MODAL
+  // =========================================
+
+  showAddModal: boolean = false;
+
+  addLoading: boolean = false;
+
+  addErrorMessage: string = '';
+
+  addForm: Instructor = {
+    id: 0,
+    name: '',
+    email: '',
+    phone: '',
+    specialization: '',
+    courses: []
+  };
+
+
+  // =========================================
   // EDIT MODAL
   // =========================================
 
@@ -81,7 +101,7 @@ export class InstructorsComponent implements OnInit {
 
 
   // =========================================
-  // LOAD ALL INSTRUCTORS
+  // LOAD INSTRUCTORS
   // =========================================
 
   loadInstructors(): void {
@@ -93,7 +113,10 @@ export class InstructorsComponent implements OnInit {
 
       next: (data: Instructor[]) => {
 
-        console.log('Instructors loaded:', data);
+        console.log(
+          'Instructors loaded:',
+          data
+        );
 
         this.instructors = data || [];
 
@@ -118,6 +141,8 @@ export class InstructorsComponent implements OnInit {
         );
 
         this.errorMessage =
+          error?.error?.message ||
+          error?.error?.title ||
           'Unable to load instructors.';
 
         this.loading = false;
@@ -159,6 +184,7 @@ export class InstructorsComponent implements OnInit {
     }
 
     return courses.join(', ');
+
   }
 
 
@@ -168,9 +194,214 @@ export class InstructorsComponent implements OnInit {
 
   addInstructor(): void {
 
-    this.router.navigate([
-      '/instructors/add'
-    ]);
+    this.addErrorMessage = '';
+
+    this.addLoading = false;
+
+    this.addForm = {
+      id: 0,
+      name: '',
+      email: '',
+      phone: '',
+      specialization: '',
+      courses: []
+    };
+
+    this.showAddModal = true;
+
+  }
+
+
+  // =========================================
+  // CLOSE ADD MODAL
+  // =========================================
+
+  closeAddModal(): void {
+
+    if (this.addLoading) {
+      return;
+    }
+
+    this.showAddModal = false;
+
+    this.addErrorMessage = '';
+
+  }
+
+
+  // =========================================
+  // CLOSE ADD ON BACKDROP
+  // =========================================
+
+  closeAddOnBackdrop(
+    event: MouseEvent
+  ): void {
+
+    if (
+      event.target === event.currentTarget &&
+      !this.addLoading
+    ) {
+
+      this.closeAddModal();
+
+    }
+
+  }
+
+
+  // =========================================
+  // SAVE NEW INSTRUCTOR
+  // =========================================
+
+  saveNewInstructor(): void {
+
+    if (this.addLoading) {
+      return;
+    }
+
+
+    // =======================================
+    // VALIDATION
+    // =======================================
+
+    if (
+      !this.addForm.name ||
+      !this.addForm.name.trim()
+    ) {
+
+      this.addErrorMessage =
+        'Instructor name is required.';
+
+      return;
+    }
+
+
+    if (
+      !this.addForm.email ||
+      !this.addForm.email.trim()
+    ) {
+
+      this.addErrorMessage =
+        'Instructor email is required.';
+
+      return;
+    }
+
+
+    // =======================================
+    // START LOADING
+    // =======================================
+
+    this.addLoading = true;
+
+    this.addErrorMessage = '';
+
+
+    const newInstructor: Instructor = {
+
+      id: 0,
+
+      name:
+        this.addForm.name.trim(),
+
+      email:
+        this.addForm.email.trim(),
+
+      phone:
+        this.addForm.phone
+          ? this.addForm.phone.trim()
+          : '',
+
+      specialization:
+        this.addForm.specialization
+          ? this.addForm.specialization.trim()
+          : '',
+
+      courses: []
+
+    };
+
+
+    console.log(
+      'Adding instructor:',
+      newInstructor
+    );
+
+
+    // =======================================
+    // ADD API
+    // =======================================
+
+    this.instructorService
+      .add(newInstructor)
+      .subscribe({
+
+        next: (response: Instructor) => {
+
+          console.log(
+            'Instructor added successfully:',
+            response
+          );
+
+
+          // =================================
+          // ADD TO LOCAL LIST
+          // =================================
+
+          if (response) {
+
+            this.instructors = [
+              ...this.instructors,
+              response
+            ];
+
+          } else {
+
+            this.loadInstructors();
+
+          }
+
+
+          // =================================
+          // CLOSE MODAL
+          // =================================
+
+          this.addLoading = false;
+
+          this.showAddModal = false;
+
+          this.addErrorMessage = '';
+
+        },
+
+        error: (error) => {
+
+          console.error(
+            'ADD INSTRUCTOR ERROR:',
+            error
+          );
+
+          console.error(
+            'STATUS:',
+            error?.status
+          );
+
+          console.error(
+            'BACKEND RESPONSE:',
+            error?.error
+          );
+
+
+          this.addErrorMessage =
+            error?.error?.message ||
+            error?.error?.title ||
+            'Unable to add instructor.';
+
+          this.addLoading = false;
+
+        }
+
+      });
 
   }
 
@@ -192,41 +423,23 @@ export class InstructorsComponent implements OnInit {
   // =========================================
   // EDIT INSTRUCTOR
   // =========================================
-  //
-  // IMPORTANT:
-  // We DO NOT navigate to another page.
-  // We open the Edit Modal directly.
-  //
-  // =========================================
 
   editInstructor(id: number): void {
 
-    console.log('==============================');
-    console.log('EDIT BUTTON CLICKED');
-    console.log('Instructor ID:', id);
     console.log(
-      'Token:',
-      localStorage.getItem('token')
+      'EDIT BUTTON CLICKED:',
+      id
     );
-    console.log('==============================');
 
 
-    // =======================================
-    // FIND INSTRUCTOR FROM CURRENT LIST
-    // =======================================
-
-    const instructor = this.instructors.find(
-      (item: Instructor) =>
-        item.id === id
-    );
+    const instructor =
+      this.instructors.find(
+        (item: Instructor) =>
+          item.id === id
+      );
 
 
     if (!instructor) {
-
-      console.error(
-        'Instructor not found:',
-        id
-      );
 
       this.editErrorMessage =
         'Instructor information could not be found.';
@@ -237,18 +450,10 @@ export class InstructorsComponent implements OnInit {
     }
 
 
-    // =======================================
-    // RESET EDIT STATE
-    // =======================================
-
     this.editErrorMessage = '';
 
     this.editLoading = false;
 
-
-    // =======================================
-    // COPY DATA INTO EDIT FORM
-    // =======================================
 
     this.editForm = {
 
@@ -273,10 +478,6 @@ export class InstructorsComponent implements OnInit {
 
     };
 
-
-    // =======================================
-    // OPEN MODAL
-    // =======================================
 
     this.showEditModal = true;
 
@@ -307,7 +508,7 @@ export class InstructorsComponent implements OnInit {
 
 
   // =========================================
-  // CLOSE EDIT MODAL ON BACKDROP
+  // CLOSE EDIT ON BACKDROP
   // =========================================
 
   closeEditOnBackdrop(
@@ -331,10 +532,6 @@ export class InstructorsComponent implements OnInit {
   // =========================================
 
   saveInstructor(): void {
-
-    // =======================================
-    // PREVENT DOUBLE CLICK
-    // =======================================
 
     if (this.editLoading) {
       return;
@@ -378,10 +575,6 @@ export class InstructorsComponent implements OnInit {
     this.editErrorMessage = '';
 
 
-    // =======================================
-    // PREPARE UPDATE DATA
-    // =======================================
-
     const updatedInstructor: Instructor = {
 
       id:
@@ -412,25 +605,8 @@ export class InstructorsComponent implements OnInit {
 
 
     console.log(
-      '================================'
-    );
-
-    console.log(
-      'UPDATING INSTRUCTOR'
-    );
-
-    console.log(
-      'ID:',
-      updatedInstructor.id
-    );
-
-    console.log(
-      'DATA:',
+      'Updating instructor:',
       updatedInstructor
-    );
-
-    console.log(
-      '================================'
     );
 
 
@@ -445,10 +621,6 @@ export class InstructorsComponent implements OnInit {
       )
       .subscribe({
 
-        // ===================================
-        // SUCCESS
-        // ===================================
-
         next: (response) => {
 
           console.log(
@@ -458,27 +630,10 @@ export class InstructorsComponent implements OnInit {
 
 
           // =================================
-          // UPDATE LOCAL LIST
+          // RELOAD DATA FROM BACKEND
           // =================================
 
-          const index =
-            this.instructors.findIndex(
-              (item: Instructor) =>
-                item.id === updatedInstructor.id
-            );
-
-
-          if (index !== -1) {
-
-            this.instructors[index] = {
-              ...updatedInstructor
-            };
-
-            this.instructors = [
-              ...this.instructors
-            ];
-
-          }
+          this.loadInstructors();
 
 
           // =================================
@@ -491,17 +646,7 @@ export class InstructorsComponent implements OnInit {
 
           this.editErrorMessage = '';
 
-
-          console.log(
-            'Instructor list updated locally.'
-          );
-
         },
-
-
-        // ===================================
-        // ERROR
-        // ===================================
 
         error: (error) => {
 
@@ -520,12 +665,17 @@ export class InstructorsComponent implements OnInit {
             error?.error
           );
 
+          console.error(
+            'ERROR MESSAGE:',
+            error?.message
+          );
+
 
           this.editErrorMessage =
             error?.error?.message ||
             error?.error?.title ||
+            error?.message ||
             'Unable to update instructor.';
-
 
           this.editLoading = false;
 
@@ -548,10 +698,6 @@ export class InstructorsComponent implements OnInit {
     );
 
 
-    // =======================================
-    // FIND INSTRUCTOR
-    // =======================================
-
     const instructor =
       this.instructors.find(
         (item: Instructor) =>
@@ -570,27 +716,14 @@ export class InstructorsComponent implements OnInit {
     }
 
 
-    // =======================================
-    // STORE INSTRUCTOR
-    // =======================================
-
     this.deletingInstructor = {
       ...instructor
     };
 
 
-    // =======================================
-    // RESET DELETE STATE
-    // =======================================
-
     this.deleteErrorMessage = '';
 
     this.deleteLoading = false;
-
-
-    // =======================================
-    // OPEN DELETE MODAL
-    // =======================================
 
     this.showDeleteModal = true;
 
@@ -684,31 +817,24 @@ export class InstructorsComponent implements OnInit {
       .delete(instructorId)
       .subscribe({
 
-        // ===================================
-        // SUCCESS
-        // ===================================
-
-        next: () => {
+        next: (response) => {
 
           console.log(
-            'Instructor deleted successfully.'
+            'Instructor deleted successfully:',
+            response
           );
 
 
-          // ================================
-          // REMOVE FROM LOCAL LIST
-          // ================================
+          // =================================
+          // RELOAD DATA FROM BACKEND
+          // =================================
 
-          this.instructors =
-            this.instructors.filter(
-              (item: Instructor) =>
-                item.id !== instructorId
-            );
+          this.loadInstructors();
 
 
-          // ================================
+          // =================================
           // CLOSE MODAL
-          // ================================
+          // =================================
 
           this.deleteLoading = false;
 
@@ -718,17 +844,7 @@ export class InstructorsComponent implements OnInit {
 
           this.deleteErrorMessage = '';
 
-
-          console.log(
-            'Instructor removed from list.'
-          );
-
         },
-
-
-        // ===================================
-        // ERROR
-        // ===================================
 
         error: (error) => {
 
@@ -747,12 +863,17 @@ export class InstructorsComponent implements OnInit {
             error?.error
           );
 
+          console.error(
+            'ERROR MESSAGE:',
+            error?.message
+          );
+
 
           this.deleteErrorMessage =
             error?.error?.message ||
             error?.error?.title ||
+            error?.message ||
             'Unable to delete instructor.';
-
 
           this.deleteLoading = false;
 
