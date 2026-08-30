@@ -24,9 +24,18 @@ namespace CourseManagementSystem.Controllers
             _configuration = configuration;
         }
 
+
+        // =====================================================
+        // REGISTER
+        // =====================================================
+
         [HttpPost("register")]
         public IActionResult Register(RegisterDto model)
         {
+            // -------------------------------------------------
+            // Check existing username or email
+            // -------------------------------------------------
+
             var existingUser = _context.Users
                 .FirstOrDefault(x =>
                     x.Username == model.Username ||
@@ -34,78 +43,295 @@ namespace CourseManagementSystem.Controllers
 
             if (existingUser != null)
             {
-                return BadRequest("Username or Email already exists");
+                return BadRequest(
+                    "Username or Email already exists"
+                );
             }
+
+
+            // -------------------------------------------------
+            // Normalize Role
+            // -------------------------------------------------
+
+            var role = NormalizeRole(model.Role);
+
+            if (role == null)
+            {
+                return BadRequest(
+                    "Invalid role. Allowed roles are Admin, Instructor, Student."
+                );
+            }
+
+
+            // -------------------------------------------------
+            // Create User
+            // -------------------------------------------------
 
             var user = new User
             {
                 Username = model.Username,
                 Email = model.Email,
                 Password = model.Password,
-                Role = model.Role
+                Role = role
             };
 
+
+            // -------------------------------------------------
+            // Save User
+            // -------------------------------------------------
+
             _context.Users.Add(user);
+
             _context.SaveChanges();
 
-            return Ok("User registered successfully");
+
+            // -------------------------------------------------
+            // Success
+            // -------------------------------------------------
+
+            return Ok(
+                "User registered successfully"
+            );
         }
+
+
+        // =====================================================
+        // LOGIN
+        // =====================================================
 
         [HttpPost("login")]
         public IActionResult Login(LoginDto model)
         {
-            var user = _context.Users.FirstOrDefault(x =>
-                x.Username == model.Username &&
-                x.Password == model.Password);
+            // -------------------------------------------------
+            // Find User
+            // -------------------------------------------------
+
+            var user = _context.Users
+                .FirstOrDefault(x =>
+                    x.Username == model.Username &&
+                    x.Password == model.Password);
+
+
+            // -------------------------------------------------
+            // User Not Found
+            // -------------------------------------------------
 
             if (user == null)
             {
-                return Unauthorized("Invalid username or password");
+                return Unauthorized(
+                    "Invalid username or password"
+                );
             }
+
+
+            // =================================================
+            // NORMALIZE ROLE
+            // =================================================
+
+            var role = NormalizeRole(user.Role);
+
+
+            // -------------------------------------------------
+            // Invalid Role
+            // -------------------------------------------------
+
+            if (role == null)
+            {
+                return Unauthorized(
+                    "Invalid user role"
+                );
+            }
+
+
+            // =================================================
+            // CLAIMS
+            // =================================================
 
             var claims = new[]
             {
+                // -------------------------------------------------
+                // Username
+                // -------------------------------------------------
+
                 new Claim(
                     ClaimTypes.Name,
-                    user.Username),
+                    user.Username
+                ),
+
+
+                // -------------------------------------------------
+                // Role
+                // -------------------------------------------------
 
                 new Claim(
                     ClaimTypes.Role,
-                    user.Role),
+                    role
+                ),
+
+
+                // -------------------------------------------------
+                // User ID
+                // -------------------------------------------------
 
                 new Claim(
                     ClaimTypes.NameIdentifier,
-                    user.Id.ToString())
+                    user.Id.ToString()
+                )
             };
+
+
+            // =================================================
+            // JWT KEY
+            // =================================================
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(
-                    _configuration["Jwt:Key"]!));
+                    _configuration["Jwt:Key"]!
+                )
+            );
+
+
+            // =================================================
+            // CREDENTIALS
+            // =================================================
 
             var credentials = new SigningCredentials(
                 key,
-                SecurityAlgorithms.HmacSha256);
+                SecurityAlgorithms.HmacSha256
+            );
+
+
+            // =================================================
+            // CREATE TOKEN
+            // =================================================
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: credentials);
+                issuer:
+                    _configuration["Jwt:Issuer"],
 
-            return Ok(new
+                audience:
+                    _configuration["Jwt:Audience"],
+
+                claims:
+                    claims,
+
+                expires:
+                    DateTime.Now.AddHours(1),
+
+                signingCredentials:
+                    credentials
+            );
+
+
+            // =================================================
+            // STUDENT ID
+            // =================================================
+
+            int? studentId = null;
+
+            if (role == "Student")
             {
-                token = new JwtSecurityTokenHandler()
-                    .WriteToken(token),
+                studentId = user.Id;
+            }
 
-                username = user.Username,
 
-                role = user.Role,
+            // =================================================
+            // RETURN RESPONSE
+            // =================================================
 
-                studentId = user.Role.ToLower() == "student"
-                    ? user.Id
-                    : (int?)null
-            });
+            return Ok(
+                new
+                {
+                    token =
+                        new JwtSecurityTokenHandler()
+                            .WriteToken(token),
+
+                    username =
+                        user.Username,
+
+                    role =
+                        role,
+
+                    studentId =
+                        studentId
+                }
+            );
+        }
+
+
+        // =====================================================
+        // NORMALIZE ROLE
+        // =====================================================
+
+        private string? NormalizeRole(
+            string? role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                return null;
+            }
+
+
+            // -------------------------------------------------
+            // Remove spaces
+            // -------------------------------------------------
+
+            role = role.Trim();
+
+
+            // -------------------------------------------------
+            // Student
+            // -------------------------------------------------
+
+            if (
+                string.Equals(
+                    role,
+                    "student",
+                    StringComparison.OrdinalIgnoreCase
+                )
+            )
+            {
+                return "Student";
+            }
+
+
+            // -------------------------------------------------
+            // Instructor
+            // -------------------------------------------------
+
+            if (
+                string.Equals(
+                    role,
+                    "instructor",
+                    StringComparison.OrdinalIgnoreCase
+                )
+            )
+            {
+                return "Instructor";
+            }
+
+
+            // -------------------------------------------------
+            // Admin
+            // -------------------------------------------------
+
+            if (
+                string.Equals(
+                    role,
+                    "admin",
+                    StringComparison.OrdinalIgnoreCase
+                )
+            )
+            {
+                return "Admin";
+            }
+
+
+            // -------------------------------------------------
+            // Invalid
+            // -------------------------------------------------
+
+            return null;
         }
     }
 }

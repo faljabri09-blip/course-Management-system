@@ -1,0 +1,259 @@
+
+<div class="instructor-students-page">
+
+
+  <!-- ========================================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================================= -->
+
+  <section class="page-title">
+
+    <div>
+
+      <h1>
+        My Students
+      </h1>
+
+      <p>
+        Students enrolled in your courses.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goBack()">
+
+      <i class="bi bi-arrow-left"></i>
+
+      Back to Dashboard
+
+    </button>
+
+  </section>
+
+
+  <!-- ========================================= -->
+  <!-- LOADING -->
+  <!-- ========================================= -->
+
+  <section
+    class="dashboard-card"
+    *ngIf="loading">
+
+    <div class="empty-message">
+
+      <i class="bi bi-arrow-repeat"></i>
+
+      Loading students...
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+  <!-- ERROR -->
+  <!-- ========================================= -->
+
+  <section
+    class="dashboard-card"
+    *ngIf="!loading && errorMessage">
+
+    <div class="empty-message">
+
+      <i class="bi bi-exclamation-triangle"></i>
+
+      {{ errorMessage }}
+
+    </div>
+
+  </section>
+
+
+  <!-- ========================================= -->
+  <!-- STUDENTS -->
+  <!-- ========================================= -->
+
+  <section
+    class="dashboard-card"
+    *ngIf="!loading && !errorMessage">
+
+
+    <!-- ======================================= -->
+    <!-- CARD HEADER -->
+    <!-- ======================================= -->
+
+    <div class="card-header">
+
+      <div>
+
+        <h2>
+          My Students
+        </h2>
+
+        <p>
+          Students currently enrolled in your courses.
+        </p>
+
+      </div>
+
+
+      <div class="student-count">
+
+        <span>
+          TOTAL STUDENTS
+        </span>
+
+        <strong>
+          {{ students.length }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ======================================= -->
+    <!-- TABLE -->
+    <!-- ======================================= -->
+
+    <div
+      class="table-wrapper"
+      *ngIf="students.length > 0">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              STUDENT
+            </th>
+
+            <th>
+              EMAIL
+            </th>
+
+            <th>
+              PHONE
+            </th>
+
+            <th>
+              MY COURSE
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let student of students">
+
+
+            <!-- STUDENT -->
+
+            <td>
+
+              <div class="student-cell">
+
+                <div class="student-avatar">
+
+                  {{
+                    student.name
+                      ? student.name
+                          .charAt(0)
+                          .toUpperCase()
+                      : 'S'
+                  }}
+
+                </div>
+
+
+                <div class="student-info">
+
+                  <strong>
+                    {{ student.name }}
+                  </strong>
+
+                  <span>
+                    Student #{{ student.id }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- EMAIL -->
+
+            <td>
+
+              {{ student.email }}
+
+            </td>
+
+
+            <!-- PHONE -->
+
+            <td>
+
+              {{ student.phone || '-' }}
+
+            </td>
+
+
+            <!-- COURSE -->
+
+            <td>
+
+              <span class="course-badge">
+
+                {{ getCourseNames(student.id) }}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ======================================= -->
+    <!-- EMPTY -->
+    <!-- ======================================= -->
+
+    <div
+      class="empty-message"
+      *ngIf="students.length === 0">
+
+      <i class="bi bi-people"></i>
+
+      <h3>
+        No Students Yet
+      </h3>
+
+      <p>
+        No students are currently enrolled
+        in your courses.
+      </p>
+
+    </div>
+
+
+  </section>
+
+</div>

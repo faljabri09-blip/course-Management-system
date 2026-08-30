@@ -87,7 +87,6 @@ namespace CourseManagementSystem.Repositories
             return true;
         }
 
-
         // ==========================================
         // DELETE COURSE
         // ==========================================
@@ -100,6 +99,18 @@ namespace CourseManagementSystem.Repositories
             if (course == null)
                 return false;
 
+            // Get all enrollments related to this course
+            var enrollments = await _context.Enrollments
+                .Where(e => e.CourseId == id)
+                .ToListAsync();
+
+            // Delete related enrollments first
+            if (enrollments.Any())
+            {
+                _context.Enrollments.RemoveRange(enrollments);
+            }
+
+            // Delete the course
             _context.Courses.Remove(course);
 
             await _context.SaveChangesAsync();
@@ -107,4 +118,4 @@ namespace CourseManagementSystem.Repositories
             return true;
         }
     }
-}
+    }

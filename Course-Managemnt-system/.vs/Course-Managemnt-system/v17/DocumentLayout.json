@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\controllers\\enrollmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\controllers\\enrollmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\repository\\courserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\repository\\courserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\data\\coursecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\data\\coursecontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\dtos\\studentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\services\\courseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\dtos\\coursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\dtos\\coursedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|solutionrelative:course-managemnt-system\\models\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4A2C80BA-3751-4768-AFCE-7325F289D243}|Course-Managemnt-system\\Course-Managemnt-system.csproj|c:\\users\\fatma aljabri\\desktop\\karim back-end\\couse-management-system\\course-managemnt-system\\course-managemnt-system\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +38,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Program.cs",
               "RelativeDocumentMoniker": "Course-Managemnt-system\\Program.cs",
@@ -45,40 +53,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EnrollmentController.cs",
-              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Controllers\\EnrollmentController.cs",
-              "RelativeDocumentMoniker": "Course-Managemnt-system\\Controllers\\EnrollmentController.cs",
-              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Controllers\\EnrollmentController.cs",
-              "RelativeToolTip": "Course-Managemnt-system\\Controllers\\EnrollmentController.cs",
-              "ViewState": "AgIAAMsAAAAAAAAAAAA2wOUAAAABAAAAAAAAAA==",
+              "Title": "CourseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Repository\\CourseRepository.cs",
+              "RelativeDocumentMoniker": "Course-Managemnt-system\\Repository\\CourseRepository.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Repository\\CourseRepository.cs",
+              "RelativeToolTip": "Course-Managemnt-system\\Repository\\CourseRepository.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAADwv3YAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-24T16:30:31.31Z",
+              "WhenOpened": "2026-08-30T09:38:30.545Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CourseContext.cs",
-              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Data\\CourseContext.cs",
-              "RelativeDocumentMoniker": "Course-Managemnt-system\\Data\\CourseContext.cs",
-              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Data\\CourseContext.cs",
-              "RelativeToolTip": "Course-Managemnt-system\\Data\\CourseContext.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAcwE8AAAABAAAAAAAAAA==",
+              "Title": "CourseController.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Controllers\\CourseController.cs",
+              "RelativeDocumentMoniker": "Course-Managemnt-system\\Controllers\\CourseController.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Controllers\\CourseController.cs",
+              "RelativeToolTip": "Course-Managemnt-system\\Controllers\\CourseController.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAA2wH4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-24T16:03:30.528Z",
+              "WhenOpened": "2026-08-30T09:26:40.578Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "StudentDto.cs",
-              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\DTOs\\StudentDto.cs",
-              "RelativeDocumentMoniker": "Course-Managemnt-system\\DTOs\\StudentDto.cs",
-              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\DTOs\\StudentDto.cs",
-              "RelativeToolTip": "Course-Managemnt-system\\DTOs\\StudentDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Title": "CourseService.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Services\\CourseService.cs",
+              "RelativeDocumentMoniker": "Course-Managemnt-system\\Services\\CourseService.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Services\\CourseService.cs",
+              "RelativeToolTip": "Course-Managemnt-system\\Services\\CourseService.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAowF4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-24T16:01:44.553Z",
+              "WhenOpened": "2026-08-30T08:32:31.27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CourseDto.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\DTOs\\CourseDto.cs",
+              "RelativeDocumentMoniker": "Course-Managemnt-system\\DTOs\\CourseDto.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\DTOs\\CourseDto.cs",
+              "RelativeToolTip": "Course-Managemnt-system\\DTOs\\CourseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAowBYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-30T08:31:11.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Course.cs",
+              "DocumentMoniker": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Models\\Course.cs",
+              "RelativeDocumentMoniker": "Course-Managemnt-system\\Models\\Course.cs",
+              "ToolTip": "C:\\Users\\Fatma ALjabri\\Desktop\\Karim Back-End\\couse-Management-system\\Course-Managemnt-system\\Course-Managemnt-system\\Models\\Course.cs",
+              "RelativeToolTip": "Course-Managemnt-system\\Models\\Course.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAxwBgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-30T08:29:13.132Z",
               "EditorCaption": ""
             }
           ]

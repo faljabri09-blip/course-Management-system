@@ -106,7 +106,10 @@ export class StudentDashboardComponent implements OnInit {
 
     this.loadCourses();
 
-    this.loadEnrollments();
+    // Load enrollments after student ID is available
+    if (this.studentId) {
+      this.loadEnrollments();
+    }
 
   }
 
@@ -127,9 +130,9 @@ export class StudentDashboardComponent implements OnInit {
     }
 
 
-    // ---------------------------------------------
-    // Student ID from localStorage
-    // ---------------------------------------------
+    // =====================================================
+    // Get Student ID from localStorage
+    // =====================================================
 
     const storedStudentId =
       localStorage.getItem('studentId');
@@ -147,9 +150,9 @@ export class StudentDashboardComponent implements OnInit {
     }
 
 
-    // ---------------------------------------------
+    // =====================================================
     // Read JWT
-    // ---------------------------------------------
+    // =====================================================
 
     try {
 
@@ -169,9 +172,9 @@ export class StudentDashboardComponent implements OnInit {
       );
 
 
-      // ---------------------------------------------
+      // =====================================================
       // Username
-      // ---------------------------------------------
+      // =====================================================
 
       this.username =
         payload[
@@ -193,40 +196,37 @@ export class StudentDashboardComponent implements OnInit {
         'Student';
 
 
-      // ---------------------------------------------
+      // =====================================================
       // Student ID from JWT
-      // ---------------------------------------------
+      // =====================================================
 
-      if (!this.studentId) {
-
-        const jwtStudentId =
-          payload[
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
-          ]
-          ||
-          payload[
-            'http://schemas.microsoft.com/identity/claims/objectidentifier'
-          ]
-          ||
-          payload.studentId
-          ||
-          payload.studentID;
+      const jwtStudentId =
+        payload[
+          'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
+        ]
+        ||
+        payload[
+          'http://schemas.microsoft.com/identity/claims/objectidentifier'
+        ]
+        ||
+        payload.studentId
+        ||
+        payload.studentID;
 
 
-        if (jwtStudentId) {
+      if (jwtStudentId) {
 
-          const id = Number(jwtStudentId);
+        const id = Number(jwtStudentId);
 
-          if (!isNaN(id) && id > 0) {
+        if (!isNaN(id) && id > 0) {
 
-            this.studentId = id;
+          // JWT is the source of truth
+          this.studentId = id;
 
-            localStorage.setItem(
-              'studentId',
-              id.toString()
-            );
-
-          }
+          localStorage.setItem(
+            'studentId',
+            id.toString()
+          );
 
         }
 
@@ -251,9 +251,9 @@ export class StudentDashboardComponent implements OnInit {
     }
 
 
-    // ---------------------------------------------
+    // =====================================================
     // Validate Student ID
-    // ---------------------------------------------
+    // =====================================================
 
     if (!this.studentId) {
 
@@ -290,7 +290,8 @@ export class StudentDashboardComponent implements OnInit {
             data
           );
 
-          this.courses = data || [];
+          this.courses =
+            data || [];
 
           this.loadingCourses = false;
 
@@ -321,18 +322,38 @@ export class StudentDashboardComponent implements OnInit {
 
   loadEnrollments(): void {
 
+    if (!this.studentId) {
+
+      console.error(
+        'Cannot load enrollments: Student ID not found.'
+      );
+
+      return;
+
+    }
+
+
     this.loadingEnrollments = true;
 
+
+    const url =
+      `${environment.apiUrl}/Enrollment/student/${this.studentId}`;
+
+
+    console.log(
+      'Loading student enrollments:',
+      url
+    );
+
+
     this.http
-      .get<Enrollment[]>(
-        `${environment.apiUrl}/Enrollment`
-      )
+      .get<Enrollment[]>(url)
       .subscribe({
 
         next: (data: Enrollment[]) => {
 
           console.log(
-            'Enrollments loaded:',
+            'Student enrollments loaded:',
             data
           );
 
@@ -351,12 +372,26 @@ export class StudentDashboardComponent implements OnInit {
         error: (error: any) => {
 
           console.error(
-            'Error loading enrollments:',
+            'Error loading student enrollments:',
             error
+          );
+
+          console.error(
+            'Status:',
+            error?.status
+          );
+
+          console.error(
+            'Error body:',
+            error?.error
           );
 
 
           this.errorMessage =
+            error?.error?.message
+            ||
+            error?.error
+            ||
             'Unable to load enrollments.';
 
 
@@ -395,12 +430,14 @@ export class StudentDashboardComponent implements OnInit {
   // CHECK ENROLLMENT
   // =====================================================
 
-  isEnrolled(courseId: number): boolean {
+  isEnrolled(
+    courseId: number
+  ): boolean {
 
     return this.enrollments.some(
       enrollment =>
         enrollment.courseId === courseId &&
-        enrollment.status !== 'Dropped'
+        enrollment.status === 'Active'
     );
 
   }
@@ -410,7 +447,9 @@ export class StudentDashboardComponent implements OnInit {
   // CHECK ENROLLING
   // =====================================================
 
-  isEnrolling(courseId: number): boolean {
+  isEnrolling(
+    courseId: number
+  ): boolean {
 
     return this.enrollingCourseId === courseId;
 
@@ -421,7 +460,36 @@ export class StudentDashboardComponent implements OnInit {
   // REGISTER COURSE
   // =====================================================
 
-  enroll(courseId: number): void {
+  enroll(
+    courseId: number
+  ): void {
+
+    console.log(
+      '===================================='
+    );
+
+    console.log(
+      'ENROLL COURSE'
+    );
+
+    console.log(
+      'Course ID:',
+      courseId
+    );
+
+    console.log(
+      'Student ID:',
+      this.studentId
+    );
+
+    console.log(
+      '===================================='
+    );
+
+
+    // =====================================================
+    // Prevent multiple clicks
+    // =====================================================
 
     if (
       this.enrollingCourseId !== null
@@ -431,6 +499,10 @@ export class StudentDashboardComponent implements OnInit {
 
     }
 
+
+    // =====================================================
+    // Validate Student ID
+    // =====================================================
 
     if (!this.studentId) {
 
@@ -442,6 +514,10 @@ export class StudentDashboardComponent implements OnInit {
     }
 
 
+    // =====================================================
+    // Check if already enrolled
+    // =====================================================
+
     if (this.isEnrolled(courseId)) {
 
       this.message =
@@ -452,12 +528,22 @@ export class StudentDashboardComponent implements OnInit {
     }
 
 
+    // =====================================================
+    // Reset messages
+    // =====================================================
+
     this.message = '';
 
     this.errorMessage = '';
 
-    this.enrollingCourseId = courseId;
 
+    this.enrollingCourseId =
+      courseId;
+
+
+    // =====================================================
+    // Request
+    // =====================================================
 
     const request = {
 
@@ -478,6 +564,10 @@ export class StudentDashboardComponent implements OnInit {
     );
 
 
+    // =====================================================
+    // POST Enrollment
+    // =====================================================
+
     this.http
       .post<Enrollment>(
         `${environment.apiUrl}/Enrollment`,
@@ -497,12 +587,13 @@ export class StudentDashboardComponent implements OnInit {
             'Course registered successfully.';
 
 
-          this.enrollingCourseId = null;
+          this.enrollingCourseId =
+            null;
 
 
-          // -----------------------------------------
-          // Add immediately to UI
-          // -----------------------------------------
+          // =================================================
+          // Add enrollment immediately to local list
+          // =================================================
 
           if (response) {
 
@@ -511,10 +602,16 @@ export class StudentDashboardComponent implements OnInit {
               response
             ];
 
+            this.calculateStatistics();
+
           }
 
 
-          this.calculateStatistics();
+          // =================================================
+          // Reload student enrollments from backend
+          // =================================================
+
+          this.loadEnrollments();
 
         },
 
@@ -522,14 +619,30 @@ export class StudentDashboardComponent implements OnInit {
         error: (error: any) => {
 
           console.error(
-            'Enrollment error:',
+            '===================================='
+          );
+
+          console.error(
+            'ENROLLMENT ERROR'
+          );
+
+          console.error(
+            'Status:',
+            error?.status
+          );
+
+          console.error(
+            'Error:',
             error
           );
 
+          console.error(
+            'Error body:',
+            error?.error
+          );
 
           console.error(
-            'Enrollment error body:',
-            error?.error
+            '===================================='
           );
 
 
@@ -541,7 +654,8 @@ export class StudentDashboardComponent implements OnInit {
             'Unable to register for this course.';
 
 
-          this.enrollingCourseId = null;
+          this.enrollingCourseId =
+            null;
 
         }
 
@@ -565,6 +679,12 @@ export class StudentDashboardComponent implements OnInit {
       return;
 
     }
+
+
+    console.log(
+      'Opening drop modal for enrollment:',
+      enrollment
+    );
 
 
     this.selectedEnrollment =
@@ -628,10 +748,6 @@ export class StudentDashboardComponent implements OnInit {
 
   confirmDropCourse(): void {
 
-    // ---------------------------------------------
-    // Check selected enrollment
-    // ---------------------------------------------
-
     if (
       !this.selectedEnrollment
     ) {
@@ -640,10 +756,6 @@ export class StudentDashboardComponent implements OnInit {
 
     }
 
-
-    // ---------------------------------------------
-    // Prevent double click
-    // ---------------------------------------------
 
     if (
       this.droppingCourseId !== null
@@ -663,12 +775,17 @@ export class StudentDashboardComponent implements OnInit {
     );
 
     console.log(
-      'DELETE ENROLLMENT'
+      'DROP COURSE'
     );
 
     console.log(
       'Enrollment ID:',
       enrollmentId
+    );
+
+    console.log(
+      'Student ID:',
+      this.studentId
     );
 
     console.log(
@@ -690,9 +807,9 @@ export class StudentDashboardComponent implements OnInit {
     this.errorMessage = '';
 
 
-    // =================================================
-    // DELETE FROM BACKEND
-    // =================================================
+    // =====================================================
+    // DELETE Enrollment
+    // =====================================================
 
     this.http
       .delete(
@@ -703,10 +820,6 @@ export class StudentDashboardComponent implements OnInit {
       )
       .subscribe({
 
-        // =================================================
-        // SUCCESS
-        // =================================================
-
         next: (response: string) => {
 
           console.log(
@@ -715,9 +828,9 @@ export class StudentDashboardComponent implements OnInit {
           );
 
 
-          // ---------------------------------------------
-          // 1. Remove enrollment immediately
-          // ---------------------------------------------
+          // =================================================
+          // Remove enrollment immediately from local list
+          // =================================================
 
           this.enrollments =
             this.enrollments.filter(
@@ -726,58 +839,48 @@ export class StudentDashboardComponent implements OnInit {
             );
 
 
-          // ---------------------------------------------
-          // 2. Update statistics
-          // ---------------------------------------------
-
           this.calculateStatistics();
 
 
-          // ---------------------------------------------
-          // 3. Clear selected enrollment
-          // ---------------------------------------------
-
-          this.selectedEnrollment =
-            null;
-
-
-          // ---------------------------------------------
-          // 4. Close modal
-          // ---------------------------------------------
+          // =================================================
+          // Close modal
+          // =================================================
 
           this.showDropModal =
             false;
 
 
-          // ---------------------------------------------
-          // 5. Stop loading
-          // ---------------------------------------------
+          this.selectedEnrollment =
+            null;
+
 
           this.droppingCourseId =
             null;
 
 
-          // ---------------------------------------------
-          // 6. Show success message
-          // ---------------------------------------------
+          // =================================================
+          // Success message
+          // =================================================
 
           this.message =
             'Course dropped successfully.';
 
-
           this.errorMessage = '';
 
 
+          // =================================================
+          // Reload from backend
+          // =================================================
+
+          this.loadEnrollments();
+
+
           console.log(
-            'Enrollment removed from UI.'
+            'Enrollments refreshed after DROP.'
           );
 
         },
 
-
-        // =================================================
-        // ERROR
-        // =================================================
 
         error: (error: any) => {
 

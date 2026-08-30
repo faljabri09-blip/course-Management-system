@@ -40,6 +40,14 @@ import { InstructorDashboardComponent }
 
 
 // =========================================
+// Instructor Students
+// =========================================
+
+import { InstructorStudentsComponent }
+  from './pages/instructor-students/instructor-students.component';
+
+
+// =========================================
 // Courses
 // =========================================
 
@@ -85,6 +93,10 @@ import { AddStudentComponent }
 import { AuthGuard }
   from '../guards/auth.guard';
 
+
+// =========================================
+// Routes
+// =========================================
 
 const routes: Routes = [
 
@@ -170,9 +182,6 @@ const routes: Routes = [
       // =====================================
       // INSTRUCTOR DASHBOARD
       // =====================================
-      // هذه صفحة المدرب الخاصة
-      // لا نغيرها
-      // =====================================
 
       {
         path: 'instructor-dashboard',
@@ -191,10 +200,27 @@ const routes: Routes = [
 
 
       // =====================================
-      // ADMIN → INSTRUCTORS
+      // INSTRUCTOR → MY STUDENTS
       // =====================================
-      // هذه صفحة عرض جميع المدربين
-      // الخاصة بالـ Admin
+
+      {
+        path: 'instructor-students',
+
+        component: InstructorStudentsComponent,
+
+        canActivate: [AuthGuard],
+
+        data: {
+          roles: [
+            'Admin',
+            'Instructor'
+          ]
+        }
+      },
+
+
+      // =====================================
+      // ADMIN → INSTRUCTORS
       // =====================================
 
       {
@@ -264,8 +290,7 @@ const routes: Routes = [
 
         data: {
           roles: [
-            'Admin',
-            'Instructor'
+            'Admin'
           ]
         }
       },

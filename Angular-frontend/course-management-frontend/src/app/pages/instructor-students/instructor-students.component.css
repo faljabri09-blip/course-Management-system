@@ -1,0 +1,238 @@
+.instructor-students-page {
+  padding: 30px;
+}
+
+
+/* =========================================
+   PAGE TITLE
+========================================= */
+
+.page-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+
+.page-title h1 {
+  margin: 0;
+  color: #080d72;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+
+.page-title p {
+  margin-top: 8px;
+  color: #64748b;
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.back-btn {
+  border: none;
+  background: #080d72;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+.back-btn:hover {
+  opacity: 0.9;
+}
+
+
+/* =========================================
+   DASHBOARD CARD
+========================================= */
+
+.dashboard-card {
+  background: white;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow:
+    0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+
+.card-header h2 {
+  margin: 0;
+  color: #1e293b;
+}
+
+
+.card-header p {
+  margin-top: 6px;
+  color: #64748b;
+}
+
+
+/* =========================================
+   STUDENT COUNT
+========================================= */
+
+.student-count {
+  text-align: center;
+}
+
+
+.student-count span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+
+.student-count strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 25px;
+  color: #080d72;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+thead {
+  background: #f8fafc;
+}
+
+
+th {
+  text-align: left;
+  padding: 15px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 700;
+}
+
+
+td {
+  padding: 16px 15px;
+  border-top: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* =========================================
+   STUDENT CELL
+========================================= */
+
+.student-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.student-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #080d72;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+
+.student-info strong {
+  display: block;
+  color: #1e293b;
+}
+
+
+.student-info span {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+
+/* =========================================
+   COURSE BADGE
+========================================= */
+
+.course-badge {
+  display: inline-block;
+
+  background: #eef2ff;
+
+  color: #080d72;
+
+  padding: 7px 12px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty-message {
+  text-align: center;
+  padding: 45px 20px;
+  color: #64748b;
+}
+
+
+.empty-message i {
+  display: block;
+  font-size: 35px;
+  margin-bottom: 12px;
+}
+
+
+.empty-message h3 {
+  color: #334155;
+  margin-bottom: 5px;
+}

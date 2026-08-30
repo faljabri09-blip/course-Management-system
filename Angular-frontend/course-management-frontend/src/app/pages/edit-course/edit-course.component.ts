@@ -30,100 +30,180 @@ export class EditCourseComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
 
+
   constructor(
     private courseService: CourseService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
+
+  // ==========================================
+  // ON INIT
+  // ==========================================
+
   ngOnInit(): void {
 
-    const id = this.route.snapshot.paramMap.get('id');
+    const id =
+      this.route.snapshot.paramMap.get('id');
 
     if (!id) {
-      this.errorMessage = 'Invalid course ID.';
+
+      this.errorMessage =
+        'Invalid course ID.';
+
       return;
     }
 
-    this.courseId = Number(id);
+    this.courseId =
+      Number(id);
 
-    if (isNaN(this.courseId) || this.courseId <= 0) {
-      this.errorMessage = 'Invalid course ID.';
+    if (
+      isNaN(this.courseId) ||
+      this.courseId <= 0
+    ) {
+
+      this.errorMessage =
+        'Invalid course ID.';
+
       return;
     }
 
     this.loadCourse();
   }
 
+
   // ==========================================
-  // Load Course
+  // LOAD COURSE
   // ==========================================
 
   loadCourse(): void {
 
     this.loading = true;
+
     this.errorMessage = '';
 
-    this.courseService.getById(this.courseId).subscribe({
 
-      next: (data: Course) => {
+    this.courseService
+      .getById(this.courseId)
+      .subscribe({
 
-        console.log('Course loaded:', data);
+        // =====================================
+        // SUCCESS
+        // =====================================
 
-        this.course = {
-          title: data.title,
-          description: data.description,
-          credits: data.credits,
-          price: data.price,
-          instructorId: data.instructorId
-        };
+        next: (data: Course) => {
 
-        this.loading = false;
-      },
+          console.log(
+            'Course loaded:',
+            data
+          );
 
-      error: (error) => {
 
-        console.error('LOAD COURSE ERROR:', error);
-        console.log('Status:', error.status);
-        console.log('Response:', error.error);
+          this.course = {
 
-        this.loading = false;
+            title:
+              data.title,
 
-        if (error.status === 401) {
+            description:
+              data.description,
 
-          this.errorMessage =
-            'Your session has expired. Please login again.';
+            credits:
+              data.credits,
 
-        } else if (error.status === 403) {
+            price:
+              data.price,
 
-          this.errorMessage =
-            'You do not have permission to view this course.';
+            instructorId:
+              data.instructorId
 
-        } else if (error.status === 404) {
+          };
 
-          this.errorMessage =
-            'Course not found.';
 
-        } else {
+          this.loading = false;
 
-          this.errorMessage =
-            'Unable to load course from the server.';
+        },
+
+
+        // =====================================
+        // ERROR
+        // =====================================
+
+        error: (error) => {
+
+          console.error(
+            'LOAD COURSE ERROR:',
+            error
+          );
+
+          console.log(
+            'Status:',
+            error.status
+          );
+
+          console.log(
+            'Response:',
+            error.error
+          );
+
+
+          this.loading = false;
+
+
+          if (error.status === 401) {
+
+            this.errorMessage =
+              'Your session has expired. Please login again.';
+
+          }
+
+          else if (error.status === 403) {
+
+            this.errorMessage =
+              'You do not have permission to view this course.';
+
+          }
+
+          else if (error.status === 404) {
+
+            this.errorMessage =
+              'Course not found.';
+
+          }
+
+          else {
+
+            this.errorMessage =
+              'Unable to load course from the server.';
+
+          }
+
         }
-      }
-    });
+
+      });
+
   }
 
+
   // ==========================================
-  // Update Course
+  // UPDATE COURSE
   // ==========================================
 
   updateCourse(): void {
 
     this.errorMessage = '';
+
     this.successMessage = '';
 
-    // Validation
-    if (!this.course.title.trim()) {
+
+    // ==========================================
+    // VALIDATION
+    // ==========================================
+
+    if (
+      !this.course.title ||
+      !this.course.title.trim()
+    ) {
 
       this.errorMessage =
         'Course title is required.';
@@ -131,13 +211,18 @@ export class EditCourseComponent implements OnInit {
       return;
     }
 
-    if (!this.course.description.trim()) {
+
+    if (
+      !this.course.description ||
+      !this.course.description.trim()
+    ) {
 
       this.errorMessage =
         'Course description is required.';
 
       return;
     }
+
 
     if (this.course.credits <= 0) {
 
@@ -147,6 +232,7 @@ export class EditCourseComponent implements OnInit {
       return;
     }
 
+
     if (this.course.price < 0) {
 
       this.errorMessage =
@@ -154,6 +240,7 @@ export class EditCourseComponent implements OnInit {
 
       return;
     }
+
 
     if (this.course.instructorId <= 0) {
 
@@ -163,91 +250,171 @@ export class EditCourseComponent implements OnInit {
       return;
     }
 
+
+    // ==========================================
+    // START SAVING
+    // ==========================================
+
     this.saving = true;
 
-    console.log('Updating course ID:', this.courseId);
 
-    console.log('Update data:', this.course);
+    console.log(
+      'Updating course ID:',
+      this.courseId
+    );
+
+    console.log(
+      'Update data:',
+      this.course
+    );
+
 
     this.courseService
-      .update(this.courseId, this.course)
+      .update(
+        this.courseId,
+        this.course
+      )
       .subscribe({
+
+        // =====================================
+        // SUCCESS
+        // =====================================
 
         next: (response) => {
 
-          console.log('UPDATE SUCCESS:', response);
+          console.log(
+            'UPDATE SUCCESS:',
+            response
+          );
+
 
           this.saving = false;
+
 
           this.successMessage =
             'Course updated successfully.';
 
+
           setTimeout(() => {
 
-            this.router.navigate(['/courses']);
+            this.router.navigate([
+              '/courses'
+            ]);
 
           }, 1000);
+
         },
+
+
+        // =====================================
+        // ERROR
+        // =====================================
 
         error: (error) => {
 
-          console.error('================================');
-          console.error('UPDATE COURSE ERROR');
-          console.error('Status:', error.status);
-          console.error('Status Text:', error.statusText);
-          console.error('Error:', error.error);
-          console.error('URL:', error.url);
-          console.error('================================');
+          console.error(
+            '================================'
+          );
+
+          console.error(
+            'UPDATE COURSE ERROR'
+          );
+
+          console.error(
+            'Status:',
+            error.status
+          );
+
+          console.error(
+            'Status Text:',
+            error.statusText
+          );
+
+          console.error(
+            'Error:',
+            error.error
+          );
+
+          console.error(
+            'URL:',
+            error.url
+          );
+
+          console.error(
+            '================================'
+          );
+
 
           this.saving = false;
+
 
           if (error.status === 400) {
 
             this.errorMessage =
               'Invalid course data. Please check all fields.';
 
-          } else if (error.status === 401) {
+          }
+
+          else if (error.status === 401) {
 
             this.errorMessage =
               'Your session has expired. Please login again.';
 
-          } else if (error.status === 403) {
+          }
+
+          else if (error.status === 403) {
 
             this.errorMessage =
               'Only Admin users can update courses.';
 
-          } else if (error.status === 404) {
+          }
+
+          else if (error.status === 404) {
 
             this.errorMessage =
               'Course not found.';
 
-          } else if (error.status === 409) {
+          }
+
+          else if (error.status === 409) {
 
             this.errorMessage =
               'Cannot update this course because it is related to other records.';
 
-          } else if (error.status === 500) {
+          }
+
+          else if (error.status === 500) {
 
             this.errorMessage =
               'Server error. Please check the Backend.';
 
-          } else {
+          }
+
+          else {
 
             this.errorMessage =
               'Unable to update the course. Status: ' +
               error.status;
+
           }
+
         }
+
       });
+
   }
 
+
   // ==========================================
-  // Cancel
+  // CANCEL
   // ==========================================
 
   cancel(): void {
 
-    this.router.navigate(['/courses']);
+    this.router.navigate([
+      '/courses'
+    ]);
 
   }
+
 }

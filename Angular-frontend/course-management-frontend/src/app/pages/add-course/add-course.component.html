@@ -13,7 +13,6 @@
       <p>
         Create a new course in the system
       </p>
-        
 
     </div>
 
@@ -46,8 +45,9 @@
 
 
     <form
+      #courseForm="ngForm"
       (ngSubmit)="addCourse()"
-      #courseForm="ngForm">
+      novalidate>
 
 
       <!-- ========================= -->
@@ -65,8 +65,7 @@
           type="text"
           name="title"
           [(ngModel)]="course.title"
-          placeholder="Enter course title"
-          required>
+          placeholder="Enter course title">
 
       </div>
 
@@ -86,8 +85,7 @@
           name="description"
           [(ngModel)]="course.description"
           placeholder="Enter course description"
-          rows="5"
-          required>
+          rows="5">
         </textarea>
 
       </div>
@@ -114,8 +112,7 @@
             name="credits"
             [(ngModel)]="course.credits"
             min="1"
-            placeholder="Example: 3"
-            required>
+            placeholder="Example: 3">
 
         </div>
 
@@ -135,8 +132,7 @@
             [(ngModel)]="course.price"
             min="0"
             step="0.01"
-            placeholder="Example: 50"
-            required>
+            placeholder="Example: 50">
 
         </div>
 
@@ -159,8 +155,7 @@
           name="instructorId"
           [(ngModel)]="course.instructorId"
           min="1"
-          placeholder="Enter instructor ID"
-          required>
+          placeholder="Enter instructor ID">
 
         <small>
           Enter the ID of the instructor assigned to this course.
@@ -204,6 +199,68 @@
       </div>
 
     </form>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- VALIDATION MODAL -->
+  <!-- ================================================= -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showValidationModal"
+    (click)="closeValidationModal()">
+
+    <div
+      class="modal-box validation-modal"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- Icon -->
+
+      <div class="modal-icon validation-icon">
+        !
+      </div>
+
+
+      <!-- Title -->
+
+      <h2>
+        Complete Course Information
+      </h2>
+
+
+      <!-- Message -->
+
+      <p>
+        {{ validationMessage }}
+      </p>
+
+
+      <div class="validation-hint">
+
+        <span>💡</span>
+
+        <span>
+          Please make sure all course information is filled in correctly.
+        </span>
+
+      </div>
+
+
+      <!-- Button -->
+
+      <button
+        type="button"
+        class="validation-btn"
+        (click)="closeValidationModal()">
+
+        OK
+
+      </button>
+
+    </div>
 
   </div>
 
@@ -264,7 +321,6 @@
 
       <div class="modal-icon error-icon">
         !
-
       </div>
 
       <h2>
@@ -272,7 +328,7 @@
       </h2>
 
       <p>
-        {{ errorMessage }}
+        {{ modalErrorMessage }}
       </p>
 
       <button

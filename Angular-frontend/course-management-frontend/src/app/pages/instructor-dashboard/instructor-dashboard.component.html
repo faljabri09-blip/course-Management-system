@@ -21,6 +21,8 @@
 
     <div class="page-actions">
 
+      <!-- VIEW STUDENTS -->
+
       <button
         type="button"
         class="secondary-btn"
@@ -32,6 +34,8 @@
 
       </button>
 
+
+      <!-- VIEW COURSES -->
 
       <button
         type="button"
@@ -99,7 +103,8 @@
     <!-- INSTRUCTOR INFORMATION -->
     <!-- ======================================= -->
 
-    <section class="dashboard-card instructor-profile-card">
+    <section
+      class="dashboard-card instructor-profile-card">
 
       <div class="card-header">
 
@@ -120,7 +125,10 @@
 
       <div class="instructor-profile">
 
-        <!-- Avatar -->
+
+        <!-- ================================= -->
+        <!-- AVATAR -->
+        <!-- ================================= -->
 
         <div class="instructor-avatar">
 
@@ -129,9 +137,14 @@
         </div>
 
 
-        <!-- Information -->
+        <!-- ================================= -->
+        <!-- INFORMATION -->
+        <!-- ================================= -->
 
         <div class="instructor-details">
+
+
+          <!-- NAME -->
 
           <div class="detail-item">
 
@@ -146,6 +159,8 @@
           </div>
 
 
+          <!-- EMAIL -->
+
           <div class="detail-item">
 
             <span class="detail-label">
@@ -158,6 +173,8 @@
 
           </div>
 
+
+          <!-- PHONE -->
 
           <div class="detail-item">
 
@@ -172,6 +189,8 @@
           </div>
 
 
+          <!-- SPECIALIZATION -->
+
           <div class="detail-item">
 
             <span class="detail-label">
@@ -183,6 +202,7 @@
             </strong>
 
           </div>
+
 
         </div>
 
@@ -198,7 +218,9 @@
     <section class="stats-grid">
 
 
+      <!-- ===================================== -->
       <!-- MY COURSES -->
+      <!-- ===================================== -->
 
       <div class="stat-card">
 
@@ -228,7 +250,9 @@
       </div>
 
 
+      <!-- ===================================== -->
       <!-- MY STUDENTS -->
+      <!-- ===================================== -->
 
       <div class="stat-card">
 
@@ -243,7 +267,7 @@
           </h2>
 
           <small class="stat-description">
-            Students enrolled
+            Students enrolled in your courses
           </small>
 
         </div>
@@ -258,37 +282,9 @@
       </div>
 
 
-      <!-- ENROLLMENTS -->
-
-      <div class="stat-card">
-
-        <div class="stat-content">
-
-          <span class="stat-label">
-            ENROLLMENTS
-          </span>
-
-          <h2>
-            {{ totalEnrollments }}
-          </h2>
-
-          <small class="stat-description">
-            Total enrollments
-          </small>
-
-        </div>
-
-
-        <div class="stat-icon enrollments">
-
-          <i class="bi bi-clipboard-check-fill"></i>
-
-        </div>
-
-      </div>
-
-
-      <!-- ROLE -->
+      <!-- ===================================== -->
+      <!-- ACCOUNT ROLE -->
+      <!-- ===================================== -->
 
       <div class="stat-card">
 
@@ -317,6 +313,7 @@
 
       </div>
 
+
     </section>
 
 
@@ -325,6 +322,9 @@
     <!-- ======================================= -->
 
     <section class="dashboard-card">
+
+
+      <!-- HEADER -->
 
       <div class="card-header">
 
@@ -355,17 +355,26 @@
       </div>
 
 
-      <!-- Courses -->
+      <!-- ===================================== -->
+      <!-- COURSES -->
+      <!-- ===================================== -->
 
       <div
         class="course-grid"
-        *ngIf="instructor.courses && instructor.courses.length > 0">
+        *ngIf="
+          instructor.courses &&
+          instructor.courses.length > 0
+        ">
 
 
         <div
           class="course-card"
-          *ngFor="let course of instructor.courses">
+          *ngFor="
+            let course of instructor.courses
+          ">
 
+
+          <!-- COURSE ICON -->
 
           <div class="course-card-icon">
 
@@ -373,6 +382,8 @@
 
           </div>
 
+
+          <!-- COURSE CONTENT -->
 
           <div class="course-card-content">
 
@@ -386,17 +397,23 @@
 
           </div>
 
+
         </div>
 
 
       </div>
 
 
-      <!-- No Courses -->
+      <!-- ===================================== -->
+      <!-- NO COURSES -->
+      <!-- ===================================== -->
 
       <div
         class="empty-message"
-        *ngIf="!instructor.courses || instructor.courses.length === 0">
+        *ngIf="
+          !instructor.courses ||
+          instructor.courses.length === 0
+        ">
 
         <i class="bi bi-book"></i>
 
@@ -404,7 +421,84 @@
 
       </div>
 
+
     </section>
+
+
+    <!-- ======================================= -->
+    <!-- MY STUDENTS -->
+    <!-- ======================================= -->
+
+    <section class="dashboard-card">
+
+
+      <!-- HEADER -->
+
+      <div class="card-header">
+
+        <div>
+
+          <h2>
+            My Students
+          </h2>
+
+          <p>
+            Students enrolled in the courses you teach.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="view-all-btn"
+          (click)="goToStudents()">
+
+          View All
+
+          <i class="bi bi-arrow-right"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- ===================================== -->
+      <!-- STUDENTS -->
+      <!-- ===================================== -->
+
+      <div
+        class="empty-message"
+        *ngIf="totalStudents === 0">
+
+        <i class="bi bi-people"></i>
+
+        No students are currently enrolled
+        in your courses.
+
+      </div>
+
+
+      <!-- ===================================== -->
+      <!-- STUDENTS WILL BE DISPLAYED HERE -->
+      <!-- ===================================== -->
+
+      <div
+        class="student-list"
+        *ngIf="totalStudents > 0">
+
+        <!--
+          سيتم هنا عرض أسماء الطلاب المسجلين
+          في المواد الخاصة بهذا المدرب.
+        -->
+
+      </div>
+
+
+    </section>
+
+
   </div>
+
 
 </div>

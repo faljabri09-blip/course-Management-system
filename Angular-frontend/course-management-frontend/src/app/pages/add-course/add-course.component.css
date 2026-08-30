@@ -2575,3 +2575,177 @@
     padding: 25px 20px;
   }
 }
+
+/* =========================================================
+   VALIDATION MODAL
+========================================================= */
+
+.validation-modal {
+
+  max-width: 450px;
+
+  padding: 35px 32px;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.20);
+
+  animation: validationAppear 0.3s ease;
+}
+
+
+/* =========================================================
+   Validation Icon
+========================================================= */
+
+.validation-icon {
+
+  background: #fff7ed;
+
+  color: #f59e0b;
+
+  border: 6px solid #ffedd5;
+
+  box-sizing: border-box;
+
+  font-size: 32px;
+
+  margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   Validation Title
+========================================================= */
+
+.validation-modal h2 {
+
+  margin: 0 0 12px;
+
+  color: #1f2937;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   Validation Message
+========================================================= */
+
+.validation-modal p {
+
+  margin: 0 auto 20px;
+
+  max-width: 360px;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   Validation Hint
+========================================================= */
+
+.validation-hint {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin: 0 auto 25px;
+
+  padding: 12px 15px;
+
+  max-width: 360px;
+
+  box-sizing: border-box;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   Validation Button
+========================================================= */
+
+.validation-btn {
+
+  min-width: 110px;
+
+  border: none;
+
+  background: #f59e0b;
+
+  color: white;
+
+  padding: 11px 28px;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+
+.validation-btn:hover {
+
+  background: #d97706;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 15px rgba(245, 158, 11, 0.25);
+}
+
+
+/* =========================================================
+   Validation Animation
+========================================================= */
+
+@keyframes validationAppear {
+
+  from {
+
+    opacity: 0;
+
+    transform: scale(0.88) translateY(15px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: scale(1) translateY(0);
+  }
+}

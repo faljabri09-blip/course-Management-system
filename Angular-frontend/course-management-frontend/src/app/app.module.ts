@@ -99,6 +99,7 @@ import {
 } from './interceptors/auth.interceptor';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { InstructorsComponent } from './pages/instructors/instructors.component';
+import { InstructorStudentsComponent } from './pages/instructor-students/instructor-students.component';
 
 
 @NgModule({
@@ -166,7 +167,8 @@ import { InstructorsComponent } from './pages/instructors/instructors.component'
     MyEnrollmentsComponent,
     AddStudentComponent,
     DashboardLayoutComponent,
-    InstructorsComponent
+    InstructorsComponent,
+    InstructorStudentsComponent
 
   ],
 

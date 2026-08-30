@@ -3,31 +3,66 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+
+// =========================================
+// COURSE MODEL
+// =========================================
+
 export interface Course {
+
   id: number;
+
   title: string;
+
   description: string;
+
   credits: number;
+
   price: number;
+
   instructorId: number;
 }
 
+
+// =========================================
+// COURSE DTO
+// =========================================
+
 export interface CourseDto {
+
   title: string;
+
   description: string;
+
   credits: number;
+
   price: number;
+
   instructorId: number;
 }
+
+
+// =========================================
+// COURSE SERVICE
+// =========================================
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
 
-  private apiUrl = `${environment.apiUrl}/Course`;
+  private apiUrl =
+    `${environment.apiUrl}/Course`;
 
-  constructor(private http: HttpClient) {}
+
+  constructor(
+    private http: HttpClient
+  ) {}
+
+
+  // =========================================
+  // GET ALL COURSES
+  // =========================================
 
   getAll(): Observable<Course[]> {
 
@@ -37,7 +72,14 @@ export class CourseService {
 
   }
 
-  getById(id: number): Observable<Course> {
+
+  // =========================================
+  // GET COURSE BY ID
+  // =========================================
+
+  getById(
+    id: number
+  ): Observable<Course> {
 
     return this.http.get<Course>(
       `${this.apiUrl}/${id}`
@@ -45,7 +87,14 @@ export class CourseService {
 
   }
 
-  add(course: CourseDto): Observable<Course> {
+
+  // =========================================
+  // ADD COURSE
+  // =========================================
+
+  add(
+    course: CourseDto
+  ): Observable<Course> {
 
     return this.http.post<Course>(
       this.apiUrl,
@@ -53,6 +102,11 @@ export class CourseService {
     );
 
   }
+
+
+  // =========================================
+  // UPDATE COURSE
+  // =========================================
 
   update(
     id: number,
@@ -69,7 +123,14 @@ export class CourseService {
 
   }
 
-  delete(id: number): Observable<string> {
+
+  // =========================================
+  // DELETE COURSE
+  // =========================================
+
+  delete(
+    id: number
+  ): Observable<string> {
 
     return this.http.delete(
       `${this.apiUrl}/${id}`,
@@ -79,4 +140,5 @@ export class CourseService {
     );
 
   }
+
 }

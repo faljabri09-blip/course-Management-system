@@ -49,8 +49,6 @@
   </div>
 
 
-
-
   <!-- =========================================
        LOADING
   ========================================== -->
@@ -85,9 +83,11 @@
     <div class="courses-card-header">
 
       <div>
-<div class="page-title-icon">
-  📚
-</div>
+
+        <div class="page-title-icon">
+          📚
+        </div>
+
         <h2>
           Available Courses
         </h2>
@@ -96,12 +96,14 @@
           Explore the courses available in EduFlow
         </p>
 
-   <span>
-     AVAILABLE COURSES
-   </span>
-   <strong>
-     {{ courses.length }}
-   </strong>
+        <span>
+          AVAILABLE COURSES
+        </span>
+
+        <strong>
+          {{ courses.length }}
+        </strong>
+
       </div>
 
     </div>
@@ -248,12 +250,16 @@
               <div class="actions">
 
 
-                <!-- =========================
-                     STUDENT - ENROLL
-                ========================== -->
+                <!-- =================================
+                     STUDENT - REGISTER
+                     Show only if NOT registered
+                ================================== -->
 
                 <button
-                  *ngIf="isStudent"
+                  *ngIf="
+                    isStudent &&
+                    !isCourseRegistered(course.id)
+                  "
                   type="button"
                   class="course-action-btn enroll-btn"
                   (click)="enrollCourse(course.id)">
@@ -267,12 +273,16 @@
                 </button>
 
 
-                <!-- =========================
+                <!-- =================================
                      STUDENT - DROP
-                ========================== -->
+                     Show only if registered
+                ================================== -->
 
                 <button
-                  *ngIf="isStudent"
+                  *ngIf="
+                    isStudent &&
+                    isCourseRegistered(course.id)
+                  "
                   type="button"
                   class="course-action-btn drop-btn"
                   (click)="dropCourse(course.id)">
@@ -286,9 +296,9 @@
                 </button>
 
 
-                <!-- =========================
+                <!-- =================================
                      ADMIN - EDIT
-                ========================== -->
+                ================================== -->
 
                 <button
                   *ngIf="isAdmin"
@@ -303,9 +313,9 @@
                 </button>
 
 
-                <!-- =========================
+                <!-- =================================
                      ADMIN - DELETE
-                ========================== -->
+                ================================== -->
 
                 <button
                   *ngIf="isAdmin"
@@ -466,11 +476,11 @@
       </div>
 
       <h2>
-        Course Deleted
+        Success
       </h2>
 
       <p>
-        The course has been deleted successfully.
+        {{ successMessage }}
       </p>
 
       <button
@@ -505,7 +515,7 @@
       </div>
 
       <h2>
-        Unable to Delete
+        Unable to Complete Action
       </h2>
 
       <p>
