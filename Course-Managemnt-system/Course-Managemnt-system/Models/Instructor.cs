@@ -20,3 +20,4 @@ namespace CourseManagementSystem.Models
             = new List<Course>();
     }
 }
+

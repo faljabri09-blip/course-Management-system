@@ -112,5 +112,15 @@ namespace CourseManagementSystem.Services
         {
             return await _repository.Delete(id);
         }
+
+        // =========================================
+        // Get Instructor By Username / Email
+        // =========================================
+
+        public async Task<Instructor?> GetByUsernameOrEmail(
+            string username)
+        {
+            return await _repository.GetByUsernameOrEmail(username);
+        }
     }
 }

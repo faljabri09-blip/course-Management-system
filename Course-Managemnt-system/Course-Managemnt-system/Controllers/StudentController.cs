@@ -1,4 +1,5 @@
-﻿using CourseManagementSystem.DTOs;
+﻿using System.Security.Claims;
+using CourseManagementSystem.DTOs;
 using CourseManagementSystem.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,16 @@ namespace CourseManagementSystem.Controllers
     public class StudentController : ControllerBase
     {
         private readonly StudentService _service;
+        private readonly InstructorService _instructorService;
 
-        public StudentController(StudentService service)
+        public StudentController(
+            StudentService service,
+            InstructorService instructorService)
         {
             _service = service;
+            _instructorService = instructorService;
         }
+
 
         // =========================================
         // Get All Students
@@ -29,6 +35,7 @@ namespace CourseManagementSystem.Controllers
             return Ok(students);
         }
 
+
         // =========================================
         // Get Student By ID
         // =========================================
@@ -40,30 +47,86 @@ namespace CourseManagementSystem.Controllers
             var student = await _service.GetById(id);
 
             if (student == null)
-            {
                 return NotFound();
-            }
 
             return Ok(student);
         }
+
 
         // =========================================
         // Add Student
         // =========================================
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
         public async Task<IActionResult> Add(StudentDto dto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
+
+
+            // =========================================
+            // Admin
+            // =========================================
+
+            if (User.IsInRole("Admin"))
+            {
+                var student = await _service.Add(
+                    dto,
+                    null
+                );
+
+                return Ok(student);
             }
 
-            var student = await _service.Add(dto);
 
-            return Ok(student);
+            // =========================================
+            // Instructor
+            // =========================================
+
+            var username =
+                User.FindFirstValue(
+                    ClaimTypes.Name
+                );
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return Unauthorized(
+                    "Instructor identity was not found."
+                );
+            }
+
+
+            // =========================================
+            // Find Instructor
+            // =========================================
+
+            var instructor =
+                await _instructorService
+                    .GetByUsernameOrEmail(username);
+
+            if (instructor == null)
+            {
+                return BadRequest(
+                    "Instructor information was not found."
+                );
+            }
+
+
+            // =========================================
+            // Add Student With InstructorId
+            // =========================================
+
+            var result =
+                await _service.Add(
+                    dto,
+                    instructor.Id
+                );
+
+
+            return Ok(result);
         }
+
 
         // =========================================
         // Update Student
@@ -76,19 +139,19 @@ namespace CourseManagementSystem.Controllers
             StudentDto dto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            var result = await _service.Update(id, dto);
+            var result =
+                await _service.Update(id, dto);
 
             if (!result)
-            {
                 return NotFound();
-            }
 
-            return Ok("Student updated successfully");
+            return Ok(
+                "Student updated successfully"
+            );
         }
+
 
         // =========================================
         // Delete Student
@@ -98,14 +161,15 @@ namespace CourseManagementSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _service.Delete(id);
+            var result =
+                await _service.Delete(id);
 
             if (!result)
-            {
                 return NotFound();
-            }
 
-            return Ok("Student deleted successfully");
+            return Ok(
+                "Student deleted successfully"
+            );
         }
     }
 }

@@ -130,7 +130,18 @@ export class AddStudentComponent {
         // =====================================
 
         setTimeout(() => {
-          this.router.navigate(['/dashboard']);
+
+          // Instructor → Instructor Dashboard
+          // Admin → Admin Dashboard
+
+          const role = localStorage.getItem('role');
+
+          if (role === 'Instructor') {
+            this.router.navigate(['/instructor-dashboard']);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
+
         }, 1200);
       },
 
@@ -174,7 +185,7 @@ export class AddStudentComponent {
         else if (error.status === 403) {
 
           this.errorMessage =
-            'Only administrators can add students.';
+            'Only administrators and instructors can add students.';
         }
 
         // =====================================
@@ -215,6 +226,14 @@ export class AddStudentComponent {
   // =========================================
 
   cancel(): void {
-    this.router.navigate(['/dashboard']);
+
+    const role = localStorage.getItem('role');
+
+    if (role === 'Instructor') {
+      this.router.navigate(['/instructor-dashboard']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
   }
 }
+

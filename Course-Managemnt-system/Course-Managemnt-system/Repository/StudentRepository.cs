@@ -1,4 +1,5 @@
-﻿using CourseManagementSystem.Data;
+﻿
+using CourseManagementSystem.Data;
 using CourseManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 

@@ -31,21 +31,26 @@ namespace CourseManagementSystem.Services
             return await _repository.GetById(id);
         }
 
-        // =========================================
-        // Add Student
-        // =========================================
+        
+// =========================================
+// Add Student
+// =========================================
 
-        public async Task<Student> Add(StudentDto dto)
+    public async Task<Student> Add(
+    StudentDto dto,
+    int? instructorId)
         {
             var student = new Student
             {
                 Name = dto.Name,
                 Email = dto.Email,
-                Phone = dto.Phone
+                Phone = dto.Phone,
+               
             };
 
             return await _repository.Add(student);
         }
+
 
         // =========================================
         // Update Student
